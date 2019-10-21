@@ -12,7 +12,7 @@ export class AuthService {
   authenticated = true;
 
   constructor(private store: LocalStoreService, private router: Router) {
-    this.checkAuth();
+    this.checkAuth(); 
   }
 
   checkAuth() {

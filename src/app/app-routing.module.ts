@@ -13,6 +13,10 @@ const adminRoutes: Routes = [
     {
       path: 'forms',
       loadChildren: () => import('./views/forms/forms.module').then(m => m.AppFormsModule)
+    },
+    {
+      path: 'modules',
+      loadChildren: () => import('./views/modules/modules.module').then(m => m.ModulesModule)
     }
   ];
 

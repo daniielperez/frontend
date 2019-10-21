@@ -56,18 +56,21 @@ export class NavigationService {
             state: '/dashboard/v1'
         },
         {
-            name: 'Forms',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+            name: 'Usuarios',
+            description: 'Gestion de usuarios.',
             type: 'dropDown',
-            icon: 'i-File-Clipboard-File--Text',
+            icon: 'i-Business-ManWoman',
             sub: [
-                { icon: 'i-File-Clipboard-Text--Image', name: 'Basic components', state: '/forms/basic', type: 'link' },
-                { icon: 'i-Split-Vertical', name: 'Form layouts', state: '/forms/layouts', type: 'link' },
-                { icon: 'i-Receipt-4', name: 'Input Group', state: '/forms/input-group', type: 'link' },
-                { icon: 'i-File-Edit', name: 'Input Mask', state: '/forms/input-mask', type: 'link' },
-                { icon: 'i-Tag-2', name: 'Tag Input', state: '/forms/tag-input', type: 'link' },
-                { icon: 'i-Width-Window', name: 'Wizard', state: '/forms/wizard', type: 'link' },
-                { icon: 'i-Crop-2', name: 'Image Cropper', state: '/forms/img-cropper', type: 'link' },
+                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/usuario', type: 'link' },
+            ]
+        },
+        {
+            name: 'Lugares',
+            description: 'Gestion de lugares.',
+            type: 'dropDown',
+            icon: 'i-Business-ManWoman',
+            sub: [
+                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/lugar', type: 'link' },
             ]
         }
     ];

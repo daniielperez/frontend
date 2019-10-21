@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ulrBackend:'http://localhost/GitHub/tuboleta/queboleta_api/public/index.php/api/',
+  ulrImage:'http://localhost/GitHub/tuboleta/queboleta_api/public/uploads/',
+  urlLogin:"http://localhost/GitHub/tuboleta/queboleta_api/public/index.php/oauth/v2/token"
 };
 
 /*

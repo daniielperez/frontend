@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation.service';
-import { SearchService } from 'src/app/shared/services/search.service';
+import { SearchService } from '../../../services/search.service';
 import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, ResolveEnd } from '@angular/router';
 
 @Component({
