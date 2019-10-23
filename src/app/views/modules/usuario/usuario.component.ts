@@ -30,6 +30,7 @@ export class UsuarioComponent implements OnInit {
         if(response['code'] == 200){
           this.usuarios = [...response['data']];
           this.filteredUsuarios = response['data'];
+          this.modalService.dismissAll();
         }
     }, error => {
       alert(error.error.error_description);

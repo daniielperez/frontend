@@ -12,6 +12,8 @@ import { ModulesRoutingModule } from './modules-routing.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { LugarModule } from './lugar/lugar.module';
+import { EmpresaModule } from './empresa/empresa.module';
+import { EntradaModule } from './entrada/entrada.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
@@ -19,12 +21,14 @@ import { EmpresaComponent } from './empresa/empresa.component';
 import { BoletaComponent } from './boleta/boleta.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { EntradaComponent } from './entrada/entrada.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+ 
 @NgModule({
-  imports: [
+  imports: [ 
     CommonModule,
     CustomFormsModule,
     FormsModule,
@@ -38,6 +42,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CategoriaModule,
     UsuarioModule,
     LugarModule,
+    EmpresaModule,
+    EntradaModule,
+
   ],
   declarations: [
     EmpresaComponent, 
@@ -45,6 +52,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CategoriaComponent, 
     UsuarioComponent,
     LugarComponent,
+    EntradaComponent,
   ]
 })
 export class ModulesModule { }

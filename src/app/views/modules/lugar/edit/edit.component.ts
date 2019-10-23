@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
 
-@Component({
+@Component({ 
   selector: 'app-edit-lugar',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
@@ -12,8 +12,6 @@ import { LugarService } from '../../../../services/lugar.service';
 export class EditComponent implements OnInit {
   @Output() ready = new EventEmitter<any>();
   @Input() lugar: any = null;
-
-  datos 
 
   loading: boolean;
   formBasic: FormGroup;
@@ -39,14 +37,13 @@ export class EditComponent implements OnInit {
       lng: [this.lugar.lng, Validators.required],  
     });
   }
+
   onSubmit() {
     this.loading = true;
     this._LugarService.edit(this.lugar).subscribe(
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
-          this.modalService.dismissAll();
-          this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }
     }, error => {

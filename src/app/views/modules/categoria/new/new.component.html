@@ -1,1 +1,34 @@
-<p>new works!</p>
+
+
+
+<form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
+    <div class="modal-header"> 
+        <h4 class="modal-title" id="modal-basic-title">Nuevo registro</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseModal()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Nombre</label>
+                <input [(ngModel)]="categoria.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
+            </div> 
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Valor</label> 
+                <input [(ngModel)]="categoria.valor" [ngClass]="{ 'is-invalid': newForm.form.controls.valor.invalid , 'is-valid': !newForm.form.controls.valor.invalid }" type="text" class="form-control" formControlName="valor" id="lastName" placeholder="Ingrese dirección">
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Evento</label> 
+                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.evento.invalid , 'is-valid': !newForm.form.controls.evento.invalid }" [multiple]="false" [options]="eventos" [(ngModel)]="categoria.evento" formControlName="evento" id="evento">
+                </ng-select>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>
+    </div>
+</form>

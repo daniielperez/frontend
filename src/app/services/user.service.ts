@@ -8,7 +8,7 @@ import { LocalStoreService } from "./local-store.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService { 
 
   url = environment.ulrBackend+"user";
   urlLogin = environment.urlLogin;
@@ -43,5 +43,10 @@ export class UserService {
   singin(json){
     return this.http.post(this.urlLogin,json,{headers:this.header})
     .pipe(map(data => data['access_token']));
+  }
+
+  select(){
+    return this.http.get(this.url+'/select',{headers:this.header})
+    .pipe(map(data => data));
   }
 }

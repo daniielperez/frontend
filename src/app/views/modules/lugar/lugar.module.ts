@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { NewComponent } from './new/new.component';
 import { EditComponent } from './edit/edit.component';
-
 
 import { CustomFormsModule } from 'ng2-validation';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

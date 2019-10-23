@@ -72,6 +72,24 @@ export class NavigationService {
             sub: [
                 { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/lugar', type: 'link' },
             ]
+        },
+        {
+            name: 'Categorías',
+            description: 'Gestion de categorías.',
+            type: 'dropDown',
+            icon: 'i-Business-ManWoman',
+            sub: [
+                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/categoria', type: 'link' },
+            ]
+        },
+        {
+            name: 'Empresas',
+            description: 'Gestion de empresas.',
+            type: 'dropDown',
+            icon: 'i-Business-ManWoman',
+            sub: [
+                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/empresa', type: 'link' },
+            ]
         }
     ];
 

@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
 import { Lugar } from '../../../../model/lugar';
-
+ 
 @Component({
   selector: 'app-new-lugar',
   templateUrl: './new.component.html',
@@ -46,7 +46,6 @@ export class NewComponent implements OnInit {
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
-          this.modalService.dismissAll();
           this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }

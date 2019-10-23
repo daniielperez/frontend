@@ -4,6 +4,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { LugarComponent } from './lugar/lugar.component';
+import { EntradaComponent } from './entrada/entrada.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: 'lugar',
         component: LugarComponent
+    },
+    {
+        path: 'entrada/:idLugar',
+        component: EntradaComponent
     }
 ];
 

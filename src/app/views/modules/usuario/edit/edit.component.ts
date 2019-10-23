@@ -44,8 +44,6 @@ export class EditComponent implements OnInit {
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
-          this.modalService.dismissAll();
-          this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }
     }, error => {

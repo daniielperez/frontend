@@ -30,6 +30,7 @@ export class LugarComponent implements OnInit {
         if(response['code'] == 200){
           this.lugares = [...response['data']];
           this.filteredLugares = response['data'];
+          this.modalService.dismissAll();
         }
     }, error => {
       alert(error.error.error_description);

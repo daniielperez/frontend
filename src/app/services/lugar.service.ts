@@ -37,4 +37,9 @@ export class LugarService {
     return this.http.post(this.url+'/new',json,{headers:this.header})
     .pipe(map(data => data));
   }
+
+  select(){
+    return this.http.get(this.url+'/select',{headers:this.header})
+    .pipe(map(data => data));
+  }
  }
