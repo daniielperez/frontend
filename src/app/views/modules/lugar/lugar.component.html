@@ -16,6 +16,11 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
+
+<agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
+
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
@@ -33,7 +38,7 @@
             [rowHeight]="60"
             [scrollbarV]="true"
             [rows]="filteredLugares">
-                <ngx-datatable-column name="nombre" [width]="300">
+                <ngx-datatable-column name="nombre" [width]="200">
                 <ng-template ngx-datatable-header-template>
                     Nombre
                 </ng-template>
@@ -106,3 +111,4 @@
         <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">Ok</button>
     </div>
 </ng-template>
+

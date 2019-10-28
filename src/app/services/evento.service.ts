@@ -9,7 +9,7 @@ import { LocalStoreService } from "./local-store.service";
 })
 export class EventoService {
 
-  url = environment.ulrBackend+"eventos";
+  url = environment.ulrBackend+"evento";
   header = new HttpHeaders();
 
 	constructor(private http: HttpClient,private store: LocalStoreService,){

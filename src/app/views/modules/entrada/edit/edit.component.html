@@ -7,12 +7,12 @@
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-6 form-group mb-3">
+            <div class="col-md-12 form-group mb-3">
                 <label for="nombre">Nombre</label>
                 <input [(ngModel)]="entrada.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese el primer nombre">
             </div> 
 
-            <div class="col-md-6 form-group mb-3">
+            <div class="col-md-12 form-group mb-3">
                 <label for="valor">Responsable</label> 
                 <ng-select class="form-control" [ngClass]="{ 'is-invalid': newForm.form.controls.responsableSelect.invalid , 'is-valid': !newForm.form.controls.responsableSelect.invalid }" style="height: 47px;" [multiple]="false" [options]="usuarios" [(ngModel)]="responsableSelect" formControlName="responsableSelect" id="responsableSelect">
                 </ng-select>

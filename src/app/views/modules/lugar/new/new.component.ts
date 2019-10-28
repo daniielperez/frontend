@@ -15,6 +15,7 @@ export class NewComponent implements OnInit {
   formBasic: FormGroup;
   loading: boolean;
   public lugar: Lugar;
+  
 
   constructor(
     private fb: FormBuilder,

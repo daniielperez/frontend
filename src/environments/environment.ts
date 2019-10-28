@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  ulrBackend:'http://localhost/GitHub/tuboleta/queboleta_api/public/index.php/api/',
-  ulrImage:'http://localhost/GitHub/tuboleta/queboleta_api/public/uploads/',
-  urlLogin:"http://localhost/GitHub/tuboleta/queboleta_api/public/index.php/oauth/v2/token"
+  ulrBackend:'http://localhost/Git/queboleta_api/public/index.php/api/',
+  ulrImage:'http://localhost/Git/queboleta_api/public/uploads/',
+  urlLogin:"http://localhost/Git/queboleta_api/public/index.php/oauth/v2/token"
 };
 
 /*

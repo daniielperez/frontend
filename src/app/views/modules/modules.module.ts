@@ -26,6 +26,7 @@ import { EntradaComponent } from './entrada/entrada.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import { AgmCoreModule } from '@agm/core';
  
 @NgModule({
   imports: [ 
@@ -44,7 +45,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LugarModule,
     EmpresaModule,
     EntradaModule,
-
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCgqoy9FbrBCYQlCbscLOMUNoq8CMy0t60'
+    })
   ],
   declarations: [
     EmpresaComponent, 

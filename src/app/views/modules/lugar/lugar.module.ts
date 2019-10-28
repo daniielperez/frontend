@@ -11,6 +11,10 @@ import { SharedComponentsModule } from '../../../shared/components/shared-compon
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import { AgmCoreModule } from '@agm/core';
+
+
+
 @NgModule({
   declarations: [NewComponent, EditComponent], 
   imports: [
@@ -21,6 +25,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SharedComponentsModule,
     NgxPaginationModule,
     NgxDatatableModule,
+    AgmCoreModule
   ],
   exports: [
     NewComponent,

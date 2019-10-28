@@ -17,6 +17,8 @@ export class LugarComponent implements OnInit {
   filteredLugares;
   formEdit = false;
   formNew = false;
+  lat = 1.218245;
+  lng = 77.280313;
 
   constructor(
     private modalService: NgbModal,

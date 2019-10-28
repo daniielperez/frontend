@@ -58,7 +58,7 @@ export class EntradaComponent implements OnInit {
   onNew(content) {
     this.onInitForms();
     this.formNew=true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg',backdrop:'static', centered: true})
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'sm',backdrop:'static', centered: true})
     .result.then((result) => {
       console.log('result!', result);
     }, (reason) => {
@@ -93,7 +93,7 @@ export class EntradaComponent implements OnInit {
     this.entrada = entrada;
     this.onInitForms();
     this.formEdit = true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'sm', backdrop:'static', centered: true})
     .result.then((result) => {
       console.log('result!', result);
     }, (reason) => {
