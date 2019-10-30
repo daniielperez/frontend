@@ -6,6 +6,9 @@ import { UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from "../../../services/local-store.service";
 
+import { AuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
@@ -29,7 +32,8 @@ export class SigninComponent implements OnInit {
         private router: Router,
         private _UserService: UserService,
         private toastr: ToastrService,
-        private store: LocalStoreService
+        private store: LocalStoreService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -69,6 +73,18 @@ export class SigninComponent implements OnInit {
                 this.loading = false;
             }
           })
+    }
+
+    signInWithGoogle(): void {
+        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    }
+    
+    signInWithFB(): void {
+        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    } 
+    
+    signOut(): void {
+        this.authService.signOut();
     }
 
 }
