@@ -14,6 +14,7 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { LugarModule } from './lugar/lugar.module';
 import { EmpresaModule } from './empresa/empresa.module';
 import { EntradaModule } from './entrada/entrada.module';
+import { EventoModule } from './evento/evento.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
@@ -22,6 +23,7 @@ import { BoletaComponent } from './boleta/boleta.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { EntradaComponent } from './entrada/entrada.component';
+import { EventoComponent } from './cliente/evento/evento.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -45,6 +47,7 @@ import { AgmCoreModule } from '@agm/core';
     LugarModule,
     EmpresaModule,
     EntradaModule,
+    EventoModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCgqoy9FbrBCYQlCbscLOMUNoq8CMy0t60'
     })
@@ -56,6 +59,7 @@ import { AgmCoreModule } from '@agm/core';
     UsuarioComponent,
     LugarComponent,
     EntradaComponent,
+    EventoComponent
   ]
 })
 export class ModulesModule { }

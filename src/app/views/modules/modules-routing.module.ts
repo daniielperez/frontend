@@ -5,6 +5,7 @@ import { EmpresaComponent } from './empresa/empresa.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { LugarComponent } from './lugar/lugar.component';
 import { EntradaComponent } from './entrada/entrada.component';
+import { EventoComponent } from './cliente/evento/evento.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
     {
         path: 'entrada/:idLugar',
         component: EntradaComponent
+    },
+    {
+        path: 'evento/:idEvento',
+        component: EventoComponent
     }
 ];
 

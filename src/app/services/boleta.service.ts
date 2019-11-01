@@ -7,9 +7,9 @@ import { LocalStoreService } from "./local-store.service";
 @Injectable({
   providedIn: 'root'
 })
-export class EventoService {
+export class BoletaService {
 
-  url = environment.ulrBackend+"evento";
+  url = environment.ulrBackend+"boleta";
   header = new HttpHeaders();
 
 	constructor(private http: HttpClient,private store: LocalStoreService,){
@@ -34,7 +34,7 @@ export class EventoService {
   }
 
   new(json){
-    return this.http.post(this.url+'/new',json,{headers:this.header})
+    return this.http.post(this.url+'/new/from/aplication',json,{headers:this.header})
     .pipe(map(data => data));
   }
 

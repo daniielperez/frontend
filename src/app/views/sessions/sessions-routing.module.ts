@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'forgot',
     component: ForgotComponent
   }
-];
+]; 
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
