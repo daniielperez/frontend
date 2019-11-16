@@ -1,29 +1,42 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
 import { Lugar } from '../../../../model/lugar';
- 
+import { MouseEvent } from '@agm/core';
+
+declare var $: any;
+
 @Component({
   selector: 'app-new-lugar',
   templateUrl: './new.component.html',
-  styleUrls: ['./new.component.scss']
+  styleUrls: ['./new.component.scss'],
+ 
 })
+
 export class NewComponent implements OnInit {
   @Output() ready = new EventEmitter<any>();
   formBasic: FormGroup;
   loading: boolean;
   public lugar: Lugar;
-  
+  public address: any = null;
+  public zoom: number = 12;
+  public lat: number = 1.2246233;
+  public lng: number = -77.2808208;
+  public map: any;
+  public marker: any = null;
+  public LatLng: any;
+  public ubicaciones: any = null;
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService,
+    private toastr: ToastrService, 
     private modalService: NgbModal,
     private _LugarService: LugarService,
+    private __zone: NgZone
   ) { 
-    this.lugar = new Lugar(null, null, null, null, null, null);
+    this.lugar = new Lugar(null, null, null, null, null, null,null);
   }
 
   ngOnInit() {
@@ -36,8 +49,6 @@ export class NewComponent implements OnInit {
       telefono: ['', Validators.required],
       celular: ['', Validators.required],
       nombre: ['', Validators.required],
-      lat: ['', Validators.required], 
-      lng: ['', Validators.required], 
     });
   }
 
@@ -57,6 +68,24 @@ export class NewComponent implements OnInit {
 
   onCloseModal(){
     this.modalService.dismissAll();
+  }
+
+
+  mapClicked($event: MouseEvent) {
+    this.lugar.lat = $event.coords.lat;
+    this.lugar.lng = $event.coords.lng;
+    this.__zone.run(() => {    
+        this.marker = {
+            lat: $event.coords.lat,
+            lng: $event.coords.lng,
+            draggable: true,
+            label: "<br>(" + this.lugar.nombre + ")" + "<br>(" + this.lugar.direccion + ")"
+        };
+    });
+  }
+
+  mapLoad(map) {
+    this.map = map;
   }
 
 }

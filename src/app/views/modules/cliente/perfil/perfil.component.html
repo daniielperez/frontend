@@ -1,0 +1,52 @@
+<link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700" rel="stylesheet">
+
+<div class="breadcrumb" *ngIf='user'>
+    <h1>Mis boiletas</h1>
+    <ul>
+        <li>{{user.firstName}} {{user.lastName}}</li>
+    </ul>
+</div>
+
+<div class="separator-breadcrumb border-top" ></div>
+
+<div class="card user-profile o-hidden mb-4" *ngIf='boletasUser'>
+    <div class="card-body row">
+        <div class="col-lg-4" *ngFor="let boletaUser of boletasUser let i = index ">
+            <div class="ticket">
+                <div class="holes-top"></div>
+                <div class="title">
+                    <p class="cinema">{{ boletaUser.categoriaNombre }}</p>
+                    <p class="movie-title">{{ boletaUser.eventoNombre }}</p>
+                </div>
+                <div class="poster">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/25240/only-god-forgives.jpg" alt="Movie: Only God Forgives" />
+                </div>
+                <div class="info">
+                <p class="cinema"><b class="color-boleta">Lugar: </b> {{ boletaUser.lugar.nombre }}</p>
+                <p class="cinema"><b class="color-boleta">Dirección: </b>{{ boletaUser.lugar.direccion }}</p>
+                <br>
+                <table>
+                    <tr>
+                        <th>PRECIO</th>
+                        <th>FECHA</th>
+                        <th>HORA</th>
+                    </tr>
+                    <tr>
+                        <td class="bigger">$12.00</td>
+                        <td class="bigger">{{ boletaUser.fecha }}</td>
+                        <td class="bigger">{{ boletaUser.hora }}</td>
+                    </tr>
+                </table>
+                </div>
+                <div class="holes-lower" ></div>
+                <div class="serial text-center">
+                        <ngx-qrcode 
+                            [qrc-value] = 'boletaUser.token             '
+                            qrc-class = "aclass"
+                            qrc-errorCorrectionLevel = "L">
+                        </ngx-qrcode>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

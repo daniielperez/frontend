@@ -30,14 +30,8 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.empresa.empresa_correos.forEach(element => {
-      this.itemsCorreos.push(element.correo);
-    });
-    this.empresa.empresa_telefonos.forEach(element => {
-      this.itemsTelefonos.push(element.numero);
-    });
-    this.correos = new FormControl(this.itemsCorreos);
-    this.telefonos = new FormControl(this.itemsTelefonos);
+    this.correos = new FormControl(this.empresa.correos);
+    this.telefonos = new FormControl(this.empresa.telefonos);
     this.buildFormBasic();
   } 
   

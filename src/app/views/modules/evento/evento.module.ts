@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { NewComponent } from './new/new.component';
+import { EditComponent } from './edit/edit.component';
+
 import { CustomFormsModule } from 'ng2-validation';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
@@ -8,12 +11,16 @@ import { SharedComponentsModule } from '../../../shared/components/shared-compon
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SelectModule } from 'angular2-select';
 
-@NgModule({
-  // declarations: [NewComponent, EditComponent], 
+
+
+@NgModule({ 
   imports: [
-    CommonModule,
+    CommonModule, 
+    NgbModule,
     CustomFormsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -22,9 +29,14 @@ import { SelectModule } from 'angular2-select';
     NgxDatatableModule,
     SelectModule,
   ],
-  exports: [
-    // NewComponent,
-    // EditComponent,
-  ]
+  declarations: [
+    NewComponent,
+    EditComponent,
+  ],
+  exports: [  
+    NewComponent, 
+    EditComponent
+  ], 
+
 })
-export class EventoModule { }
+export class EventoConfigModule { }

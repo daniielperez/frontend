@@ -1,0 +1,53 @@
+
+
+
+<form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
+    <div class="modal-header"> 
+        <h4 class="modal-title" id="modal-basic-title">Nuevo registro</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseModal()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Nombre</label>
+                <input [(ngModel)]="evento.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
+            </div> 
+
+             <div class="col-md-6 form-group mb-3">
+                <label for="picker1">Fecha</label>
+                <div class="input-group">
+                    <input id="picker1" [(ngModel)]="evento.fecha" [ngClass]="{ 'is-invalid': newForm.form.controls.fecha.invalid , 'is-valid': !newForm.form.controls.fecha.invalid }" type="text" class="form-control" formControlName="fecha" id="fecha" placeholder="Ingrese fecha" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                        ngbDatepicker #dp="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                            <i class="icon-regular i-Calendar-4"></i>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Numero de boletas</label> 
+                <input [(ngModel)]="evento.totalBoletas" [ngClass]="{ 'is-invalid': newForm.form.controls.totalBoletas.invalid , 'is-valid': !newForm.form.controls.totalBoletas.invalid }" type="text" class="form-control" formControlName="totalBoletas" id="totalBoletas" placeholder="Ingrese total de las boletas">
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Empresas</label> 
+                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.empresa.invalid , 'is-valid': !newForm.form.controls.empresa.invalid }" [multiple]="false" [options]="empresas" [(ngModel)]="evento.empresa" formControlName="empresa" id="empresa">
+                </ng-select>
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Lugares</label> 
+                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.lugar.invalid , 'is-valid': !newForm.form.controls.lugar.invalid }" [multiple]="false" [options]="lugares" [(ngModel)]="evento.lugar" formControlName="lugar" id="lugar">
+                </ng-select>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>
+    </div>
+</form>

@@ -6,6 +6,9 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { LugarComponent } from './lugar/lugar.component';
 import { EntradaComponent } from './entrada/entrada.component';
 import { EventoComponent } from './cliente/evento/evento.component';
+import { HomeComponent } from './cliente/home/home.component';
+import { EventoConfigComponent } from './evento/evento.component';
+import { PerfilComponent } from './cliente/perfil/perfil.component';
 
 const routes: Routes = [
     {
@@ -29,8 +32,20 @@ const routes: Routes = [
         component: EntradaComponent
     },
     {
-        path: 'evento/:idEvento',
+        path: 'cliente/evento/:idEvento',
         component: EventoComponent
+    },
+    {
+        path: 'cliente/home',
+        component: HomeComponent
+    },
+    {
+        path: 'cliente/perfil',
+        component: PerfilComponent
+    },
+    {
+        path: 'eventoConfig',
+        component: EventoConfigComponent
     }
 ];
 

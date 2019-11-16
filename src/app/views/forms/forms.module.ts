@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsRoutingModule } from './forms-routing.module';
 import { CustomFormsModule } from 'ng2-validation';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+  import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../shared/shared.module';
 import { TagInputModule } from 'ngx-chips';
  

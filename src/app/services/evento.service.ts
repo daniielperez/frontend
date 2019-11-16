@@ -19,7 +19,12 @@ export class EventoService {
   }
   
   index(){
-    return this.http.get(this.url+'/',{headers:this.header})
+    return this.http.get(this.url+'/index/list/registro/fronend',{headers:this.header})
+    .pipe(map(data => data));
+  }
+  
+  indexCliente(){
+    return this.http.get(this.url+'/list/home/frontend',{headers:this.header})
     .pipe(map(data => data));
   }
 
@@ -44,7 +49,7 @@ export class EventoService {
   }
 
   select(){
-    return this.http.get(this.url+'/select',{headers:this.header})
+    return this.http.get(this.url+'/select/select',{headers:this.header})
     .pipe(map(data => data));
   }
  }

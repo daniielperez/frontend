@@ -14,7 +14,8 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { LugarModule } from './lugar/lugar.module';
 import { EmpresaModule } from './empresa/empresa.module';
 import { EntradaModule } from './entrada/entrada.module';
-import { EventoModule } from './evento/evento.module';
+import { EventoModule } from './cliente/evento/evento.module';
+import { EventoConfigModule } from './evento/evento.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
@@ -24,12 +25,16 @@ import { CategoriaComponent } from './categoria/categoria.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { EntradaComponent } from './entrada/entrada.component';
 import { EventoComponent } from './cliente/evento/evento.component';
+import { EventoConfigComponent } from './evento/evento.component';
+import { HomeComponent } from './cliente/home/home.component';
+import { PerfilComponent } from './cliente/perfil/perfil.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { GoogleMapsAPIWrapper } from '@agm/core';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
-import { AgmCoreModule } from '@agm/core';
- 
+
 @NgModule({
   imports: [ 
     CommonModule,
@@ -48,10 +53,10 @@ import { AgmCoreModule } from '@agm/core';
     EmpresaModule,
     EntradaModule,
     EventoModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCgqoy9FbrBCYQlCbscLOMUNoq8CMy0t60'
-    })
+    EventoConfigModule,
+    NgxQRCodeModule
   ],
+  providers:[GoogleMapsAPIWrapper],
   declarations: [
     EmpresaComponent, 
     BoletaComponent, 
@@ -59,7 +64,10 @@ import { AgmCoreModule } from '@agm/core';
     UsuarioComponent,
     LugarComponent,
     EntradaComponent,
-    EventoComponent
+    EventoComponent,
+    HomeComponent,
+    PerfilComponent,
+    EventoConfigComponent,
   ]
 })
 export class ModulesModule { }

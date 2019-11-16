@@ -45,6 +45,11 @@ export class UserService {
     .pipe(map(data => data['access_token']));
   }
 
+  show(id){
+    return this.http.get(this.url+'/'+id+'/show',{headers:this.header})
+    .pipe(map(data => data));
+  }
+
   select(){
     return this.http.get(this.url+'/select',{headers:this.header})
     .pipe(map(data => data));

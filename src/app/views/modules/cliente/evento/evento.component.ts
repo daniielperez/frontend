@@ -35,7 +35,9 @@ export class EventoComponent implements OnInit {
       response => { 
         if(response['status'] == 200){
           this.evento = response['data']['evento'];
-          this.ulrImage = this.ulrImage+'/'+response['data']['evento']['publicidades'][0].url_imagen;
+          if(response['data']['evento']['publicidades'][0]){
+            this.ulrImage = this.ulrImage+'/'+response['data']['evento']['publicidades'][0].url_imagen;
+          }
           this.publicidades = response['data']['evento']['publicidades'];
           this.precios = response['data']['precios'];
           response['data']['categorias'].forEach(element => {
@@ -82,6 +84,7 @@ export class EventoComponent implements OnInit {
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }
     }, error => {
+      this.loading = false;
       alert(error.error.error_description);
     })
   }

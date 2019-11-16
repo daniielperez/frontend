@@ -1,0 +1,89 @@
+<div class="breadcrumb">
+    <h1>Home</h1>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="card user-profile o-hidden mb-4">
+    <div class="card-body">
+        <ngb-tabset class="nav-center">
+
+            <ngb-tab title="Top eventos">
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-md-6" *ngFor="let eventoTop of eventosTop let i = index">
+                            <div class="card card-profile-1 mb-4">
+                                <div class="card-body text-center">
+                                    <div class="avatar box-shadow-2 mb-3">
+                                        <img [src]="ulr+'/'+eventoTop.imagen" alt="">
+                                    </div>
+                                    <h5 class="m-0">{{eventoTop.nombre}}</h5>
+                                    <p class="mt-0 text-muted">{{eventoTop.nombreEpresa}}</p>
+                                    <p>{{eventoTop.nombre}} dirección: {{eventoTop.direccion}}</p>
+                                    <button class="btn btn-primary btn-rounded" (click)='onShowEvento(eventoTop.id)'>Saber más</button>
+                                    <div class="card-socials-simple mt-4">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoTop.empresa_reds let i = index">
+                                            <i class="i-{{redes.nombre}}"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        
+
+            <ngb-tab title="Proximos Eventos">
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-md-6" *ngFor="let eventoProximo of eventosProximos let i = index">
+                            <div class="card card-profile-1 mb-4">
+                                <div class="card-body text-center">
+                                    <div class="avatar box-shadow-2 mb-3">
+                                        <img [src]="ulr+'/'+eventoProximo.imagen" alt="">
+                                    </div>
+                                    <h5 class="m-0">{{eventoProximo.nombre}}</h5>
+                                    <p class="mt-0 text-muted">{{eventoProximo.nombreEpresa}}</p>
+                                    <p>{{eventoProximo.lugar}} dirección: {{eventoProximo.direccion}}</p>
+                                    <button class="btn btn-primary btn-rounded" (click)='onShowEvento(eventoProximo.id)'>Saber más</button>
+                                    <div class="card-socials-simple mt-4">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoProximo.empresa_reds let i = index">
+                                            <i class="i-{{redes.nombre}}"></i>
+                                        </a>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            
+            <ngb-tab title="Todos los eventos">
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-md-6" *ngFor="let evento of todos let i = index">
+                            <div class="card card-profile-1 mb-4">
+                                <div class="card-body text-center">
+                                    <div class="avatar box-shadow-2 mb-3">
+                                        <img [src]="ulr+'/'+evento.imagen" alt="">
+                                    </div>
+                                    <h5 class="m-0">{{evento.nombre}}</h5>
+                                    <p class="mt-0 text-muted">{{evento.nombreEpresa}}</p>
+                                    <p>{{evento.nombre}} dirección: {{evento.direccion}}</p>
+                                    <button class="btn btn-primary btn-rounded" (click)='onShowEvento(evento.id)'>Saber más</button>
+                                    <div class="card-socials-simple mt-4">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of evento.empresa_reds let i = index">
+                                            <i class="i-{{redes.nombre}}"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+        </ngb-tabset>
+    </div>
+</div>

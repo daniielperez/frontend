@@ -37,4 +37,14 @@ export class EmpresaService {
     return this.http.post(this.url+'/new',json,{headers:this.header})
     .pipe(map(data => data));
   }
+
+  show(id){
+    return this.http.get(this.url+'/'+id+'/show',{headers:this.header})
+    .pipe(map(data => data));
+  }
+
+  select(){
+    return this.http.get(this.url+'/empresa/select',{headers:this.header})
+    .pipe(map(data => data));
+  }
  }

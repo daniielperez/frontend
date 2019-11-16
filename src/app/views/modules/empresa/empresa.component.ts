@@ -4,6 +4,7 @@ import { EmpresaService } from '../../../services/empresa.service';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-empresa',
@@ -18,6 +19,7 @@ export class EmpresaComponent implements OnInit {
   filteredEmpresas;
   formEdit = false;
   formNew = false;
+  ulr = environment.ulrImage+"empresa";
 
   constructor(
     private modalService: NgbModal,

@@ -118,6 +118,7 @@ export class LugarComponent implements OnInit {
       console.log('Err!', reason);
     });
   }
+  
   onInitForms(){
     this.formNew = false;
     this.formEdit = false;

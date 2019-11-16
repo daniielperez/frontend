@@ -13,8 +13,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AgmCoreModule } from '@agm/core';
 
-
-
 @NgModule({
   declarations: [NewComponent, EditComponent], 
   imports: [
@@ -25,7 +23,12 @@ import { AgmCoreModule } from '@agm/core';
     SharedComponentsModule,
     NgxPaginationModule,
     NgxDatatableModule,
-    AgmCoreModule
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAE4fzSoCEHjBoGocIFwLz8BSqi0ti1o0g'
+    })
+  ],
+  providers: [
+    AgmCoreModule,
   ],
   exports: [
     NewComponent,

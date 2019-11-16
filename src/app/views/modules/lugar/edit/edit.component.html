@@ -27,17 +27,16 @@
                 <input [(ngModel)]="lugar.celular" [ngClass]="{ 'is-invalid': newForm.form.controls.celular.invalid , 'is-valid': !newForm.form.controls.celular.invalid }" type="text" class="form-control" formControlName="celular" id="celular" placeholder="Ingrese celular">
             </div>
 
-            <div class="col-md-6 form-group mb-3">
-                <label for="lat">Lat</label>
-                <input [(ngModel)]="lugar.lat" [ngClass]="{ 'is-invalid': newForm.form.controls.lat.invalid , 'is-valid': !newForm.form.controls.lat.invalid }" type="lat" class="form-control" formControlName="lat" id="lat">
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="lng">Lng</label>
-                <input [(ngModel)]="lugar.lng" [ngClass]="{ 'is-invalid': newForm.form.controls.lng.invalid , 'is-valid': !newForm.form.controls.lng.invalid }" type="lng" class="form-control" formControlName="lng" id="lng">
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-            </div>
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" [usePanning] = "true" (mapClick)="mapClicked($event)" (mapReady)="mapLoad($event)">
+                            
+                <agm-marker *ngIf="marker" [latitude]="marker.lat" [longitude]="marker.lng">                            
+                
+                    <agm-info-window>
+                        <strong>{{ marker.label }}</strong>
+                    </agm-info-window>
+                </agm-marker>
+            
+            </agm-map>
         </div>
     </div>
     <div class="modal-footer">
