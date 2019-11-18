@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
 import { Lugar } from '../../../../model/lugar';
-import { MouseEvent } from '@agm/core';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
 
 declare var $: any;
 
@@ -20,28 +20,70 @@ export class NewComponent implements OnInit {
   formBasic: FormGroup;
   loading: boolean;
   public lugar: Lugar;
-  public address: any = null;
-  public zoom: number = 12;
-  public lat: number = 1.2246233;
-  public lng: number = -77.2808208;
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  address: string;
+  private geoCoder;
   public map: any;
   public marker: any = null;
   public LatLng: any;
   public ubicaciones: any = null;
+  @ViewChild('search', {static: true})
+  public searchElementRef: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService, 
     private modalService: NgbModal,
     private _LugarService: LugarService,
-    private __zone: NgZone
+    private __zone: NgZone,
+    private mapsAPILoader: MapsAPILoader,
   ) { 
     this.lugar = new Lugar(null, null, null, null, null, null,null);
   }
 
   ngOnInit() {
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      this.setCurrentLocation();
+      this.geoCoder = new google.maps.Geocoder;
+ 
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      
+      autocomplete.addListener("place_changed", () => {
+        this.__zone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+ 
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+ 
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
     this.buildFormBasic();
   } 
+
+  // Get Current Location Coordinates
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 8;
+        this.getAddress(this.latitude, this.longitude);
+      });
+    }
+  }
 
   buildFormBasic() {
     this.formBasic = this.fb.group({
@@ -70,22 +112,28 @@ export class NewComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-
-  mapClicked($event: MouseEvent) {
-    this.lugar.lat = $event.coords.lat;
-    this.lugar.lng = $event.coords.lng;
-    this.__zone.run(() => {    
-        this.marker = {
-            lat: $event.coords.lat,
-            lng: $event.coords.lng,
-            draggable: true,
-            label: "<br>(" + this.lugar.nombre + ")" + "<br>(" + this.lugar.direccion + ")"
-        };
+  markerDragEnd($event: MouseEvent) {
+    console.log($event);
+    this.latitude = $event.coords.lat;
+    this.longitude = $event.coords.lng;
+    this.getAddress(this.latitude, this.longitude);
+  }
+ 
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      console.log(results);
+      console.log(status);
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 12;
+          this.address = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+ 
     });
   }
-
-  mapLoad(map) {
-    this.map = map;
-  }
-
 }

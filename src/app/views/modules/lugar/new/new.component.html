@@ -28,7 +28,7 @@
             </div>
 
 
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" [usePanning] = "true" (mapClick)="mapClicked($event)" (mapReady)="mapLoad($event)">
+            <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" [usePanning] = "true" (mapClick)="mapClicked($event)" (mapReady)="mapLoad($event)">
                             
                 <agm-marker *ngIf="marker" [latitude]="marker.lat" [longitude]="marker.lng">                            
                 
@@ -37,8 +37,20 @@
                     </agm-info-window>
                 </agm-marker>
             
-            </agm-map>
-            
+            </agm-map> -->
+
+            <div class="form-group">
+                    <h5>Address: {{address}}</h5>
+                    <div>Latitude: {{latitude}}</div>
+                    <div>Longitude: {{longitude}}</div>
+                <label>Enter address</label>
+                <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+              </div>
+             
+              <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                  (dragEnd)="markerDragEnd($event)"></agm-marker>
+              </agm-map>
         </div>
     </div>
     <div class="modal-footer">
