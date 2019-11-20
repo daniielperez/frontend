@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventoService } from '../../../../services/evento.service';
 import { BoletaService } from '../../../../services/boleta.service';
+import { VentaService } from '../../../../services/venta.service';
 import { environment } from '../../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from "../../../../services/local-store.service";
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-evento',
@@ -13,9 +16,16 @@ import { LocalStoreService } from "../../../../services/local-store.service";
 })
 export class EventoComponent implements OnInit {
   loading: boolean;
+  @ViewChild('testForm', {static: false}) testFormElement;
   evento;
   publicidades;
   precios;
+  email;
+  codigoVenta;
+  signature;
+  merchantId = 508029;
+  apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
+  accountId = 512321;
   valorTotal = 0;
   categorias = [];
   ulrImage = environment.ulrImage+"publicidad";
@@ -24,12 +34,25 @@ export class EventoComponent implements OnInit {
   constructor(
     private rutaActiva: ActivatedRoute,
     private _EventoService: EventoService,
-    private _BoletaService: BoletaService,
+    private _VentaService: VentaService,
     private toastr: ToastrService,
     private store: LocalStoreService,
   ) { }
 
   ngOnInit() {
+    this._VentaService.ultimoCodigo(this.store.getItem("username")).subscribe(
+      response => { 
+        if(response['code'] == 200){
+          this.codigoVenta = response['data'];
+          this.email = response['data'];
+          this.signature = this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP';
+          console.log(this.signature);
+        }
+    }, error => {
+      this.loading = false;
+      alert(error.error.error_description);
+    })
+    
     let idEvento = this.rutaActiva.snapshot.params.idEvento;
     this._EventoService.show(idEvento).subscribe(
       response => { 
@@ -77,16 +100,16 @@ export class EventoComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this._BoletaService.new(this.categorias).subscribe(
+    this._VentaService.new(this.categorias).subscribe(
       response => { 
         if(response['code'] == 200){
           this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
+          /* this.testFormElement.nativeElement.submit(); */
         }
     }, error => {
       this.loading = false;
       alert(error.error.error_description);
     })
   }
-
 }

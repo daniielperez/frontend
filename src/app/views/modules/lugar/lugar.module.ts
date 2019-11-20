@@ -12,7 +12,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AgmCoreModule } from '@agm/core';
-import { bindCallback } from '../../../../../node_modules/rxjs';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 @NgModule({
   declarations: [NewComponent, EditComponent], 
@@ -27,7 +27,8 @@ import { bindCallback } from '../../../../../node_modules/rxjs';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAE4fzSoCEHjBoGocIFwLz8BSqi0ti1o0g',
       libraries: ["places"]
-    })
+    }), 
+    MatGoogleMapsAutocompleteModule.forRoot(),
   ],
   providers: [
     AgmCoreModule,

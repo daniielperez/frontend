@@ -6,7 +6,7 @@ export class Empresa {
 		public logo: string,
 		public portada: string,
 		public direccion: string,
-		public lat: string,
-		public lng: string,
+		public lat: number,
+		public lng: number,
 	){}
 }

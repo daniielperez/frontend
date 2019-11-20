@@ -1,4 +1,4 @@
-<div class="breadcrumb">
+<div class="breadcrumb" *ngIf='formIndex'>
     <div class="row container-fluid">
         <div class="col-md-8">
             <h1>Lugar</h1>
@@ -14,9 +14,9 @@
     </div>
 </div>
 
-<div class="separator-breadcrumb border-top"></div>
+<div class="separator-breadcrumb border-top"  *ngIf='formIndex'></div>
 
-<div class="row">
+<div class="row" *ngIf='formIndex'>
     <div class="col-md-4">
         <div class="form-group">
         <input id="email" placeholder="Buscar registros" [formControl]="searchControl" class="form-control form-control-rounded" type="email">
@@ -78,10 +78,10 @@
     </div>
 </div>
 
-<ng-template #modalBasic let-modal> 
-        <app-new-lugar *ngIf='formNew' (ready)="ready($event)"></app-new-lugar>
-        <app-edit-lugar *ngIf='formEdit' [lugar]="lugar" (ready)="ready($event)"></app-edit-lugar>
-</ng-template>
+<app-new-lugar *ngIf='formNew' (ready)="ready($event)"></app-new-lugar>
+<app-edit-lugar *ngIf='formEdit' [lugar]="lugar" (ready)="ready($event)"></app-edit-lugar>
+<!-- <ng-template #modalBasic let-modal> 
+</ng-template> -->
 
 <ng-template #modalConfirm let-modal>
     <div class="modal-header">

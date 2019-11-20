@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
-import { MouseEvent } from '@agm/core';
+import { MouseEvent, MapsAPILoader } from '@agm/core';
+import {Location, Appearance} from '@angular-material-extensions/google-maps-autocomplete';
 
 @Component({ 
   selector: 'app-edit-lugar',
@@ -16,29 +17,29 @@ export class EditComponent implements OnInit {
 
   loading: boolean;
   formBasic: FormGroup;
-  public marker: any = null;
-  public map: any;
-  public zoom: number = 12;
-  public lat: number = 1.2246233;
-  public lng: number = -77.2808208;
+  public zoom: number = 10;
+  public lat: any;
+  public lng: any;
+  private geoCoder;
+  public appearance = Appearance;
   
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _LugarService: LugarService,
-    private __zone: NgZone
+    private mapsAPILoader: MapsAPILoader,
+    private cdref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.__zone.run(() => {    
-      this.marker = {
-          lat: this.lugar.lat,
-          lng: this.lugar.lng,
-          draggable: true,
-          label: "<br>(" + this.lugar.nombre + ")" + "<br>(" + this.lugar.direccion + ")"
-      };
-  });
+    this.mapsAPILoader.load().then(() => {
+      this.lat = parseFloat(this.lugar.lat);
+      this.lng = parseFloat(this.lugar.lng);
+      this.zoom = 10;
+      this.geoCoder = new google.maps.Geocoder;
+      this.getAddress(this.lat, this.lng);
+    });
     this.buildFormBasic();
   }
 
@@ -52,7 +53,10 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.lugar.lat = this.lat;
+    this.lugar.lng = this.lng;
     this.loading = true;
+    console.log(this.lugar);
     this._LugarService.edit(this.lugar).subscribe(
       response => { 
         if(response['code'] == 200){
@@ -68,21 +72,37 @@ export class EditComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  mapClicked($event: MouseEvent) {
-    this.lugar.lat = $event.coords.lat;
-    this.lugar.lng = $event.coords.lng;
-    this.__zone.run(() => {    
-          this.marker = {
-              lat: $event.coords.lat,
-              lng: $event.coords.lng,
-              draggable: true,
-              label: "<br>(" + this.lugar.nombre + ")" + "<br>(" + this.lugar.direccion + ")"
-          };
-      });
+  markerDragEnd($event: MouseEvent) {
+    this.lat = $event.coords.lat;
+    this.lng =  $event.coords.lng;
+    this.getAddress(this.lat, this.lng);
+  }
+ 
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 12;
+          this.lugar.direccion = results[0].formatted_address;
+          this.cdref.detectChanges();
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
   }
 
-  mapLoad(map) {
-    this.map = map;
+  onLocationSelected(location: Location) {
+    console.log('onLocationSelected:', location);
+    this.lat = location.latitude;
+    this.lng = location.longitude;
+    this.getAddress(this.lat, this.lng);
+  }
+
+  onCancelar(){
+    this.ready.emit(true);
   }
 
 }

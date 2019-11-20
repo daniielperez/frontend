@@ -1,10 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ChangeDetectorRef, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LugarService } from '../../../../services/lugar.service';
 import { Lugar } from '../../../../model/lugar';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { Location, Appearance } from '@angular-material-extensions/google-maps-autocomplete';
+import PlaceResult = google.maps.places.PlaceResult;
 
 declare var $: any;
 
@@ -12,7 +14,7 @@ declare var $: any;
   selector: 'app-new-lugar',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss'],
- 
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class NewComponent implements OnInit {
@@ -23,52 +25,26 @@ export class NewComponent implements OnInit {
   latitude: number;
   longitude: number;
   zoom: number;
-  address: string;
   private geoCoder;
-  public map: any;
-  public marker: any = null;
-  public LatLng: any;
-  public ubicaciones: any = null;
-  @ViewChild('search', {static: true})
-  public searchElementRef: ElementRef;
+  public selectedAddress: PlaceResult;
+  public appearance = Appearance;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService, 
     private modalService: NgbModal,
     private _LugarService: LugarService,
-    private __zone: NgZone,
     private mapsAPILoader: MapsAPILoader,
+    private cdref: ChangeDetectorRef
   ) { 
     this.lugar = new Lugar(null, null, null, null, null, null,null);
   }
 
   ngOnInit() {
-    //load Places Autocomplete
+    this.zoom = 8;
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
- 
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["address"]
-      });
-      
-      autocomplete.addListener("place_changed", () => {
-        this.__zone.run(() => {
-          //get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
- 
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
- 
-          //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
-        });
-      });
     });
     this.buildFormBasic();
   } 
@@ -77,10 +53,10 @@ export class NewComponent implements OnInit {
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        this.lugar.lat = position.coords.latitude;
+        this.lugar.lng = position.coords.longitude;
         this.zoom = 8;
-        this.getAddress(this.latitude, this.longitude);
+        this.getAddress(this.lugar.lat, this.lugar.lng);
       });
     }
   }
@@ -113,20 +89,18 @@ export class NewComponent implements OnInit {
   }
 
   markerDragEnd($event: MouseEvent) {
-    console.log($event);
-    this.latitude = $event.coords.lat;
-    this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
+    this.lugar.lat = $event.coords.lat;
+    this.lugar.lng =  $event.coords.lng;
+    this.getAddress(this.lugar.lat, this.lugar.lng);
   }
  
   getAddress(latitude, longitude) {
     this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 12;
-          this.address = results[0].formatted_address;
+          this.lugar.direccion = results[0].formatted_address;
+          this.cdref.detectChanges();
         } else {
           window.alert('No results found');
         }
@@ -135,5 +109,15 @@ export class NewComponent implements OnInit {
       }
  
     });
+  }
+
+  onLocationSelected(location: Location) {
+    this.lugar.lat= location.latitude;
+    this.lugar.lng = location.longitude;
+    this.getAddress(this.lugar.lat, this.lugar.lng); 
+  }
+
+  onCancelar(){
+    this.ready.emit(true);
   }
 }

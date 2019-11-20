@@ -15,6 +15,9 @@ import { SelectModule } from 'angular2-select';
 
 import { TagInputModule } from 'ngx-chips';
 
+import { AgmCoreModule } from '@agm/core';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +28,12 @@ import { TagInputModule } from 'ngx-chips';
     NgxPaginationModule,
     NgxDatatableModule,
     SelectModule,
-    TagInputModule
+    TagInputModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAE4fzSoCEHjBoGocIFwLz8BSqi0ti1o0g',
+      libraries: ["places"]
+    }), 
+    MatGoogleMapsAutocompleteModule.forRoot(),
   ],
   declarations: [
     NewComponent,

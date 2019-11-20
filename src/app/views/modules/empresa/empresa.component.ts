@@ -19,6 +19,7 @@ export class EmpresaComponent implements OnInit {
   filteredEmpresas;
   formEdit = false;
   formNew = false;
+  formIndex = true;
   ulr = environment.ulrImage+"empresa";
 
   constructor(
@@ -47,8 +48,9 @@ export class EmpresaComponent implements OnInit {
   }
 
   ready(isCreado:any){
-    console.log(isCreado);
     if(isCreado) {
+      this.onInitForms();
+      this.formIndex = true;
       this.ngOnInit();
     }
   }
@@ -56,12 +58,12 @@ export class EmpresaComponent implements OnInit {
   onNew(content) {
     this.onInitForms();
     this.formNew=true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg',backdrop:'static', centered: true})
+    /* this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg',backdrop:'static', centered: true})
     .result.then((result) => {
       console.log('result!', result);
     }, (reason) => {
       console.log('Err!', reason);
-    });
+    }); */
   }
 
   filerData(val) {
@@ -87,16 +89,17 @@ export class EmpresaComponent implements OnInit {
     });
     this.filteredEmpresas = rows;
   }
+
   onEdit(content,empresa:any){
     this.empresa = empresa;
     this.onInitForms();
     this.formEdit = true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
+    /* this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
     .result.then((result) => {
       console.log('result!', result);
     }, (reason) => {
       console.log('Err!', reason);
-    });
+    }); */
   }
 
   onDelete(content,empresa:any){
@@ -121,7 +124,7 @@ export class EmpresaComponent implements OnInit {
   onInitForms(){
     this.formNew = false;
     this.formEdit = false;
+    this.formIndex = false;
     return true;
   }
- 
 }

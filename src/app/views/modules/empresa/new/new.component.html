@@ -1,66 +1,64 @@
+<div class="card mb-4 col-lg-10 offset-lg-1">
+    <div class="card-body">
+        <div class="card-title mb-3">Nuevo registro</div>
+        <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
+            <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                    <label for="nombre">Nombre</label>
+                    <input [(ngModel)]="empresa.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
+                </div> 
 
+                <div class="col-md-6 form-group mb-3">
+                    <label for="logo">Logo</label> 
+                    <input [(ngModel)]="empresa.logo" [ngClass]="{ 'is-invalid': newForm.form.controls.logo.invalid , 'is-valid': !newForm.form.controls.logo.invalid }" type="text" class="form-control" formControlName="logo" id="logo" placeholder="Ingrese dirección">
+                </div>
 
+                <div class="col-md-6 form-group mb-3">
+                    <label for="portada">Portada</label> 
+                    <input [(ngModel)]="empresa.portada" [ngClass]="{ 'is-invalid': newForm.form.controls.portada.invalid , 'is-valid': !newForm.form.controls.portada.invalid }" type="text" class="form-control" formControlName="portada" id="portada" placeholder="Ingrese dirección">
+                </div>
 
-<form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
-    <div class="modal-header"> 
-        <h4 class="modal-title" id="modal-basic-title">Nuevo registro</h4>
-        <button type="button" class="close" aria-label="Close" (click)="onCloseModal()">
-        <span aria-hidden="true">&times;</span>
-        </button>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="nit">Nit</label> 
+                    <input [(ngModel)]="empresa.nit" [ngClass]="{ 'is-invalid': newForm.form.controls.nit.invalid , 'is-valid': !newForm.form.controls.nit.invalid }" type="text" class="form-control" formControlName="nit" id="nit" placeholder="Ingrese dirección">
+                </div>
+                
+
+                <div class="col-md-6 form-group mb-3">
+                    <label for="direccion">Dirección</label> 
+                    <input [(ngModel)]="empresa.direccion" [ngClass]="{ 'is-invalid': newForm.form.controls.direccion.invalid , 'is-valid': !newForm.form.controls.direccion.invalid }" type="text" class="form-control" formControlName="direccion" id="direccion" placeholder="Ingrese dirección">
+                </div>
+
+                <div class="col-md-6 form-group mb-3">
+                        <tag-input [formControl]="correos"
+                        [modelAsStrings]="true" theme='primary' placeholder="+ Correo" secondaryPlaceholder="Nuevo correo">
+                    </tag-input>
+                </div>
+
+                <div class="col-md-6 form-group mb-3">
+                    <tag-input [formControl]="telefonos" 
+                        [modelAsStrings]="true" theme='primary' placeholder="+ Telefono" secondaryPlaceholder="Nuevo telefono">
+                    </tag-input> 
+                </div>
+
+                <div fxFlex fxFlexAlign="center"
+                        class="autocomplete-container col-lg-12">
+                    <mat-google-maps-autocomplete [appearance]="appearance.OUTLINE"
+                                                    (onLocationSelected)="onLocationSelected($event)">
+                    </mat-google-maps-autocomplete>
+                </div>
+                <agm-map [latitude]="empresa.lat" [longitude]="empresa.lng" [zoom]="zoom">
+                    <agm-marker [latitude]="empresa.lat" [longitude]="empresa.lng" [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event)"></agm-marker>
+                </agm-map>
+                
+                <div class="col-md-12">
+                    <br>
+                    <br>
+                    <btn-loading btnClass="btn-ligth btn-rounded" (click)="onCancelar()" [loading]="loading">Cancelar</btn-loading>
+                    <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>
+                </div>
+            </div>    
+        </form>
     </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-6 form-group mb-3">
-                <label for="nombre">Nombre</label>
-                <input [(ngModel)]="empresa.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
-            </div> 
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="logo">Logo</label> 
-                <input [(ngModel)]="empresa.logo" [ngClass]="{ 'is-invalid': newForm.form.controls.logo.invalid , 'is-valid': !newForm.form.controls.logo.invalid }" type="text" class="form-control" formControlName="logo" id="logo" placeholder="Ingrese dirección">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="portada">Portada</label> 
-                <input [(ngModel)]="empresa.portada" [ngClass]="{ 'is-invalid': newForm.form.controls.portada.invalid , 'is-valid': !newForm.form.controls.portada.invalid }" type="text" class="form-control" formControlName="portada" id="portada" placeholder="Ingrese dirección">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="nit">Nit</label> 
-                <input [(ngModel)]="empresa.nit" [ngClass]="{ 'is-invalid': newForm.form.controls.nit.invalid , 'is-valid': !newForm.form.controls.nit.invalid }" type="text" class="form-control" formControlName="nit" id="nit" placeholder="Ingrese dirección">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="direccion">Dirección</label> 
-                <input [(ngModel)]="empresa.direccion" [ngClass]="{ 'is-invalid': newForm.form.controls.direccion.invalid , 'is-valid': !newForm.form.controls.direccion.invalid }" type="text" class="form-control" formControlName="direccion" id="direccion" placeholder="Ingrese dirección">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="lat">Lat</label>
-                <input [(ngModel)]="empresa.lat" [ngClass]="{ 'is-invalid': newForm.form.controls.lat.invalid , 'is-valid': !newForm.form.controls.lat.invalid }" type="lat" class="form-control" formControlName="lat" id="lat">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
-                <label for="lng">Lng</label>
-                <input [(ngModel)]="empresa.lng" [ngClass]="{ 'is-invalid': newForm.form.controls.lng.invalid , 'is-valid': !newForm.form.controls.lng.invalid }" type="lng" class="form-control" formControlName="lng" id="lng">
-            </div>
-
-            <div class="col-md-12 form-group mb-3">
-                    <tag-input [formControl]="correos"
-                    [modelAsStrings]="true" theme='primary' placeholder="+ Correo" secondaryPlaceholder="Nuevo correo">
-                </tag-input>
-            </div>
-
-            <div class="col-md-12 form-group mb-3">
-                <tag-input [formControl]="telefonos"
-                    [modelAsStrings]="true" theme='primary' placeholder="+ Telefono" secondaryPlaceholder="Nuevo telefono">
-                </tag-input> 
-            </div>
-
-        </div>
-
-    </div>
-    <div class="modal-footer">
-        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>
-    </div>
-</form>
+</div>

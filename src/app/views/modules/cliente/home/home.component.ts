@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
   }
 
   onShowEvento(idEvento){
-    this._Router.navigate(['modules/ciente/evento/',idEvento]);
+    this._Router.navigate(['modules/cliente/evento/',idEvento]);
     console.log(idEvento);
-  }
+  } 
 }

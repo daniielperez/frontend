@@ -17,6 +17,7 @@ export class LugarComponent implements OnInit {
   filteredLugares;
   formEdit = false;
   formNew = false;
+  formIndex = true;
   lat = 1.218245;
   lng = 77.280313;
 
@@ -46,8 +47,9 @@ export class LugarComponent implements OnInit {
   } 
 
   ready(isCreado:any){
-    console.log(isCreado);
     if(isCreado) {
+      this.onInitForms();
+      this.formIndex = true;
       this.ngOnInit();
     }
   }
@@ -55,12 +57,6 @@ export class LugarComponent implements OnInit {
   onNew(content) {
     this.onInitForms();
     this.formNew=true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg',backdrop:'static', centered: true})
-    .result.then((result) => {
-      console.log('result!', result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
   }
 
   filerData(val) {
@@ -90,12 +86,6 @@ export class LugarComponent implements OnInit {
     this.lugar = lugar;
     this.onInitForms();
     this.formEdit = true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
-    .result.then((result) => {
-      console.log('result!', result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
   }
 
   onDelete(content,lugar:any){
@@ -122,6 +112,7 @@ export class LugarComponent implements OnInit {
   onInitForms(){
     this.formNew = false;
     this.formEdit = false;
+    this.formIndex = false;
     return true;
   }
 
