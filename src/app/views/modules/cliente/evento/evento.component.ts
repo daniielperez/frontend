@@ -14,9 +14,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './evento.component.html',
   styleUrls: ['./evento.component.scss']
 })
-export class EventoComponent implements OnInit {
+export class EventoComponent implements OnInit { 
   loading: boolean;
-  @ViewChild('testForm', {static: false}) testFormElement;
+  @ViewChild('testForm', {static: false}) testFormElement; 
   evento;
   publicidades;
   precios;
@@ -45,8 +45,7 @@ export class EventoComponent implements OnInit {
         if(response['code'] == 200){
           this.codigoVenta = response['data'];
           this.email = response['data'];
-          this.signature = this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP';
-          console.log(this.signature);
+          
         }
     }, error => {
       this.loading = false;
@@ -100,12 +99,28 @@ export class EventoComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this._VentaService.new(this.categorias).subscribe(
+
+    /* this.signature = this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP';
+    console.log(this.signature);
+    this.testFormElement.nativeElement.submit();  */
+    let valorTransaccion = this.valorTotal * (3.35/100) + 900;
+    let datos = {
+      'venta': {
+        'codigo': this.codigoVenta,
+        'valor_total': this.valorTotal,
+        'valor_transaccion': valorTransaccion,
+        'valor_venta': this.valorTotal - valorTransaccion,
+        'estado': 'PENDIENTE',
+        'tipo': 'WEB'
+      },
+      'detalle': this.categorias,
+      'user': this.store.getItem("username")
+    }
+    this._VentaService.new(datos).subscribe(
       response => { 
         if(response['code'] == 200){
           this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
-          /* this.testFormElement.nativeElement.submit(); */
         }
     }, error => {
       this.loading = false;
