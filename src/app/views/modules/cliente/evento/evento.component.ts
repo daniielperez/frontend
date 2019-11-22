@@ -6,7 +6,7 @@ import { VentaService } from '../../../../services/venta.service';
 import { environment } from '../../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from "../../../../services/local-store.service";
-import { HttpClient } from '@angular/common/http';
+import {Md5} from 'ts-md5/dist/md5';
 
 
 @Component({
@@ -44,7 +44,7 @@ export class EventoComponent implements OnInit {
       response => { 
         if(response['code'] == 200){
           this.codigoVenta = response['data'];
-          this.email = response['data'];
+          this.email = response['correo'];
           
         }
     }, error => {
@@ -100,9 +100,9 @@ export class EventoComponent implements OnInit {
   onSubmit() {
     this.loading = true;
 
-    /* this.signature = this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP';
-    console.log(this.signature);
-    this.testFormElement.nativeElement.submit();  */
+    const md5 = new Md5();
+    this.signature = md5.appendStr(this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP').end();
+    
     let valorTransaccion = this.valorTotal * (3.35/100) + 900;
     let datos = {
       'venta': {
@@ -121,6 +121,7 @@ export class EventoComponent implements OnInit {
         if(response['code'] == 200){
           this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
+          this.testFormElement.nativeElement.submit(); 
         }
     }, error => {
       this.loading = false;

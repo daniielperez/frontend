@@ -16,6 +16,23 @@
             <ngb-tab title="Compras">
                 <ng-template ngbTabContent>
                     <hr>
+
+                    <form ngNoForm #testForm action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank" method="POST">
+                        <input name="merchantId"    type="hidden"  value="{{merchantId}}"   >
+                        <input name="accountId"     type="hidden"  value="{{accountId}}" >
+                        <input name="description"   type="hidden"  value="Ventas en linea"  >
+                        <input name="referenceCode" type="hidden"  value="{{codigoVenta}}" >
+                        <input name="amount"        type="hidden"  value="{{valorTotal}}"   >
+                        <input name="tax"           type="hidden"  value="0"  >
+                        <input name="taxReturnBase" type="hidden"  value="0" >
+                        <input name="currency"      type="hidden"  value="COP" >
+                        <input name="signature"     type="hidden"  value="{{signature}}"  > 
+                        <input name="test"          type="hidden"  value="1" >
+                        <input name="buyerEmail"    type="hidden"  value="{{email}}" >
+                        <input name="responseUrl"    type="hidden"  value="http://localhost/Git/queboleta_api/public/index.php/api/payu/respuesta/pago/">
+                        <input name="confirmationUrl"    type="hidden"  value="http://localhost/Git/queboleta_api/public/index.php/api/payu/" >
+                        <input name="Submit" type="submit" type="hidden" value="Enviar" >
+                    </form>
                     
                     <div class="row" *ngFor="let categoria of categorias let i = index ">
                         <div class="row col-md-12 col-6">
@@ -25,9 +42,9 @@
                             </div>
                             <div class="col-md-4">
                                 <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Boletas</p>
-                                <i (click)="onAdd(categoria)" class="i-Add text-16 mr-1 text-success" ></i>
-                                <b>{{ categoria.boleta }}</b>
                                 <i (click)="onRemove(categoria)" style="margin-left: 4px;" class="i-Remove text-16 mr-1 text-danger"></i>
+                                    <b>{{ categoria.boleta }}</b>
+                                <i (click)="onAdd(categoria)" class="i-Add text-16 mr-1 text-success" ></i>
                             </div>
                             <div class="col-md-4">
                                 <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Valor</p>
@@ -39,22 +56,7 @@
                         <br>
                         <br>
                         <br>
-                        <form ngNoForm #testForm action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank" method="POST">
-                            <input name="merchantId"    type="hidden"  value="{{merchantId}}"   >
-                            <input name="accountId"     type="hidden"  value="{{accountId}}" >
-                            <input name="description"   type="hidden"  value="Ventas en linea"  >
-                            <input name="referenceCode" type="hidden"  value="{{codigoVenta}}" >
-                            <input name="amount"        type="hidden"  value="{{valorTotal}}"   >
-                            <input name="tax"           type="hidden"  value="0"  >
-                            <input name="taxReturnBase" type="hidden"  value="0" >
-                            <input name="currency"      type="hidden"  value="COP" >
-                            <input name="signature"     type="hidden"  value="{{signature}}"  >
-                            <input name="test"          type="hidden"  value="1" >
-                            <input name="buyerEmail"    type="hidden"  value="{{email}}" >
-                            <input name="responseUrl"    type="hidden"  value="http://localhost/Git/queboleta_api/public/index.php/api/boleta/" >
-                            <input name="confirmationUrl"    type="hidden"  value="http://www.test.com/confirmation" >
-                            <input name="Submit" type="submit" type="hidden" value="Enviar" >
-                        </form>
+                        
                     </div>
                     <div class="row">
                         <div class="col-lg-7 col-md-6 col-sm-6">
