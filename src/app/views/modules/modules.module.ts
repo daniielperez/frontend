@@ -16,6 +16,7 @@ import { EmpresaModule } from './empresa/empresa.module';
 import { EntradaModule } from './entrada/entrada.module';
 import { EventoModule } from './cliente/evento/evento.module';
 import { EventoConfigModule } from './evento/evento.module';
+import { PuntoVentaModule } from './puntoVenta/puntoVenta.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
@@ -28,6 +29,7 @@ import { EventoComponent } from './cliente/evento/evento.component';
 import { EventoConfigComponent } from './evento/evento.component';
 import { HomeComponent } from './cliente/home/home.component';
 import { PerfilComponent } from './cliente/perfil/perfil.component';
+import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -54,7 +56,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     EntradaModule,
     EventoModule,
     EventoConfigModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    PuntoVentaModule
   ],
   providers:[GoogleMapsAPIWrapper],
   declarations: [
@@ -68,6 +71,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     HomeComponent,
     PerfilComponent,
     EventoConfigComponent,
+    PuntoVentaComponent
   ]
 })
 export class ModulesModule { }

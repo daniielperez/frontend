@@ -56,7 +56,7 @@ export class EditComponent implements OnInit {
       id: this.categoria.id,
       nombre: this.categoria.nombre,
       valor: this.categoria.valor,
-      evento: this.eventoSelect,
+      evento: this.eventoSelect.toString(),
     };
     this._CategoriaService.edit(arrayDatos).subscribe(
       response => { 

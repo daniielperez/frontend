@@ -9,6 +9,7 @@ import { EventoComponent } from './cliente/evento/evento.component';
 import { HomeComponent } from './cliente/home/home.component';
 import { EventoConfigComponent } from './evento/evento.component';
 import { PerfilComponent } from './cliente/perfil/perfil.component';
+import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
 
 const routes: Routes = [
     {
@@ -42,6 +43,10 @@ const routes: Routes = [
     {
         path: 'cliente/perfil',
         component: PerfilComponent
+    },
+    {
+        path: 'puntoVenta',
+        component: PuntoVentaComponent
     },
     {
         path: 'eventoConfig',

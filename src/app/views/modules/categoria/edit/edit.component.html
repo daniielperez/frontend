@@ -22,7 +22,14 @@
 
             <div class="col-md-6 form-group mb-3">
                 <label for="valor">Evento</label> 
-                <ng-select class="form-control" [ngClass]="{ 'is-invalid': newForm.form.controls.eventoSelect.invalid , 'is-valid': !newForm.form.controls.eventoSelect.invalid }" style="height: 47px;" [multiple]="false" [options]="eventos" [(ngModel)]="eventoSelect" formControlName="eventoSelect" id="eventoSelect">
+                <ng-select class="form-control" 
+                    [ngClass]="{ 'is-invalid': newForm.form.controls.eventoSelect.invalid , 'is-valid': !newForm.form.controls.eventoSelect.invalid }" 
+                    style="height: 47px;" 
+                    [multiple]="false" 
+                    [options]="eventos" 
+                    [(ngModel)]="eventoSelect" 
+                    formControlName="eventoSelect" 
+                    id="eventoSelect">
                 </ng-select>
             </div>
         </div>

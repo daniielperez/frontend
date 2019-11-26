@@ -10,6 +10,7 @@ export class BoletaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

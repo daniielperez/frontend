@@ -1,0 +1,109 @@
+
+<div class="breadcrumb">
+    <div class="row container-fluid">
+        <div class="col-md-8">
+            <h1>venta punto</h1>
+          <!--   <ul>
+                <li>index</li>
+                <li>{{puntoVenta.nombre}}</li>
+            </ul> -->
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group btn-group-toggle header-part-right">
+                <button type="button" (click)="onNew(modalBasic)" class="btn btn-primary m-1">Nuevo registro</button>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group col-md-6">
+            <input id="email" placeholder="Buscar registros" [formControl]="searchControl" class="form-control form-control-rounded" type="email">
+        </div>
+        <div class="card  o-hidden">
+            <ngx-datatable
+            style="height: 500px; box-shadow: none"
+            class="material fullscreen"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="60"
+            [scrollbarV]="true"
+            [rows]="filteredPuntoVentas">
+                <ngx-datatable-column name="nombre" [width]="300">
+                <ng-template ngx-datatable-header-template>
+                    Nombre
+                </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="direccion" [width]="300">
+                <ng-template ngx-datatable-header-template>
+                    Dirección
+                </ng-template>
+                </ngx-datatable-column> 
+
+                <ngx-datatable-column name="telefono" [width]="300">
+                <ng-template ngx-datatable-header-template>
+                    Telefono
+                </ng-template>
+                </ngx-datatable-column> 
+
+                <ngx-datatable-column name="eventoId" [resizeable]="false" [width]="150">
+                    <ng-template ngx-datatable-header-template>
+                        Evento
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.evento.nombre}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="id" [resizeable]="false" [width]="150">
+                    <ng-template ngx-datatable-header-template>
+                        Acciones
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button ngbPopover="Editar" triggers="mouseenter:mouseleave" placement="left" (click)="onEdit(modalBasic,row)" class="btn btn-icon bg-transparent">
+                            <i class="i-File-Edit text-20 text-primary"></i>
+                        </button>
+                        <button ngbPopover="Eliminar" triggers="mouseenter:mouseleave" placement="left" (click)="onDelete(modalConfirm,row)" class="btn btn-icon bg-transparent">
+                            <i class="i-Delete-File text-20 text-danger"></i>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div> 
+
+<ng-template #modalBasic let-modal> 
+        <app-new-puntoVenta *ngIf='formNew' (ready)="ready($event)"></app-new-puntoVenta>
+        <app-edit-puntoVenta *ngIf='formEdit' [puntoVenta]="puntoVenta" (ready)="ready($event)"></app-edit-puntoVenta>
+</ng-template>
+
+<ng-template #modalConfirm let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">
+            <b>
+                <i class="i-Warning-Window text-20 text-danger"></i>
+                Borrar registro 
+            </b>
+        </h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-justify"><strong>¿Estas seguro que quieres borrar el registro?</strong></h4>
+        <h5 class="text-justify">Toda la información de este registro se eliminará.
+            <b class="text-danger">¡Esta operación no se puede deshacer.!</b>
+        </h5>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-rounded" (click)="modal.dismiss('cancel')">Cancel</button>
+        <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">Ok</button>
+    </div>
+</ng-template>
