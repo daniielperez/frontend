@@ -32,7 +32,7 @@ export class PerfilComponent implements OnInit {
           console.log(this.boletasUser);
         }
     }, error => {
-      alert(error.error.error_description);
+      alert(error.error.error_description); 
     })
   }
 

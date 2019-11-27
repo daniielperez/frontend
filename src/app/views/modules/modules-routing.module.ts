@@ -10,6 +10,7 @@ import { HomeComponent } from './cliente/home/home.component';
 import { EventoConfigComponent } from './evento/evento.component';
 import { PerfilComponent } from './cliente/perfil/perfil.component';
 import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
+import { VentaComponent } from './venta/venta.component';
 
 const routes: Routes = [
     {
@@ -47,6 +48,10 @@ const routes: Routes = [
     {
         path: 'puntoVenta',
         component: PuntoVentaComponent
+    },
+    {
+        path: 'venta',
+        component: VentaComponent
     },
     {
         path: 'eventoConfig',

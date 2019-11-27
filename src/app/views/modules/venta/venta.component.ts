@@ -1,58 +1,60 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { EventoService } from '../../../../services/evento.service';
-import { BoletaService } from '../../../../services/boleta.service';
-import { VentaService } from '../../../../services/venta.service';
-import { environment } from '../../../../../environments/environment';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { VentaService } from '../../../services/venta.service';
+import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { LocalStoreService } from "../../../../services/local-store.service";
-import {Md5} from 'ts-md5/dist/md5';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LocalStoreService } from "../../../services/local-store.service";
+import { UserService } from '../../../services/user.service';
 
 
 @Component({
-  selector: 'app-evento',
-  templateUrl: './evento.component.html',
-  styleUrls: ['./evento.component.scss']
+  selector: 'app-venta',
+  templateUrl: './venta.component.html',
+  styleUrls: ['./venta.component.scss']
 })
-export class EventoComponent implements OnInit { 
+export class VentaComponent implements OnInit { 
   loading: boolean;
   @ViewChild('testForm', {static: false}) testFormElement; 
+  formBasic: FormGroup;
   evento;
   publicidades;
   precios;
-  email;
   codigoVenta;
-  signature;
-  merchantId = 508029;
-  apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
-  accountId = 512321;
+  userComprador;
+  correoComprador;
   valorTotal = 0;
   categorias = [];
+  puntoVenta;
+  formNew = false;
   ulrImage = environment.ulrImage+"publicidad";
   ulr = environment.ulrImage+"publicidad";
 
   constructor(
-    private rutaActiva: ActivatedRoute,
-    private _EventoService: EventoService,
     private _VentaService: VentaService,
     private toastr: ToastrService,
     private store: LocalStoreService,
+    private fb: FormBuilder,
+    private _UserService: UserService,
+    private cdref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
+    this.buildFormBasic();
     this._VentaService.ultimoCodigo(this.store.getItem("username")).subscribe(
       response => { 
         if(response['code'] == 200){
           this.codigoVenta = response['codigo'];
-          this.email = response['correo'];
-          
+          this.puntoVenta = response['puntoVenta'];
+          if(this.puntoVenta.length == 0){
+            this.toastr.error('Usuario no tiene un punto de venta asignado', 'Error!', {progressBar: true});
+          }
         }
     }, error => {
       this.loading = false;
       alert(error.error.error_description);
     })
     
-    let idEvento = this.rutaActiva.snapshot.params.idEvento;
+    /* let idEvento = this.rutaActiva.snapshot.params.idEvento;
     this._EventoService.show(idEvento).subscribe(
       response => { 
         if(response['status'] == 200){
@@ -78,7 +80,13 @@ export class EventoComponent implements OnInit {
         }
     }, error => {
       alert(error.error.error_description);
-    })
+    }) */
+  }
+
+  buildFormBasic() {
+    this.formBasic = this.fb.group({
+      correoComprador: ['', Validators.required]
+    });
   }
 
   onAdd(categoria){
@@ -99,10 +107,6 @@ export class EventoComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-
-    const md5 = new Md5();
-    this.signature = md5.appendStr(this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP').end();
-    
     let valorTransaccion = this.valorTotal * (3.35/100) + 900;
     let datos = {
       'venta': {
@@ -127,5 +131,32 @@ export class EventoComponent implements OnInit {
       this.loading = false;
       alert(error.error.error_description);
     })
+  }
+
+  onSubmitBuscarUsuario() {
+    this.loading = true;
+    this._UserService.showCorreo(this.correoComprador).subscribe(
+      response => { 
+        this.loading = false;
+        if(response['status'] == 200){
+          this.userComprador = response['data'];
+          console.log(this.userComprador);
+          this.formNew = false;
+        }else{
+          this.correoComprador = '';
+          this.toastr.error('Usuario no encontrado', 'Error!', {progressBar: true});
+          this.formNew = true;
+          this.cdref.detectChanges(); 
+          this.userComprador = false;
+        }
+    }, error => {
+      this.loading = false;
+      alert(error.error.error_description);
+    })
+  }
+
+  ready(isCreado:any){
+    this.formNew = false;
+    console.log(isCreado);
   }
 }

@@ -53,5 +53,6 @@ export class NewComponent implements OnInit {
 
   onCloseModal(){
     this.modalService.dismissAll();
+    this.ready.emit(false);
   }
 }

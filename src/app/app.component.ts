@@ -19,7 +19,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     if (this.store.getItem("token")) {
       // this.router.navigateByUrl('/dashboard/v1');
-      this.router.navigateByUrl('/modules/puntoVenta');
+      this.router.navigateByUrl('/modules/venta');
     } else {
       this.router.navigateByUrl('/sessions/signin');
     }

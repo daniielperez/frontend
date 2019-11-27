@@ -50,6 +50,11 @@ export class UserService {
     .pipe(map(data => data));
   }
 
+  showCorreo(coreo){
+    return this.http.get(this.url+'/'+coreo+'/show/email',{headers:this.header})
+    .pipe(map(data => data));
+  }
+
   select(){
     return this.http.get(this.url+'/select',{headers:this.header})
     .pipe(map(data => data));
