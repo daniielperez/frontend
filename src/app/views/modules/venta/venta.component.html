@@ -8,7 +8,7 @@
 
     <div class="card  col-lg-4 col-sm-12" style="margin-right: 27px; margin-bottom: 27px;">
         <div class="card-body">
-            <div class="card-title mb-3">Buscar cliente</div>
+            <div class="card-title mb-3">cliente</div>
             <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmitBuscarUsuario()">
                 <div class="row">
                     <div class="col-lg-12 form-group">
@@ -23,7 +23,7 @@
                         >
                     </div>
                     <div class="col-lg-12">
-                        <btn-loading btnClass="btn-primary" [loading]="loading">Aceptar</btn-loading>
+                        <btn-loading btnClass="btn-primary" [loading]="loading">Buscar</btn-loading>
                     </div>
                 </div> 
             </form>        
@@ -38,7 +38,7 @@
                         <p class="mt-0 text-muted">{{ userComprador.firstName }}</p>
                         <p>{{ userComprador.email }}</p>
                         <p>{{ userComprador.username }}</p>
-                        <button class="btn btn-primary btn-rounded" >Saber más</button>
+                        <button class="btn btn-primary btn-rounded" >Aceptar</button>
                     </div>
                 </div>
             </div>
@@ -48,8 +48,16 @@
 
     <div class="card col-lg-7 col-sm-12">
         <div class="card-body">
-            <div class="card-title mb-3">Cliente</div>
-                <h3>cliente</h3>         
+            <div class="card-title mb-3">Venta</div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Eventos</label>
+                <ng-select class="form-control" style="height: 47px;"  
+                    [multiple]="false" 
+                    [options]="puntosVenta" 
+                    [(ngModel)]="eventoSelect" 
+                    id="eventoSelect"> 
+                </ng-select>
+            </div>       
         </div>
     </div>  
 

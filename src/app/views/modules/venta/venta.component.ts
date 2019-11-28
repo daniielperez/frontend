@@ -21,10 +21,11 @@ export class VentaComponent implements OnInit {
   precios;
   codigoVenta;
   userComprador;
+  eventoSelect;
   correoComprador;
   valorTotal = 0;
   categorias = [];
-  puntoVenta;
+  puntosVenta;
   formNew = false;
   ulrImage = environment.ulrImage+"publicidad";
   ulr = environment.ulrImage+"publicidad";
@@ -44,8 +45,8 @@ export class VentaComponent implements OnInit {
       response => { 
         if(response['code'] == 200){
           this.codigoVenta = response['codigo'];
-          this.puntoVenta = response['puntoVenta'];
-          if(this.puntoVenta.length == 0){
+          this.puntosVenta = response['puntosVenta'];
+          if(this.puntosVenta.length == 0){
             this.toastr.error('Usuario no tiene un punto de venta asignado', 'Error!', {progressBar: true});
           }
         }

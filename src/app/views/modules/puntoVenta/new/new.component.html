@@ -15,28 +15,6 @@
                 <label for="telefono">Telefono</label>
                 <input [(ngModel)]="puntoVenta.telefono" [ngClass]="{ 'is-invalid': newForm.form.controls.telefono.invalid, 'is-valid': !newForm.form.controls.telefono.invalid }" type="text" class="form-control" formControlName="telefono" id="telefono" placeholder="Ingrese el primer telefono">
             </div>  
-            <div class="col-md-6 form-group mb-3">
-                <label for="nombre">Responsable</label>
-                <ng-select class="form-control" style="height: 47px;"  
-                    [ngClass]="{ 'is-invalid': newForm.form.controls.vendedor.invalid , 'is-valid': !newForm.form.controls.vendedor.invalid }" 
-                    [multiple]="false" 
-                    [options]="usuarios" 
-                    [(ngModel)]="puntoVenta.vendedor" 
-                    formControlName="vendedor" 
-                    id="vendedor"> 
-                </ng-select>
-            </div>
-            <div class="col-md-6 form-group mb-3">
-                <label for="nombre">Evento</label>
-                <ng-select class="form-control" style="height: 47px;"  
-                    [ngClass]="{ 'is-invalid': newForm.form.controls.evento.invalid , 'is-valid': !newForm.form.controls.evento.invalid }" 
-                    [multiple]="false" 
-                    [options]="eventos" 
-                    [(ngModel)]="puntoVenta.evento" 
-                    formControlName="evento" 
-                    id="evento"> 
-                </ng-select>
-            </div>
             <div class="col-md-12 form-group mb-3">
                 <label for="direccion">Dirección</label>
                 <input [(ngModel)]="puntoVenta.direccion" [ngClass]="{ 'is-invalid': newForm.form.controls.direccion.invalid, 'is-valid': !newForm.form.controls.direccion.invalid }" type="text" class="form-control" formControlName="direccion" id="direccion" placeholder="Ingrese el primer direccion">

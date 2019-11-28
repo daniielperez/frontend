@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PuntoVentaService } from '../../../../services/puntoVenta.service';
-import { UserService } from '../../../../services/user.service';
-import { EventoService } from '../../../../services/evento.service';
+
 
 @Component({ 
   selector: 'app-edit-puntoVenta',
@@ -18,10 +17,6 @@ export class EditComponent implements OnInit {
   loading: boolean;
   formBasic: FormGroup;
  
-  public usuarios;
-  public eventos;
-  public vendedorSelect;
-  public eventoSelect:any;
   public datos;
   
   constructor(
@@ -29,34 +24,9 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _PuntoVentaService: PuntoVentaService,
-    private _UserService: UserService,
-    private cdref: ChangeDetectorRef,
-    private _EventoService: EventoService,
   ) { }
 
   ngOnInit() {
-    
-    this._EventoService.select().subscribe(
-      response => { 
-        this.eventos = response;
-        setTimeout(() => {
-          this.eventoSelect = [this.puntoVenta.evento.id];
-          this.cdref.detectChanges();
-        });
-    }, error => {
-      alert(error.error.error_description);
-    });
-
-    this._UserService.select().subscribe(
-      response => { 
-        this.usuarios = response;
-        setTimeout(() => {
-          this.vendedorSelect = [this.puntoVenta.vendedor.id];
-          this.cdref.detectChanges();
-        });
-    }, error => {
-      alert(error.error.error_description);
-    });
     this.buildFormBasic();
   }
 
@@ -64,9 +34,7 @@ export class EditComponent implements OnInit {
     this.formBasic = this.fb.group({
       nombre: [this.puntoVenta.nombre, Validators.required],
       direccion: [this.puntoVenta.direccion, Validators.required],
-      telefono: [this.puntoVenta.telefono, Validators.required],
-      eventoSelect: ['', Validators.required],
-      vendedorSelect: ['', Validators.required],  
+      telefono: [this.puntoVenta.telefono, Validators.required], 
     });
   }
 
@@ -76,9 +44,7 @@ export class EditComponent implements OnInit {
       id: this.puntoVenta.id,
       nombre: this.puntoVenta.nombre,
       direccion: this.puntoVenta.direccion,
-      telefono: this.puntoVenta.telefono,
-      vendedor: this.vendedorSelect.toString(),
-      evento: this.eventoSelect.toString(),
+      telefono: this.puntoVenta.telefono
     }
   
     this._PuntoVentaService.edit(this.datos).subscribe(

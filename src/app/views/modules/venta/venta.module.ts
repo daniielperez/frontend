@@ -8,7 +8,6 @@ import { SharedComponentsModule } from '../../../shared/components/shared-compon
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-import { SelectModule } from 'angular2-select'; 
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { SelectModule } from 'angular2-select';
     SharedComponentsModule,
     NgxPaginationModule,
     NgxDatatableModule,
-    SelectModule,
   ],
   exports: [
     

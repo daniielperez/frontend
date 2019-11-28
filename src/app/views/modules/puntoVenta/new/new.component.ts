@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PuntoVentaService } from '../../../../services/puntoVenta.service';
-import { UserService } from '../../../../services/user.service';
-import { EventoService } from '../../../../services/evento.service';
 import { PuntoVenta } from '../../../../model/puntoVenta';
  
 @Component({
@@ -25,25 +23,11 @@ export class NewComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _PuntoVentaService: PuntoVentaService,
-    private _UserService: UserService,
-    private _EventoService: EventoService,
   ) { 
-    this.puntoVenta = new PuntoVenta(null, null, null, null, null, null);
+    this.puntoVenta = new PuntoVenta(null, null, null, null);
   }
 
   ngOnInit() {
-    this._UserService.select().subscribe(
-      response => { 
-        this.usuarios = response;
-    }, error => {
-      alert(error.error.error_description);
-    });
-    this._EventoService.select().subscribe(
-      response => { 
-        this.eventos = response;
-    }, error => {
-      alert(error.error.error_description);
-    });
     this.buildFormBasic();
   } 
 
@@ -52,8 +36,6 @@ export class NewComponent implements OnInit {
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
       telefono: ['', Validators.required],
-      evento: ['', Validators.required],
-      vendedor: ['', Validators.required],
     });
   }
 

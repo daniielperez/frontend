@@ -37,6 +37,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { GoogleMapsAPIWrapper } from '@agm/core';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 
+import { SelectModule } from 'angular2-select'; 
+
+
+
 
 @NgModule({
   imports: [ 
@@ -60,6 +64,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     NgxQRCodeModule,
     PuntoVentaModule,
     VentaModule,
+    SelectModule,
   ],
   providers:[GoogleMapsAPIWrapper],
   declarations: [
