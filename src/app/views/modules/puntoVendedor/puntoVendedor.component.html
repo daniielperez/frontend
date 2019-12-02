@@ -2,11 +2,11 @@
 <div class="breadcrumb">
     <div class="row container-fluid">
         <div class="col-md-8">
-            <h1>venta punto</h1>
-          <!--   <ul>
-                <li>index</li>
-                <li>{{puntoVenta.nombre}}</li>
-            </ul> -->
+            <h1>Entradas</h1>
+            <ul>
+                <li>Punto</li>
+                <li>{{punto.nombre}}</li>
+            </ul>
         </div>
         <div class="col-md-4 text-right">
             <div class="btn-group btn-group-toggle header-part-right">
@@ -20,7 +20,24 @@
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4" *ngIf='punto'>
+        <div class="card mb-4 o-hidden">
+            <div class="card-body">
+                <h5 class="card-title">{{punto.nombre}}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{punto.telefono}}</li>
+                <li class="list-group-item">{{punto.direccion}}</li>
+            </ul>
+            <div class="card-body">
+                <a routerLink="/modules/puntoVenta" class="card-link">Atrás</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" *ngIf='!punto'>
+            <span class="spinner-glow spinner-glow-primary mr-5"></span>
+    </div>
+    <div class="col-md-8">
         <div class="form-group col-md-6">
             <input id="email" placeholder="Buscar registros" [formControl]="searchControl" class="form-control form-control-rounded" type="email">
         </div>
@@ -33,24 +50,16 @@
             [footerHeight]="50"
             [rowHeight]="60"
             [scrollbarV]="true"
-            [rows]="filteredPuntoVentas">
-                <ngx-datatable-column name="nombre" [width]="300">
-                <ng-template ngx-datatable-header-template>
-                    Nombre
-                </ng-template>
+            [rows]="filteredEntradas">
+
+                <ngx-datatable-column name="eventoId" [resizeable]="false" [width]="150">
+                    <ng-template ngx-datatable-header-template>
+                        Responsable
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.vendedor.username}}
+                    </ng-template>
                 </ngx-datatable-column>
-
-                <ngx-datatable-column name="direccion" [width]="300">
-                <ng-template ngx-datatable-header-template>
-                    Dirección
-                </ng-template>
-                </ngx-datatable-column> 
-
-                <ngx-datatable-column name="telefono" [width]="300">
-                <ng-template ngx-datatable-header-template>
-                    Telefono
-                </ng-template>
-                </ngx-datatable-column> 
 
                 <ngx-datatable-column name="id" [resizeable]="false" [width]="150">
                     <ng-template ngx-datatable-header-template>
@@ -63,19 +72,16 @@
                         <button ngbPopover="Eliminar" triggers="mouseenter:mouseleave" placement="left" (click)="onDelete(modalConfirm,row)" class="btn btn-icon bg-transparent">
                             <i class="i-Delete-File text-20 text-danger"></i>
                         </button>
-                        <button routerLink="/modules/puntoVendedor/{{row.id}}" ngbPopover="Responsables" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
-                            <i class="i-Door text-20 text-warning"></i>
-                        </button>
                     </ng-template>
                 </ngx-datatable-column>
             </ngx-datatable>
         </div>
     </div>
-</div> 
+</div>
 
 <ng-template #modalBasic let-modal> 
-        <app-new-puntoVenta *ngIf='formNew' (ready)="ready($event)"></app-new-puntoVenta>
-        <app-edit-puntoVenta *ngIf='formEdit' [puntoVenta]="puntoVenta" (ready)="ready($event)"></app-edit-puntoVenta>
+        <app-new-puntoVendedor *ngIf='formNew' (ready)="ready($event)"></app-new-puntoVendedor>
+        <app-edit-puntoVendedor *ngIf='formEdit' [puntoVendedor]="puntoVendedor" (ready)="ready($event)"></app-edit-puntoVendedor>
 </ng-template>
 
 <ng-template #modalConfirm let-modal>

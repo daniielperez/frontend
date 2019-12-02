@@ -24,8 +24,8 @@ export class EventoComponent implements OnInit {
   codigoVenta;
   signature;
   merchantId = 508029;
-  apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
   accountId = 512321;
+  apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
   valorTotal = 0;
   categorias = [];
   ulrImage = environment.ulrImage+"publicidad";

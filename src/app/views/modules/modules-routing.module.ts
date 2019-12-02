@@ -11,6 +11,8 @@ import { EventoConfigComponent } from './evento/evento.component';
 import { PerfilComponent } from './cliente/perfil/perfil.component';
 import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
 import { VentaComponent } from './venta/venta.component';
+import { PuntoVendedorComponent } from './puntoVendedor/puntoVendedor.component';
+
 
 const routes: Routes = [
     {
@@ -36,6 +38,10 @@ const routes: Routes = [
     {
         path: 'cliente/evento/:idEvento',
         component: EventoComponent
+    },
+    {
+        path: 'puntoVendedor/:idPuntoVenta',
+        component: PuntoVendedorComponent
     },
     {
         path: 'cliente/home',

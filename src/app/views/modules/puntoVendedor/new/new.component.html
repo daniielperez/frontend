@@ -8,8 +8,8 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12 form-group mb-3">
-                <label for="nombre">Responsable</label>
-                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.responsable.invalid , 'is-valid': !newForm.form.controls.responsable.invalid }" [multiple]="false" [options]="usuarios" [(ngModel)]="entrada.responsable" formControlName="responsable" id="responsable">
+                <label for="nombre">Vendedor</label>
+                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.vendedor.invalid , 'is-valid': !newForm.form.controls.vendedor.invalid }" [multiple]="false" [options]="usuarios" [(ngModel)]="puntoVendedor.vendedor" formControlName="vendedor" id="vendedor">
                 </ng-select>
             </div>
         </div>
