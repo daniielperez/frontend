@@ -72,15 +72,14 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.evento.fecha);
     this.loading = true;
     let arrayDatos = {
       id: this.evento.id,
       nombre: this.evento.nombre,
       totalBoletas: this.evento.totalBoletas,
       fecha: this.evento.fecha['year']+'-'+this.evento.fecha['month']+'-'+this.evento.fecha['day'],
-      empresa: this.empresaSelect[0],
-      lugar: this.lugarSelect[0], 
+      empresa: this.empresaSelect.toString(), 
+      lugar: this.lugarSelect.toString(), 
     };
     this._EventoService.edit(arrayDatos).subscribe(
       response => { 

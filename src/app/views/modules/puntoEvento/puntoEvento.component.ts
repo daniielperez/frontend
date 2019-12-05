@@ -1,55 +1,56 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PuntoVendedorService } from '../../../services/puntoVendedor.service'; 
+import { PuntoEventoService } from '../../../services/puntoEvento.service'; 
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../services/user.service';
-import { PuntoVendedor } from '../../../model/puntoVendedor';
+import { PuntoVentaService } from '../../../services/puntoVenta.service';
+import { PuntoEvento } from '../../../model/puntoEvento';
  
 @Component({
-  selector: 'app-puntoVendedor',
-  templateUrl: './puntoVendedor.component.html',
-  styleUrls: ['./puntoVendedor.component.scss']
+  selector: 'app-puntoEvento',
+  templateUrl: './puntoEvento.component.html',
+  styleUrls: ['./puntoEvento.component.scss']
 })
-export class PuntoVendedorComponent implements OnInit {
+export class PuntoEventoComponent implements OnInit {
   searchControl: FormControl = new FormControl();
   formBasic: FormGroup;
-  puntoVendedors;
-  puntoVendedorNew: PuntoVendedor;
-  puntoVendedor;
-  punto: any;
-  filteredPuntoVendedors;
+  puntoEventos; 
+  puntoEventoNew: PuntoEvento;
+  puntoEvento;
+  evento: any;
+  puntos: any;
+  puntoSelect: any;
+  filteredPuntoVentas;
   formEdit = false;
   formNew = false;
-  correoComprador;
-  userComprador;
+  nombrePunto;
   loading2: boolean;
   loading: boolean;
 
   constructor(
     private modalService: NgbModal,
     private rutaActiva: ActivatedRoute,
-    private _PuntoVendedorService: PuntoVendedorService,
+    private _PuntoEventoService: PuntoEventoService,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private _UserService: UserService,
+    private _PuntoVentaService: PuntoVentaService,
     private cdref: ChangeDetectorRef,
   ) { 
-    this.puntoVendedorNew = new PuntoVendedor(null, null, null);
+    this.puntoEventoNew = new PuntoEvento(null, null, null);
   }
 
   ngOnInit() {
     this.buildFormBasic(); 
-    let idPuntoVenta = this.rutaActiva.snapshot.params.idPuntoVenta;
-    this._PuntoVendedorService.index(idPuntoVenta).subscribe( 
+    let idEvento = this.rutaActiva.snapshot.params.idEvento;
+    this._PuntoEventoService.index(idEvento).subscribe( 
       response => {  
         if(response['code'] == 200){
-          this.puntoVendedors = [...response['data']];
-          this.filteredPuntoVendedors = response['data'];
-          this.punto = response['puntoVenta'];
+          this.puntoEventos = [...response['data']];
+          this.filteredPuntoVentas = response['data'];
+          this.evento = response['evento'];
           this.modalService.dismissAll();
         }
     }, error => {
@@ -65,7 +66,7 @@ export class PuntoVendedorComponent implements OnInit {
 
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      correoComprador: ['', Validators.required]
+      nombrePunto: ['', Validators.required]
     });
   }
 
@@ -80,15 +81,15 @@ export class PuntoVendedorComponent implements OnInit {
     if (val) {
       val = val.toLowerCase();
     } else {
-      return this.filteredPuntoVendedors = [...this.puntoVendedors];
+      return this.filteredPuntoVentas = [...this.puntoEventos];
     }
 
-    const columns = Object.keys(this.puntoVendedors[0]);
+    const columns = Object.keys(this.puntoEventos[0]);
     if (!columns.length) {
       return;
     }
 
-    const rows = this.puntoVendedors.filter(function(d) {
+    const rows = this.puntoEventos.filter(function(d) {
       for (let i = 0; i <= columns.length; i++) {
         const column = columns[i];
         // console.log(d[column]);
@@ -97,28 +98,17 @@ export class PuntoVendedorComponent implements OnInit {
         }
       }
     });
-    this.filteredPuntoVendedors = rows;
+    this.filteredPuntoVentas = rows;
   }
 
-  onEdit(content,puntoVendedor:any){
-    this.puntoVendedor = puntoVendedor;
-    this.onInitForms();
-    this.formEdit = true;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'sm', backdrop:'static', centered: true})
-    .result.then((result) => {
-      console.log('result!', result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
-  }
 
-  onDelete(content,puntoVendedor:any){
-    this.puntoVendedor = puntoVendedor;
+  onDelete(content,puntoEvento:any){
+    this.puntoEvento = puntoEvento;
     this.onInitForms();
     this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static', centered: true})
     .result.then((result) => {
-      this._PuntoVendedorService.delete(this.puntoVendedor).subscribe(
+      this._PuntoEventoService.delete(this.puntoEvento).subscribe(
         response => { 
           if(response['code'] == 200){
             this.ngOnInit()
@@ -133,21 +123,23 @@ export class PuntoVendedorComponent implements OnInit {
     });
   }
 
-  onSubmitBuscarUsuario() {
+  onSubmitBuscarEvento() {
     this.loading = true;
-    this._UserService.showCorreo(this.correoComprador).subscribe(
+    let array = {
+      'nombre': this.nombrePunto
+    }
+    this._PuntoVentaService.showNombre(array).subscribe( 
       response => { 
         this.loading = false;
         if(response['status'] == 200){
-          this.userComprador = response['data'];
-          console.log(this.userComprador);
+          this.puntos = response['data'];
           this.formNew = false;
         }else{
-          this.correoComprador = '';
+          this.nombrePunto = '';
           this.toastr.error('Usuario no encontrado', 'Error!', {progressBar: true});
           this.formNew = true;
           this.cdref.detectChanges(); 
-          this.userComprador = false;
+          this.puntos = false;
         }
     }, error => {
       this.loading = false;
@@ -155,23 +147,23 @@ export class PuntoVendedorComponent implements OnInit {
     })
   }
 
-  onNew() {
-    this.loading2 = true;
-    this.puntoVendedorNew.vendedor = this.userComprador.id;
-    this.puntoVendedorNew.punto = this.punto.id;
+  onNew(idPunto) {
+    // this.loading2 = true;
+    this.puntoEventoNew.evento = this.rutaActiva.snapshot.params.idEvento;;
+    this.puntoEventoNew.punto = idPunto;
 
-    this._PuntoVendedorService.new(this.puntoVendedorNew).subscribe(
+    this._PuntoEventoService.new(this.puntoEventoNew).subscribe(
       response => { 
         if(response['code'] == 200){
           this.loading2 = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
-          this.userComprador = false;
+          this.puntos = false;
           this.ngOnInit();
         }
     }, error => {
       alert(error.error.error_description);
     })
-  }
+  } 
 
   onInitForms(){
     this.formNew = false;

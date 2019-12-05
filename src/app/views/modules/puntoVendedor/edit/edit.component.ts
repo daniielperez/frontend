@@ -18,7 +18,7 @@ export class EditComponent implements OnInit {
   formBasic: FormGroup;
 
   public usuarios;
-  public responsableSelect;
+  public vendedorSelect;
   
   constructor(
     private fb: FormBuilder,
@@ -30,11 +30,12 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.puntoVendedor);
     this._UserService.select().subscribe(
       response => { 
         this.usuarios = response;
         setTimeout(() => {
-          this.responsableSelect = [this.puntoVendedor.responsable.id];
+          this.vendedorSelect = [this.puntoVendedor.vendedor.id];
           this.cdref.detectChanges();
         });
     }, error => {
@@ -45,8 +46,7 @@ export class EditComponent implements OnInit {
 
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      nombre: [this.puntoVendedor.nombre, Validators.required],
-      responsableSelect: ['', Validators.required],
+      vendedorSelect: ['', Validators.required],
     });
   }
 
@@ -55,8 +55,8 @@ export class EditComponent implements OnInit {
     let arrayDatos = {
       id: this.puntoVendedor.id,
       nombre: this.puntoVendedor.nombre,
-      responsable: this.puntoVendedor.responsable.id,
-      lugar: this.puntoVendedor.lugar.id,
+      vendedor: this.vendedorSelect.toString(),
+      punto: this.puntoVendedor.punto.id,
     };
     this._PuntoVendedorService.edit(arrayDatos).subscribe(
       response => { 

@@ -7,9 +7,9 @@ import { LocalStoreService } from "./local-store.service";
 @Injectable({
   providedIn: 'root'
 })
-export class EventoService {
+export class PuntoEventoService {
 
-  url = environment.ulrBackend+"evento";
+  url = environment.ulrBackend+"puntoEvento";
   header = new HttpHeaders();
 
 	constructor(private http: HttpClient,private store: LocalStoreService,){
@@ -18,13 +18,8 @@ export class EventoService {
     this.header = this.header.append('Authorization','Bearer ' + this.store.getItem("token"));
   }
   
-  index(idEmpresa){
-    return this.http.get(this.url+'/index/list/registro/fronend/'+idEmpresa+'/',{headers:this.header})
-    .pipe(map(data => data));
-  }
-  
-  indexCliente(){
-    return this.http.get(this.url+'/list/home/frontend',{headers:this.header})
+  index(idLugar){
+    return this.http.get(this.url+'/'+idLugar+'/',{headers:this.header})
     .pipe(map(data => data));
   }
 
@@ -40,16 +35,6 @@ export class EventoService {
 
   new(json){
     return this.http.post(this.url+'/new',json,{headers:this.header})
-    .pipe(map(data => data));
-  }
-
-  show(idEvento){
-    return this.http.get(this.url+'/'+idEvento+'/show',{headers:this.header})
-    .pipe(map(data => data));
-  }
-
-  select(){
-    return this.http.get(this.url+'/select/select',{headers:this.header})
     .pipe(map(data => data));
   }
  }

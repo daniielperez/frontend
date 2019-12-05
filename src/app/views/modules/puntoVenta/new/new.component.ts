@@ -23,7 +23,7 @@ export class NewComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _PuntoVentaService: PuntoVentaService,
-  ) { 
+  ){ 
     this.puntoVenta = new PuntoVenta(null, null, null, null);
   }
 
@@ -48,13 +48,14 @@ export class NewComponent implements OnInit {
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }
-    }, error => {
+    },error => {
       alert(error.error.error_description);
     })
-  }
+  } 
 
   onCloseModal(){
     this.modalService.dismissAll();
+    this.ready.emit(true);
   }
 
 }

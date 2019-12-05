@@ -1,0 +1,171 @@
+
+<div class="breadcrumb" *ngIf='evento'>
+    <div class="row container-fluid">
+        <div class="col-md-8">
+            <h1>Puntos de venta</h1>
+            <ul>
+                <li>Evento:</li>
+                <li>{{evento.nombre}}</li>
+            </ul>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group btn-group-toggle header-part-right">
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+
+<div class="row">
+    <div class="col-md-4" *ngIf='!evento'>
+            <span class="spinner-glow spinner-glow-primary mr-5"></span>
+    </div>
+
+    <div class="col-md-4" *ngIf='evento'>
+        <div class="card mb-4 o-hidden">
+            <div class="card-body">
+                <h5 class="card-title">{{evento.nombre}}</h5>
+            </div> 
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">empresa: {{evento.empresa.nombre}}</li>
+                <li class="list-group-item">lugar: {{evento.lugar.nombre}}</li>
+                <li class="list-group-item">Total boletas: {{evento.total_boletas}}</li>
+            </ul>
+            <div class="card-body">
+                <a routerLink="/modules/eventoVenta" class="card-link">Atrás</a>
+            </div>
+        </div>
+
+        <div class="card  col-lg-12 col-sm-12">
+            <div class="card-body">
+                <div class="card-title mb-3">Buscar puntos</div>
+                <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmitBuscarEvento()">
+                    <div class="row">
+                        <div class="col-lg-12 form-group" >
+                            <label for="nombrePunto">Nombre</label>
+                            <input 
+                                [(ngModel)]="nombrePunto" 
+                                [ngClass]="{ 'is-invalid': newForm.form.controls.nombrePunto.invalid, 'is-valid': !newForm.form.controls.nombrePunto.invalid }" 
+                                type="text" 
+                                class="form-control text-uppercase" 
+                                formControlName="nombrePunto" 
+                                id="nombrePunto" 
+                                placeholder="Ingrese el nombre del punto"
+                                
+                            >
+                        </div>
+                        <div class="col-lg-12">
+                            <btn-loading btnClass="btn-primary" [loading]="loading">Buscar</btn-loading>
+                        </div>
+                    </div>  
+                </form>         
+
+                <app-new-puntoVenta *ngIf='formNew' (ready)="ready($event)"></app-new-puntoVenta>  
+
+                <div class="row" *ngIf='puntos'>
+                    <div class="col-lg-4 col-sm-12 " *ngFor="let punto of puntos let i = index">
+                        <div class="card card-profile-1 mb-4">
+                            <div class="card-body text-center">
+                                <h5 class="m-0 text-uppercase">{{ punto.nombre }}</h5>
+                                <p class="mt-0 text-muted">{{ punto.direccion }}</p>
+                                <p>{{ punto.telefono }}</p>
+                                <btn-loading btnClass="btn-primary" (click)="onNew(punto.id)" [loading]="loading2">Vincular</btn-loading>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="form-group col-md-6">
+            <input id="email" placeholder="Buscar registros" [formControl]="searchControl" class="form-control form-control-rounded" type="email">
+        </div>
+        <div class="card  o-hidden">
+                <ngx-datatable
+                style="height: 500px; box-shadow: none"
+                class="material fullscreen"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="60"
+                [scrollbarV]="true"
+                [rows]="filteredPuntoVentas">
+
+                    <ngx-datatable-column name="nombre" [resizeable]="false" [width]="150">
+                        <ng-template ngx-datatable-header-template>
+                            Nombre
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.punto.nombre}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="direccion" [resizeable]="false" [width]="150">
+                        <ng-template ngx-datatable-header-template>
+                            Dirección
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.punto.direccion}}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="telefono" [resizeable]="false" [width]="150">
+                        <ng-template ngx-datatable-header-template>
+                            Teléfono
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.punto.telefono}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                   
+                    <ngx-datatable-column name="id" [resizeable]="false" [width]="150">
+                        <ng-template ngx-datatable-header-template>
+                            Acciones
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                         
+                            <button ngbPopover="Eliminar" triggers="mouseenter:mouseleave" placement="left" (click)="onDelete(modalConfirm,row)" class="btn btn-icon bg-transparent">
+                                <i class="i-Delete-File text-20 text-danger"></i>
+                            </button>
+
+                            <button routerLink="/modules/puntoVendedor/{{row.punto.id}}" ngbPopover="Responsables" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
+                                <i class="i-Door text-20 text-warning"></i>
+                            </button>
+                          
+                        </ng-template>
+                    </ngx-datatable-column>
+                    
+                </ngx-datatable>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalConfirm let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">
+            <b>
+                <i class="i-Warning-Window text-20 text-danger"></i>
+                Borrar registro 
+            </b>
+        </h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-justify"><strong>¿Estas seguro que quieres borrar el registro?</strong></h4>
+        <h5 class="text-justify">Toda la información de este registro se eliminará.
+            <b class="text-danger">¡Esta operación no se puede deshacer.!</b>
+        </h5>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-rounded" (click)="modal.dismiss('cancel')">Cancel</button>
+        <button type="button" ngbAutofocus class="btn btn-danger btn-rounded" (click)="modal.close('Ok')">Ok</button>
+    </div>
+</ng-template>
+    

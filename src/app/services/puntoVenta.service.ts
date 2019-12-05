@@ -33,6 +33,11 @@ export class PuntoVentaService {
     .pipe(map(data => data));
   }
 
+  showNombre(json){
+    return this.http.post(this.url+'/show/nombre',json,{headers:this.header})
+    .pipe(map(data => data));
+  }
+
   new(json){
     return this.http.post(this.url+'/new',json,{headers:this.header})
     .pipe(map(data => data));

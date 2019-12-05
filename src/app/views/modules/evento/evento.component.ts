@@ -4,6 +4,7 @@ import { EventoService } from '../../../services/evento.service';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-evento',
@@ -23,10 +24,12 @@ export class EventoConfigComponent implements OnInit {
     private modalService: NgbModal,
     private _EventoService: EventoService,
     private toastr: ToastrService,
+    private rutaActiva: ActivatedRoute,
   ) { }
 
   ngOnInit() { 
-    this._EventoService.index().subscribe(
+    let idEmpresa = this.rutaActiva.snapshot.params.idEmpresa;
+    this._EventoService.index(idEmpresa).subscribe(
       response => { 
         if(response['code'] == 200){
           this.eventos = [...response['data']];

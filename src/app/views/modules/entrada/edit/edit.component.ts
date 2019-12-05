@@ -55,7 +55,7 @@ export class EditComponent implements OnInit {
     let arrayDatos = {
       id: this.entrada.id,
       nombre: this.entrada.nombre,
-      responsable: this.entrada.responsable.id,
+      responsable: this.responsableSelect.toString(),
       lugar: this.entrada.lugar.id,
     };
     this._EntradaService.edit(arrayDatos).subscribe(

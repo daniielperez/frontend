@@ -19,10 +19,12 @@ import { EventoConfigModule } from './evento/evento.module';
 import { PuntoVentaModule } from './puntoVenta/puntoVenta.module';
 import { VentaModule } from './Venta/Venta.module';
 import { PuntoVendedorModule } from './puntoVendedor/puntoVendedor.module';
+import { PuntoEventoModule } from './puntoEvento/puntoEvento.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
 import { PuntoVendedorComponent } from './puntoVendedor/puntoVendedor.component';
+import { PuntoEventoComponent } from './puntoEvento/puntoEvento.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { BoletaComponent } from './boleta/boleta.component';
 import { CategoriaComponent } from './categoria/categoria.component';
@@ -67,7 +69,8 @@ import { SelectModule } from 'angular2-select';
     PuntoVentaModule,
     VentaModule,
     SelectModule,
-    PuntoVendedorModule
+    PuntoVendedorModule,
+    PuntoEventoModule
 
   ],
   providers:[GoogleMapsAPIWrapper],
@@ -85,6 +88,7 @@ import { SelectModule } from 'angular2-select';
     PuntoVentaComponent,
     VentaComponent,
     PuntoVendedorComponent,
+    PuntoEventoComponent
   ]
 })
 export class ModulesModule { }

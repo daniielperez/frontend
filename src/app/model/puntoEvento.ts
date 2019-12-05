@@ -1,7 +1,7 @@
-export class Categoria {
+export class PuntoEvento {
     constructor(
 		public id: string,
-		public nombre: string,
 		public evento: string,
+		public punto: string,
 	){}
 }

@@ -6,8 +6,8 @@
 
 <div class="row">
 
-    <div class="card  col-lg-4 col-sm-12" style="margin-right: 27px; margin-bottom: 27px;">
-        <div class="card-body">
+    <div class="col-lg-4 col-sm-12">
+        <div class="card card-body">
             <div class="card-title mb-3">cliente</div>
             <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmitBuscarUsuario()">
                 <div class="row">
@@ -46,8 +46,8 @@
     </div> 
     <br>
 
-    <div class="card col-lg-7 col-sm-12">
-        <div class="card-body">
+    <div class="col-lg-7 col-sm-12">
+        <div class="card card-body">
             <div class="card-title mb-3">Venta</div>
             <div class="col-md-6 form-group mb-3">
                 <label for="nombre">Eventos</label>
@@ -61,8 +61,7 @@
         </div>
     </div>  
 
-</div>
-       
+</div>      
 
 <div class="card user-profile o-hidden mb-4" *ngIf='evento'>
     <div class="header-cover"  [ngStyle]="{'background-image':'url('+ulrImage+')'}"></div>

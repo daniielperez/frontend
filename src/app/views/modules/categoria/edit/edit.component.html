@@ -16,11 +16,6 @@
             </div> 
 
             <div class="col-md-6 form-group mb-3">
-                <label for="valor">Valor</label> 
-                <input [(ngModel)]="categoria.valor" [ngClass]="{ 'is-invalid': newForm.form.controls.valor.invalid , 'is-valid': !newForm.form.controls.valor.invalid }" type="text" class="form-control" formControlName="valor" id="lastName" placeholder="Ingrese dirección">
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
                 <label for="valor">Evento</label> 
                 <ng-select class="form-control" 
                     [ngClass]="{ 'is-invalid': newForm.form.controls.eventoSelect.invalid , 'is-valid': !newForm.form.controls.eventoSelect.invalid }" 

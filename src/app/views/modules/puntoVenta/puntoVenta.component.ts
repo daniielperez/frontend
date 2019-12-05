@@ -4,7 +4,6 @@ import { PuntoVentaService } from '../../../services/puntoVenta.service';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
  
 @Component({
   selector: 'app-puntoVenta',

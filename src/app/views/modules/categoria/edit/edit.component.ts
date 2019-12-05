@@ -45,19 +45,20 @@ export class EditComponent implements OnInit {
   buildFormBasic() {
     this.formBasic = this.fb.group({
       nombre: [this.categoria.nombre, Validators.required],
-      valor: [this.categoria.valor, Validators.required],
       eventoSelect: ['', Validators.required]
     });
   }
 
   onSubmit() {
+
     this.loading = true;
+
     let arrayDatos = {
       id: this.categoria.id,
       nombre: this.categoria.nombre,
-      valor: this.categoria.valor,
-      evento: this.eventoSelect.toString(),
+      evento: this.eventoSelect.toString(), 
     };
+
     this._CategoriaService.edit(arrayDatos).subscribe(
       response => { 
         if(response['code'] == 200){
@@ -67,6 +68,7 @@ export class EditComponent implements OnInit {
     }, error => {
         alert(error.error.error_description);
     })
+
   }
 
   onCloseModal(){

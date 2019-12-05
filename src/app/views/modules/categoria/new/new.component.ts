@@ -26,7 +26,7 @@ export class NewComponent implements OnInit {
     private _CategoriaService: CategoriaService,
     private _EventoService: EventoService,
   ) { 
-    this.categoria = new Categoria(null, null, null, null);
+    this.categoria = new Categoria(null, null, null);
   }
   ngOnInit()
   {
@@ -42,7 +42,6 @@ export class NewComponent implements OnInit {
   buildFormBasic() {
     this.formBasic = this.fb.group({
       nombre: ['', Validators.required],
-      valor: ['', Validators.required],
       evento: ['', Validators.required]
     });
   }
