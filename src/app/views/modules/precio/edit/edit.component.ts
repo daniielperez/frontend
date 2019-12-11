@@ -1,65 +1,64 @@
-import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriaService } from '../../../../services/categoria.service';
-import { EventoService } from '../../../../services/evento.service';
+import { PrecioService } from '../../../../services/precio.service';
+import { UserService } from '../../../../services/user.service';
 
-@Component({
-  selector: 'app-edit-categoria',
+@Component({ 
+  selector: 'app-edit-precio',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
   @Output() ready = new EventEmitter<any>();
-  @Input() categoria: any = null;
+  @Input() precio: any = null;
 
   loading: boolean;
   formBasic: FormGroup;
-  eventoSelect;
-  eventos;
+
+  public usuarios;
+  public vendedorSelect;
   
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _CategoriaService: CategoriaService,
-    private _EventoService: EventoService,
+    private _PrecioService: PrecioService,
+    private _UserService: UserService,
     private cdref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this._EventoService.select().subscribe(
+    console.log(this.precio);
+    this._UserService.select().subscribe(
       response => { 
-        this.eventos = response;
+        this.usuarios = response;
         setTimeout(() => {
-          this.eventoSelect = [this.categoria.evento.id];
+          this.vendedorSelect = [this.precio.vendedor.id];
           this.cdref.detectChanges();
         });
     }, error => {
       alert(error.error.error_description);
     });
     this.buildFormBasic();
-  } 
-  
+  }
+
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      nombre: [this.categoria.nombre, Validators.required],
-      eventoSelect: ['', Validators.required]
+      vendedorSelect: ['', Validators.required],
     });
   }
 
   onSubmit() {
-
     this.loading = true;
-
     let arrayDatos = {
-      id: this.categoria.id,
-      nombre: this.categoria.nombre,
-      evento: this.eventoSelect.toString(), 
+      id: this.precio.id,
+      nombre: this.precio.nombre,
+      vendedor: this.vendedorSelect.toString(),
+      punto: this.precio.punto.id,
     };
-
-    this._CategoriaService.edit(arrayDatos).subscribe(
+    this._PrecioService.edit(arrayDatos).subscribe(
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
@@ -68,7 +67,6 @@ export class EditComponent implements OnInit {
     }, error => {
         alert(error.error.error_description);
     })
-
   }
 
   onCloseModal(){

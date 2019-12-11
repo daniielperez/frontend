@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 
 import { SharedComponentsModule } from '../../shared/components/shared-components.module';
 import { ModulesRoutingModule } from './modules-routing.module';
-import { CategoriaModule } from './categoria/categoria.module';
+import { LoteBoletaModule } from './loteBoleta/loteBoleta.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { LugarModule } from './lugar/lugar.module';
 import { EmpresaModule } from './empresa/empresa.module';
@@ -19,15 +19,17 @@ import { EventoConfigModule } from './evento/evento.module';
 import { PuntoVentaModule } from './puntoVenta/puntoVenta.module';
 import { VentaModule } from './Venta/Venta.module';
 import { PuntoVendedorModule } from './puntoVendedor/puntoVendedor.module';
+import { PrecioModule } from './precio/precio.module';
 import { PuntoEventoModule } from './puntoEvento/puntoEvento.module';
 
 
 import { LugarComponent } from './lugar/lugar.component';
+import { PrecioComponent } from './precio/precio.component';
 import { PuntoVendedorComponent } from './puntoVendedor/puntoVendedor.component';
 import { PuntoEventoComponent } from './puntoEvento/puntoEvento.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { BoletaComponent } from './boleta/boleta.component';
-import { CategoriaComponent } from './categoria/categoria.component';
+import { LoteBoletaComponent } from './loteBoleta/loteBoleta.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { EntradaComponent } from './entrada/entrada.component';
 import { EventoComponent } from './cliente/evento/evento.component';
@@ -58,7 +60,7 @@ import { SelectModule } from 'angular2-select';
     SharedComponentsModule,
     NgxPaginationModule,
     NgxDatatableModule,
-    CategoriaModule,
+    LoteBoletaModule,
     UsuarioModule,
     LugarModule,
     EmpresaModule,
@@ -70,14 +72,15 @@ import { SelectModule } from 'angular2-select';
     VentaModule,
     SelectModule,
     PuntoVendedorModule,
-    PuntoEventoModule
+    PuntoEventoModule,
+    PrecioModule
 
   ],
   providers:[GoogleMapsAPIWrapper],
   declarations: [
     EmpresaComponent, 
     BoletaComponent, 
-    CategoriaComponent, 
+    LoteBoletaComponent, 
     UsuarioComponent,
     LugarComponent,
     EntradaComponent,
@@ -88,7 +91,8 @@ import { SelectModule } from 'angular2-select';
     PuntoVentaComponent,
     VentaComponent,
     PuntoVendedorComponent,
-    PuntoEventoComponent
+    PuntoEventoComponent,
+    PrecioComponent,
   ]
 })
 export class ModulesModule { }

@@ -7,9 +7,9 @@ import { LocalStoreService } from "./local-store.service";
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class PrecioService {
 
-  url = environment.ulrBackend+"categoriaboleta";
+  url = environment.ulrBackend+"precio";
   header = new HttpHeaders();
 
 	constructor(private http: HttpClient,private store: LocalStoreService,){
@@ -18,8 +18,8 @@ export class CategoriaService {
     this.header = this.header.append('Authorization','Bearer ' + this.store.getItem("token"));
   }
   
-  index(){
-    return this.http.get(this.url+'/',{headers:this.header})
+  index(idLugar){
+    return this.http.get(this.url+'/'+idLugar+'/',{headers:this.header})
     .pipe(map(data => data));
   }
 

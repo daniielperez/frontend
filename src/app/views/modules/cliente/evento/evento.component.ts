@@ -62,19 +62,21 @@ export class EventoComponent implements OnInit {
           }
           this.publicidades = response['data']['evento']['publicidades'];
           this.precios = response['data']['precios'];
-          response['data']['categorias'].forEach(element => {
-            if(element.disponibles > 0){
-             let array = {
-               username: this.store.getItem("username"),
-               id: element.id, 
-               nombre: element.nombre,
-               valor: element.valor,
-               boleta: 0,
-               disponibles: element.disponibles
-            }
-            this.categorias.push(array);
-            }
-          });
+          if (response['data']['categorias']) {
+            response['data']['categorias'].forEach(element => {
+              if(element.disponibles > 0){
+               let array = {
+                 username: this.store.getItem("username"),
+                 id: element.id, 
+                 nombre: element.nombre,
+                 valor: element.valor,
+                 boleta: 0,
+                 disponibles: element.disponibles
+              }
+              this.categorias.push(array);
+              }
+            });
+          }
         }
     }, error => {
       alert(error.error.error_description);

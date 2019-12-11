@@ -1,14 +1,14 @@
 <div class="breadcrumb">
     <div class="row container-fluid">
         <div class="col-md-8">
-            <h1>Categoria</h1>
+            <h1>Categoría</h1>
             <ul>
                 <li>Gestionar</li>
             </ul>
         </div>
         <div class="col-md-4 text-right">
             <div class="btn-group btn-group-toggle header-part-right">
-                <button type="button" (click)="onNew(modalBasic)" class="btn btn-primary m-1">Nuevo registro</button>
+                <button type="button" (click)="onNew(modalBasic)" class="btn btn-primary m-1">Nuevo</button>
             </div> 
         </div>
     </div>
@@ -17,11 +17,12 @@
 <div class="separator-breadcrumb border-top"></div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="form-group">
         <input id="email" placeholder="Buscar registros" [formControl]="searchControl" class="form-control form-control-rounded" type="email">
         </div>
     </div>
+    
     <div class="col-md-12">
         <div class="card  o-hidden">
             <ngx-datatable
@@ -32,11 +33,17 @@
             [footerHeight]="50"
             [rowHeight]="60"
             [scrollbarV]="true"
-            [rows]="filteredCategorias">
-                <ngx-datatable-column name="nombre" [width]="300">
+            [rows]="filteredLoteBoletas">
+                <ngx-datatable-column name="categoria" [width]="300">
                 <ng-template ngx-datatable-header-template>
-                    Nombre
+                    Categoría
                 </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="cantidad" [width]="300">
+                    <ng-template ngx-datatable-header-template>
+                        Cantidad
+                    </ng-template>
                 </ngx-datatable-column>
 
                 <ngx-datatable-column name="eventoId" [resizeable]="false" [width]="150">
@@ -53,11 +60,11 @@
                         Acciones
                     </ng-template>
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button ngbPopover="Editar" triggers="mouseenter:mouseleave" placement="left" (click)="onEdit(modalBasic,row)" class="btn btn-icon bg-transparent">
-                            <i class="i-File-Edit text-20 text-primary"></i>
-                        </button>
                         <button ngbPopover="Eliminar" triggers="mouseenter:mouseleave" placement="left" (click)="onDelete(modalConfirm,row)" class="btn btn-icon bg-transparent">
                             <i class="i-Delete-File text-20 text-danger"></i>
+                        </button>
+                        <button routerLink="/modules/precio/{{row.id}}" ngbPopover="Precios" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
+                            <i class="i-Door text-20 text-warning"></i>
                         </button>
                     </ng-template>
                 </ngx-datatable-column>
@@ -65,11 +72,12 @@
             </ngx-datatable>
         </div>
     </div>
+
 </div>
 
 <ng-template #modalBasic let-modal> 
-        <app-new-categoria *ngIf='formNew' (ready)="ready($event)"></app-new-categoria>
-        <app-edit-categoria *ngIf='formEdit' [categoria]="categoria" (ready)="ready($event)"></app-edit-categoria>
+        <app-new-loteBoleta *ngIf='formNew' [idEvento]="idEvento" (ready)="ready($event)"></app-new-loteBoleta>
+        <app-edit-loteBoleta *ngIf='formEdit' [loteBoleta]="loteBoleta" (ready)="ready($event)"></app-edit-loteBoleta>
 </ng-template>
 
 <ng-template #modalConfirm let-modal>

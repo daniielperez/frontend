@@ -1,61 +1,63 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PuntoVentaService } from '../../../../services/puntoVenta.service';
-import { PuntoVenta } from '../../../../model/puntoVenta';
- 
+import { LoteBoletaService } from '../../../../services/loteBoleta.service';
+import { EventoService } from '../../../../services/evento.service';
+import { LoteBoleta } from '../../../../model/loteBoleta';
+
+
 @Component({
-  selector: 'app-new-puntoVenta',
+  selector: 'app-new-loteBoleta',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss']
 })
 export class NewComponent implements OnInit {
   @Output() ready = new EventEmitter<any>();
+  @Input() idEvento: any = null;
   formBasic: FormGroup;
   loading: boolean;
-  public puntoVenta: PuntoVenta;
-  public usuarios;
+  public loteBoleta: LoteBoleta;
   public eventos;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _PuntoVentaService: PuntoVentaService,
-  ){ 
-    this.puntoVenta = new PuntoVenta(null, null, null, null);
+    private _LoteBoletaService: LoteBoletaService,
+  ) { 
+    this.loteBoleta = new LoteBoleta(null, null, null, null, null);
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.buildFormBasic();
-  } 
-
+  }
+   
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      nombre: ['', Validators.required],
-      direccion: ['', Validators.required],
-      telefono: ['', Validators.required],
+      categoria: ['', Validators.required],
+      fin: ['', Validators.required],
+      inicio: ['', Validators.required]
     });
   }
 
   onSubmit() {
     this.loading = true;
-    this._PuntoVentaService.new(this.puntoVenta).subscribe(
+    this.loteBoleta.evento = this.idEvento; 
+    this._LoteBoletaService.new(this.loteBoleta).subscribe(
       response => { 
         if(response['code'] == 200){
-          this.loading = false;
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
         }
-    },error => {
+    }, error => {
       alert(error.error.error_description);
     })
-  } 
-
+  }
+ 
   onCloseModal(){
-    // this.modalService.dismissAll('modalBasic');
-    this.ready.emit(true);
+    this.modalService.dismissAll();
   }
 
 }

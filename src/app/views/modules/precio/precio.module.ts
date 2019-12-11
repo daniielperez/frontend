@@ -12,10 +12,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { SelectModule } from 'angular2-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
+  declarations: [NewComponent, EditComponent], 
   imports: [
     CommonModule,
+    NgbModule,
     CustomFormsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -24,14 +27,9 @@ import { SelectModule } from 'angular2-select';
     NgxDatatableModule,
     SelectModule,
   ],
-  declarations: [
+  exports: [
     NewComponent,
     EditComponent,
-  ],
-  exports: [  
-    NewComponent, 
-    EditComponent
-  ], 
-
+  ]
 })
-export class CategoriaModule { }
+export class PrecioModule { }

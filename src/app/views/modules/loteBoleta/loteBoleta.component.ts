@@ -1,36 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriaService } from '../../../services/categoria.service'; 
+import { LoteBoletaService } from '../../../services/loteBoleta.service'; 
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.scss']
+  selector: 'app-loteBoleta',
+  templateUrl: './loteBoleta.component.html',
+  styleUrls: ['./loteBoleta.component.scss']
 })
-export class CategoriaComponent implements OnInit {
+export class LoteBoletaComponent implements OnInit {
 
   searchControl: FormControl = new FormControl();
-  categorias;
-  categoria:any;
-  filteredCategorias;
+  @Input() idEvento: any = null;
+  loteBoletas;
+  loteBoleta:any;
+  filteredLoteBoletas;
   formEdit = false;
   formNew = false;
 
   constructor(
     private modalService: NgbModal,
-    private _CategoriaService: CategoriaService,
+    private _LoteBoletaService: LoteBoletaService,
     private toastr: ToastrService,
   ) { }
 
   ngOnInit() { 
-    this._CategoriaService.index().subscribe(
+    let data = {
+      idEvento:this.idEvento
+    };
+    this._LoteBoletaService.index(data).subscribe(
       response => { 
         if(response['code'] == 200){
-          this.categorias = [...response['data']];
-          this.filteredCategorias = response['data'];
+          this.loteBoletas = [...response['data']];
+          this.filteredLoteBoletas = response['data'];
           this.modalService.dismissAll();
         }
     }, error => {
@@ -66,27 +70,26 @@ export class CategoriaComponent implements OnInit {
     if (val) {
       val = val.toLowerCase();
     } else {
-      return this.filteredCategorias = [...this.categorias];
+      return this.filteredLoteBoletas = [...this.loteBoletas];
     }
 
-    const columns = Object.keys(this.categorias[0]);
+    const columns = Object.keys(this.loteBoletas[0]);
     if (!columns.length) {
       return;
     }
 
-    const rows = this.categorias.filter(function(d) {
+    const rows = this.loteBoletas.filter(function(d) {
       for (let i = 0; i <= columns.length; i++) {
         const column = columns[i];
-        // console.log(d[column]);
         if (d[column] && d[column].toString().toLowerCase().indexOf(val) > -1) {
           return true;
         }
       }
     });
-    this.filteredCategorias = rows;
+    this.filteredLoteBoletas = rows;
   }
-  onEdit(content,categoria:any){
-    this.categoria = categoria;
+  onEdit(content,loteBoleta:any){
+    this.loteBoleta = loteBoleta;
     this.onInitForms();
     this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
@@ -97,13 +100,13 @@ export class CategoriaComponent implements OnInit {
     });
   }
 
-  onDelete(content,categoria:any){
-    this.categoria = categoria;
+  onDelete(content,loteBoleta:any){
+    this.loteBoleta = loteBoleta;
     this.onInitForms();
     this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static', centered: true})
     .result.then((result) => {
-      this._CategoriaService.delete(this.categoria).subscribe(
+      this._LoteBoletaService.delete(this.loteBoleta).subscribe(
         response => { 
           if(response['code'] == 200){
             this.ngOnInit();
@@ -116,6 +119,7 @@ export class CategoriaComponent implements OnInit {
       console.log('Err!', reason);
     });
   }
+  
   onInitForms(){
     this.formNew = false;
     this.formEdit = false;

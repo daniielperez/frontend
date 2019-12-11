@@ -1,0 +1,32 @@
+
+
+
+<form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
+    <div class="modal-header"> 
+        <h4 class="modal-title" id="modal-basic-title">Nuevo registro</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseModal()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 form-group mb-3">
+                <label for="nombre">Categoría</label>
+                <input [(ngModel)]="loteBoleta.categoria" [ngClass]="{ 'is-invalid': newForm.form.controls.categoria.invalid, 'is-valid': !newForm.form.controls.categoria.invalid }" type="text" class="form-control" formControlName="categoria" id="categoria" placeholder="Ingrese categoria">
+            </div> 
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Inicio</label>
+                <input [(ngModel)]="loteBoleta.inicio" [ngClass]="{ 'is-invalid': newForm.form.controls.inicio.invalid, 'is-valid': !newForm.form.controls.inicio.invalid }" type="text" class="form-control" formControlName="inicio" id="inicio" placeholder="Ingrese inicio">
+            </div> 
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Fin</label>
+                <input [(ngModel)]="loteBoleta.fin" [ngClass]="{ 'is-invalid': newForm.form.controls.fin.invalid, 'is-valid': !newForm.form.controls.fin.invalid }" type="text" class="form-control" formControlName="fin" id="fin" placeholder="Ingrese fin">
+            </div> 
+        </div>
+    </div>
+    <div class="modal-footer">
+        <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>
+    </div>
+</form>

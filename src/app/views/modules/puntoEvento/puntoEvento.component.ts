@@ -51,7 +51,6 @@ export class PuntoEventoComponent implements OnInit {
           this.puntoEventos = [...response['data']];
           this.filteredPuntoVentas = response['data'];
           this.evento = response['evento'];
-          this.modalService.dismissAll();
         }
     }, error => {
       alert(error.error.error_description);
@@ -135,11 +134,11 @@ export class PuntoEventoComponent implements OnInit {
           this.puntos = response['data'];
           this.formNew = false;
         }else{
-          this.nombrePunto = '';
+          this.nombrePunto = "";
           this.toastr.error('Usuario no encontrado', 'Error!', {progressBar: true});
           this.formNew = true;
-          this.cdref.detectChanges(); 
           this.puntos = false;
+          this.cdref.detectChanges(); 
         }
     }, error => {
       this.loading = false;
@@ -165,10 +164,27 @@ export class PuntoEventoComponent implements OnInit {
     })
   } 
 
+  onNewPunto(content){
+    this.onInitForms();
+    this.formEdit = true;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static', centered: true})
+    .result.then((result) => {
+      console.log('result!', result);
+    }, (reason) => {
+      console.log('Err!', reason);
+    });
+  }
+
   onInitForms(){
     this.formNew = false;
     this.formEdit = false;
     return true;
+  }
+
+  onCloseModal(){
+    this.modalService.dismissAll();
+    this.puntos = false;
+    this.nombrePunto = '';
   }
 
 }

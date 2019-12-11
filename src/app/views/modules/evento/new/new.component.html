@@ -15,7 +15,7 @@
                 <input [(ngModel)]="evento.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
             </div> 
 
-             <div class="col-md-6 form-group mb-3">
+            <div class="col-md-6 form-group mb-3">
                 <label for="picker1">Fecha</label>
                 <div class="input-group">
                     <input id="picker1" [(ngModel)]="evento.fecha" [ngClass]="{ 'is-invalid': newForm.form.controls.fecha.invalid , 'is-valid': !newForm.form.controls.fecha.invalid }" type="text" class="form-control" formControlName="fecha" id="fecha" placeholder="Ingrese fecha" class="form-control" placeholder="yyyy-mm-dd" name="dp"

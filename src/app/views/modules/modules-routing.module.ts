@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CategoriaComponent } from './categoria/categoria.component';
+import { LoteBoletaComponent } from './loteBoleta/loteBoleta.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { LugarComponent } from './lugar/lugar.component';
@@ -12,13 +12,14 @@ import { PerfilComponent } from './cliente/perfil/perfil.component';
 import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
 import { VentaComponent } from './venta/venta.component';
 import { PuntoVendedorComponent } from './puntoVendedor/puntoVendedor.component';
+import { PrecioComponent } from './precio/precio.component';
 import { PuntoEventoComponent } from './puntoEvento/puntoEvento.component';
 
 
 const routes: Routes = [
     {
         path: 'categoria',
-        component: CategoriaComponent
+        component: LoteBoletaComponent
     },
     {
         path: 'empresa',
@@ -43,6 +44,10 @@ const routes: Routes = [
     {
         path: 'puntoVendedor/:idPuntoVenta',
         component: PuntoVendedorComponent
+    },
+    {
+        path: 'precio/:idLoteBoleta',
+        component: PrecioComponent
     },
     {
         path: 'cliente/home',
