@@ -32,6 +32,13 @@
                 <input [(ngModel)]="usuario.password" [ngClass]="{ 'is-invalid': newForm.form.controls.password.invalid , 'is-valid': !newForm.form.controls.password.invalid }" type="password" class="form-control" formControlName="password" id="password" placeholder="Ingrese la contraseña">
                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
+
+            <div class="col-md-6 form-group mb-3">
+                <label for="nombre">Roles</label>
+                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.roles.invalid , 'is-valid': !newForm.form.controls.roles.invalid }" [multiple]="false" [options]="roles" [(ngModel)]="rolSelected" formControlName="roles" id="roles">
+                </ng-select>
+            </div>
+
         </div>
     </div>
     <div class="modal-footer">

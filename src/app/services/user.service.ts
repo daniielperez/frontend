@@ -26,7 +26,7 @@ export class UserService {
   } 
 
   edit(json){
-    return this.http.post(this.url+'/'+json.id+'/edit',json,{headers:this.header})
+    return this.http.post(this.url+'/'+json.usuario.id+'/edit',json,{headers:this.header})
     .pipe(map(data => data));
   }
 

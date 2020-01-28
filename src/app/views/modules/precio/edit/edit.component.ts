@@ -25,38 +25,34 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _PrecioService: PrecioService,
-    private _UserService: UserService,
     private cdref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     console.log(this.precio);
-    this._UserService.select().subscribe(
-      response => { 
-        this.usuarios = response;
-        setTimeout(() => {
-          this.vendedorSelect = [this.precio.vendedor.id];
-          this.cdref.detectChanges();
-        });
-    }, error => {
-      alert(error.error.error_description);
-    });
     this.buildFormBasic();
   }
 
   buildFormBasic() {
+    this.precio.fechaInicio = {year: parseInt(this.precio.anioInicio), month: parseInt(this.precio.mesInicio), day: parseInt(this.precio.diaInicio)}
+    this.precio.fechaFin = {year: parseInt(this.precio.anioFin), month: parseInt(this.precio.mesFin), day: parseInt(this.precio.diaFin)}
     this.formBasic = this.fb.group({
-      vendedorSelect: ['', Validators.required],
+      valor: [this.precio.valor, Validators.required],
+      fechaInicio: ['', Validators.required],
+      fechaFin: ['', Validators.required],
     });
+    this.cdref.detectChanges();
   }
-
+ 
   onSubmit() {
+
     this.loading = true;
     let arrayDatos = {
       id: this.precio.id,
-      nombre: this.precio.nombre,
-      vendedor: this.vendedorSelect.toString(),
-      punto: this.precio.punto.id,
+      fechaInicio: this.precio.fechaInicio['year']+'-'+this.precio.fechaInicio['month']+'-'+this.precio.fechaInicio['day'],
+      fechaFin: this.precio.fechaFin['year']+'-'+this.precio.fechaFin['month']+'-'+this.precio.fechaFin['day'],
+      valor: this.precio.valor,
+      loteBoleta: this.precio.loteBoleta, 
     };
     this._PrecioService.edit(arrayDatos).subscribe(
       response => { 
@@ -67,6 +63,7 @@ export class EditComponent implements OnInit {
     }, error => {
         alert(error.error.error_description);
     })
+    
   }
 
   onCloseModal(){

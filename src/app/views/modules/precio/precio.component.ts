@@ -30,14 +30,13 @@ export class PrecioComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let idLoteBoleta = this.rutaActiva.snapshot.params.idLoteBoleta;
+    let idLoteBoleta = this.rutaActiva.snapshot.params.idLoteBoleta; 
     this._PrecioService.index(idLoteBoleta).subscribe( 
       response => {  
         if(response['code'] == 200){
           this.precios = [...response['data']];
           this.filteredPrecios = response['data'];
           this.categoria = response['categoria'];
-          console.log(this.categoria);
           this.modalService.dismissAll();
         }
     }, error => {
@@ -74,7 +73,6 @@ export class PrecioComponent implements OnInit {
     const rows = this.precios.filter(function(d) {
       for (let i = 0; i <= columns.length; i++) {
         const column = columns[i];
-        // console.log(d[column]);
         if (d[column] && d[column].toString().toLowerCase().indexOf(val) > -1) {
           return true;
         }
@@ -84,7 +82,7 @@ export class PrecioComponent implements OnInit {
   }
 
   onEdit(content,precio:any){
-    this.categoria = precio;
+    this.precio = precio;
     this.onInitForms();
     this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg', backdrop:'static', centered: true})
@@ -96,12 +94,12 @@ export class PrecioComponent implements OnInit {
   }
 
   onDelete(content,precio:any){
-    this.categoria = precio;
+    this.precio = precio;
     this.onInitForms();
     this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static', centered: true})
     .result.then((result) => {
-      this._PrecioService.delete(this.categoria).subscribe(
+      this._PrecioService.delete(this.precio).subscribe(
         response => { 
           if(response['code'] == 200){
             this.ngOnInit()

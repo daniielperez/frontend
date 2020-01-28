@@ -21,6 +21,11 @@ import { VentaModule } from './Venta/Venta.module';
 import { PuntoVendedorModule } from './puntoVendedor/puntoVendedor.module';
 import { PrecioModule } from './precio/precio.module';
 import { PuntoEventoModule } from './puntoEvento/puntoEvento.module';
+import { EmpresaPerfilModule } from './empresaPerfil/empresaPerfil.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+
+import { SelectModule } from 'angular2-select'; 
+
 
 
 import { LugarComponent } from './lugar/lugar.component';
@@ -30,6 +35,7 @@ import { PuntoEventoComponent } from './puntoEvento/puntoEvento.component';
 import { EmpresaComponent } from './empresa/empresa.component';
 import { BoletaComponent } from './boleta/boleta.component';
 import { LoteBoletaComponent } from './loteBoleta/loteBoleta.component';
+import { EmpresaPerfilComponent } from './empresaPerfil/empresaPerfil.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { EntradaComponent } from './entrada/entrada.component';
 import { EventoComponent } from './cliente/evento/evento.component';
@@ -41,9 +47,6 @@ import { VentaComponent } from './venta/venta.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GoogleMapsAPIWrapper } from '@agm/core';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
-
-import { SelectModule } from 'angular2-select'; 
 
 
 
@@ -73,7 +76,8 @@ import { SelectModule } from 'angular2-select';
     SelectModule,
     PuntoVendedorModule,
     PuntoEventoModule,
-    PrecioModule
+    PrecioModule,
+    EmpresaPerfilModule
 
   ],
   providers:[GoogleMapsAPIWrapper],
@@ -93,6 +97,7 @@ import { SelectModule } from 'angular2-select';
     PuntoVendedorComponent,
     PuntoEventoComponent,
     PrecioComponent,
+    EmpresaPerfilComponent,
   ]
 })
 export class ModulesModule { }

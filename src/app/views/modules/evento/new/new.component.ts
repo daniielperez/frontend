@@ -61,7 +61,6 @@ export class NewComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     this.evento.fecha = this.evento.fecha['year']+'-'+this.evento.fecha['month']+'-'+this.evento.fecha['day'];
-    console.log(this.evento.fecha);
     this._EventoService.new(this.evento).subscribe(
       response => { 
         if(response['code'] == 200){

@@ -14,6 +14,7 @@ import { VentaComponent } from './venta/venta.component';
 import { PuntoVendedorComponent } from './puntoVendedor/puntoVendedor.component';
 import { PrecioComponent } from './precio/precio.component';
 import { PuntoEventoComponent } from './puntoEvento/puntoEvento.component';
+import { EmpresaPerfilComponent } from './empresaPerfil/empresaPerfil.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
         component: LoteBoletaComponent
     },
     {
-        path: 'empresa',
+        path: 'empresa/:idUsuario',
         component: EmpresaComponent
     },
     {
@@ -52,6 +53,10 @@ const routes: Routes = [
     {
         path: 'cliente/home',
         component: HomeComponent
+    },
+    {
+        path: 'empresaPerfil',
+        component: EmpresaPerfilComponent
     },
     {
         path: 'cliente/perfil',

@@ -51,6 +51,9 @@ export class NewComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     this.precio.loteBoleta = this.rutaActiva.snapshot.params.idLoteBoleta;
+    console.log(this.precio.fechaInicio['day']);
+    this.precio.fechaInicio = this.precio.fechaInicio = this.precio.fechaInicio['year']+'-'+this.precio.fechaInicio['month']+'-'+this.precio.fechaInicio['day'];
+    this.precio.fechaFin = this.precio.fechaFin = this.precio.fechaFin['year']+'-'+this.precio.fechaFin['month']+'-'+this.precio.fechaFin['day'];
     this._PrecioService.new(this.precio).subscribe(
       response => { 
         if(response['code'] == 200){

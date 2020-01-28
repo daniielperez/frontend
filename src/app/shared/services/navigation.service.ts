@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LocalStoreService } from "../../services/local-store.service";
 
 export interface IMenuItem {
     id?: string;
@@ -36,6 +37,7 @@ interface ISidebarState {
     childnavOpen?: boolean;
 }
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -44,7 +46,11 @@ export class NavigationService {
         sidenavOpen: true,
         childnavOpen: false
     };
-    constructor() {
+    user:any;
+    constructor(
+        private store: LocalStoreService,
+    ) {
+       
     }
 
     defaultMenu: IMenuItem[] = [
@@ -56,40 +62,36 @@ export class NavigationService {
             state: '/dashboard/v1'
         },
         {
-            name: 'Usuarios',
-            description: 'Gestion de usuarios.',
+            name: 'Configuración',
+            description: 'Configuración.',
             type: 'dropDown',
-            icon: 'i-Business-ManWoman',
+            icon: 'i-Gear',
             sub: [
-                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/usuario', type: 'link' },
+                { icon: 'i-Business-Mens', name: 'Gestionar usuarios', state: '/modules/usuario', type: 'link' },
+                { icon: 'i-Map-Marker', name: 'Gestionar lugares', state: '/modules/lugar', type: 'link' },
+                { icon: 'i-Building', name: 'Gestionar empresas', state: '/modules/empresa/'+this.store.getItem("idUsuario"), type: 'link' },
             ]
         },
         {
-            name: 'Lugares',
-            description: 'Gestion de lugares.',
-            type: 'dropDown',
-            icon: 'i-Business-ManWoman',
-            sub: [
-                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/lugar', type: 'link' },
-            ]
+            name: 'Ventas',
+            description: 'Ventas.',
+            type: 'link',
+            icon: 'i-Cash-register-2',
+            state: '/modules/venta',
         },
         {
-            name: 'Categorías',
-            description: 'Gestion de categorías.',
-            type: 'dropDown',
-            icon: 'i-Business-ManWoman',
-            sub: [
-                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/categoria', type: 'link' },
-            ]
+            name: 'Eventos',
+            description: 'Eventos top.',
+            type: 'link',
+            icon: 'i-Home1',
+            state: '/modules/cliente/home', 
         },
         {
-            name: 'Empresas',
-            description: 'Gestion de empresas.',
-            type: 'dropDown',
-            icon: 'i-Business-ManWoman',
-            sub: [
-                { icon: 'i-Add-Window', name: 'Gestionar', state: '/modules/empresa', type: 'link' },
-            ]
+            name: 'Perfil',
+            description: 'Home.',
+            type: 'link',
+            icon: 'i-Business-Man',
+            state: '/modules/cliente/perfil', 
         }
     ];
 

@@ -18,8 +18,8 @@ export class EmpresaService {
     this.header = this.header.append('Authorization','Bearer ' + this.store.getItem("token"));
   }
   
-  index(){
-    return this.http.get(this.url+'/',{headers:this.header})
+  index(idUsuario){
+    return this.http.get(this.url+'/'+idUsuario+'/',{headers:this.header})
     .pipe(map(data => data));
   }
 

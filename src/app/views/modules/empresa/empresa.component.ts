@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-empresa',
@@ -26,10 +27,12 @@ export class EmpresaComponent implements OnInit {
     private modalService: NgbModal,
     private _EmpresaService: EmpresaService,
     private toastr: ToastrService,
+    private rutaActiva: ActivatedRoute,
   ) { }
 
   ngOnInit() { 
-    this._EmpresaService.index().subscribe(
+    let idUsuario = this.rutaActiva.snapshot.params.idUsuario;
+    this._EmpresaService.index(idUsuario).subscribe(
       response => { 
         if(response['code'] == 200){
           this.empresas = [...response['data']];
@@ -104,8 +107,6 @@ export class EmpresaComponent implements OnInit {
 
   onDelete(content,empresa:any){
     this.empresa = empresa;
-    this.onInitForms();
-    this.formEdit = true;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop:'static', centered: true})
     .result.then((result) => {
       this._EmpresaService.delete(this.empresa).subscribe(

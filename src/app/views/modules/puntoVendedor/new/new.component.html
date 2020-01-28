@@ -12,7 +12,7 @@
                 <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.vendedor.invalid , 'is-valid': !newForm.form.controls.vendedor.invalid }" [multiple]="false" [options]="usuarios" [(ngModel)]="puntoVendedor.vendedor" formControlName="vendedor" id="vendedor">
                 </ng-select>
             </div>
-        </div>
+        </div> 
     </div>
     <div class="modal-footer">
         <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Guardar</btn-loading>

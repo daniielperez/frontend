@@ -7,10 +7,33 @@
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-12 form-group mb-3">
-                <label for="vendedorSelect">Vendedor</label>
-                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.vendedorSelect.invalid , 'is-valid': !newForm.form.controls.vendedorSelect.invalid }" [multiple]="false" [options]="usuarios" [(ngModel)]="vendedorSelect" formControlName="vendedorSelect" id="vendedorSelect">
-                </ng-select>
+            <div class="col-md-6 form-group mb-3">
+                <label for="picker1">Fecha inicio</label>
+                <div class="input-group">
+                    <input id="picker1" [(ngModel)]="precio.fechaInicio" [ngClass]="{ 'is-invalid': newForm.form.controls.fechaInicio.invalid , 'is-valid': !newForm.form.controls.fechaInicio.invalid }" type="text" class="form-control" formControlName="fechaInicio" id="fechaInicio" placeholder="Ingrese fechaInicio" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                        ngbDatepicker #dp="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                            <i class="icon-regular i-Calendar-4"></i>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="picker2">Fecha fin</label>
+                <div class="input-group">
+                    <input id="picker2" [(ngModel)]="precio.fechaFin" [ngClass]="{ 'is-invalid': newForm.form.controls.fechaFin.invalid , 'is-valid': !newForm.form.controls.fechaFin.invalid }" type="text" class="form-control" formControlName="fechaFin" id="fechaFin" placeholder="Ingrese fechaFin" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                        ngbDatepicker #dp2="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" (click)="dp2.toggle()" type="button">
+                            <i class="icon-regular i-Calendar-4"></i>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="valor">Valor</label> 
+                <input [(ngModel)]="precio.valor" [ngClass]="{ 'is-invalid': newForm.form.controls.valor.invalid , 'is-valid': !newForm.form.controls.valor.invalid }" type="text" class="form-control" formControlName="valor" id="valor" placeholder="Ingrese total de las boletas">
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ export class EventoComponent implements OnInit {
   loading: boolean;
   @ViewChild('testForm', {static: false}) testFormElement; 
   evento;
+  categoriaDes=[];
   publicidades;
   precios;
   email;
@@ -67,7 +68,7 @@ export class EventoComponent implements OnInit {
               if(element.disponibles > 0){
                let array = {
                  username: this.store.getItem("username"),
-                 id: element.id, 
+                 idCategoria: element.id, 
                  nombre: element.nombre,
                  valor: element.valor,
                  boleta: 0,
@@ -106,6 +107,11 @@ export class EventoComponent implements OnInit {
     this.signature = md5.appendStr(this.apiKey+'~'+this.merchantId+'~'+this.codigoVenta+'~'+this.valorTotal+'~COP').end();
     
     let valorTransaccion = this.valorTotal * (3.35/100) + 900;
+    this.categorias.forEach(categoria => {
+       if (categoria.boleta > 0) {
+         this.categoriaDes.push(categoria);
+       }
+    });
     let datos = {
       'venta': {
         'codigo': this.codigoVenta,
@@ -115,7 +121,7 @@ export class EventoComponent implements OnInit {
         'estado': 'PENDIENTE',
         'tipo': 'WEB'
       },
-      'detalle': this.categorias,
+      'detalle': this.categoriaDes,
       'user': this.store.getItem("username")
     }
     this._VentaService.new(datos).subscribe(

@@ -2,7 +2,7 @@
 <div class="breadcrumb" *ngIf='evento'>
     <div class="row container-fluid">
         <div class="col-md-8">
-            <h1>Puntos de venta</h1>
+            <h1>Detalle</h1>
             <ul>
                 <li>Evento:</li>
                 <li>{{evento.nombre}}</li>
@@ -113,7 +113,7 @@
                                             <i class="i-Delete-File text-20 text-danger"></i>
                                         </button>
             
-                                        <button routerLink="/modules/puntoVendedor/{{row.punto.id}}" ngbPopover="Responsables" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
+                                        <button routerLink="/modules/puntoVendedor/{{row.punto.id}}" ngbPopover="Vendedores" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
                                             <i class="i-Door text-20 text-warning"></i>
                                         </button>
                                         

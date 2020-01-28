@@ -58,11 +58,21 @@ export class SigninComponent implements OnInit {
         this._UserService.singin(this.json).subscribe(
             response => { 
                 this.loading = false;
-                console.log(response)
                 this.store.setItem("token", response);
                 this.store.setItem("username", this.json.username);
-                this.toastr.success(this.json.username, 'Bienvenido', { timeOut: 4000 });
-                this.router.navigateByUrl('/dashboard/v1');
+                this._UserService.show(this.json.username).subscribe(
+                    responseUser => { 
+                      if(responseUser['status'] == 200){
+                          let user = responseUser['data']['user']
+                          console.log(user.id);
+                        this.store.setItem("idUsuario", user.id);
+                        this.toastr.success(this.json.username, 'Bienvenido', { timeOut: 4000 });
+                        window.location.href = "/dashboard/v1";
+                      }
+                  }, error => {
+                    alert(error.error.error_description); 
+                  })
+                
           }, error => {
               if(error.error.error_description === 'Invalid username and password combination'){
                 this.toastr.error('Usuario o contraseña incorrectos!', 'Credenciales invalidas', { timeOut: 4000 });
