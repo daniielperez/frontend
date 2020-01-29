@@ -12,6 +12,7 @@ import { LocalStoreService } from "../../../../services/local-store.service";
 export class HeaderSidebarLargeComponent implements OnInit {
 
     notifications: any[];
+    username = this.store.getItem("username");
 
     constructor(
       private navService: NavigationService,
@@ -19,6 +20,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
       private store: LocalStoreService,
       private router: Router,
     ) {
+
       this.notifications = [
         {
           icon: 'i-Speach-Bubble-6',
@@ -27,7 +29,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
           text: 'James: Hey! are you busy?',
           time: new Date(),
           status: 'primary',
-          link: '/chat'
+          link: '/chat' 
         },
         {
           icon: 'i-Receipt-3',

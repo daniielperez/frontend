@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventoService } from '../../../../services/evento.service';
-import { BoletaService } from '../../../../services/boleta.service';
 import { VentaService } from '../../../../services/venta.service';
 import { environment } from '../../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -46,7 +45,6 @@ export class EventoComponent implements OnInit {
         if(response['code'] == 200){
           this.codigoVenta = response['codigo'];
           this.email = response['correo'];
-          
         }
     }, error => {
       this.loading = false;
@@ -112,6 +110,7 @@ export class EventoComponent implements OnInit {
          this.categoriaDes.push(categoria);
        }
     });
+
     let datos = {
       'venta': {
         'codigo': this.codigoVenta,
@@ -119,11 +118,12 @@ export class EventoComponent implements OnInit {
         'valor_transaccion': valorTransaccion,
         'valor_venta': this.valorTotal - valorTransaccion,
         'estado': 'PENDIENTE',
-        'tipo': 'WEB'
+        'tipo': 'WEB' 
       },
       'detalle': this.categoriaDes,
       'user': this.store.getItem("username")
     }
+
     this._VentaService.new(datos).subscribe(
       response => { 
         if(response['code'] == 200){
@@ -135,5 +135,6 @@ export class EventoComponent implements OnInit {
       this.loading = false;
       alert(error.error.error_description);
     })
+
   }
 }

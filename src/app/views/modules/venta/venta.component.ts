@@ -27,6 +27,7 @@ export class VentaComponent implements OnInit {
   categorias = [];
   puntosVenta;
   formNew = false;
+  state = false;
   ulrImage = environment.ulrImage+"publicidad";
   ulr = environment.ulrImage+"publicidad";
 
@@ -43,10 +44,11 @@ export class VentaComponent implements OnInit {
     this.buildFormBasic();
     this._VentaService.ultimoCodigo(this.store.getItem("username")).subscribe(
       response => { 
+        this.state = true;
         if(response['code'] == 200){
           this.codigoVenta = response['codigo'];
           this.puntosVenta = response['puntosVenta'];
-          if(this.puntosVenta.length == 0){
+          if(!this.puntosVenta){
             this.toastr.error('Usuario no tiene un punto de venta asignado', 'Error!', {progressBar: true});
           }
         }

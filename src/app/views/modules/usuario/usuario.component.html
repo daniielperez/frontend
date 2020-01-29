@@ -68,7 +68,7 @@
                         <button ngbPopover="Eliminar" triggers="mouseenter:mouseleave" placement="left" (click)="onDelete(modalConfirm,row)" class="btn btn-icon bg-transparent">
                             <i class="i-Delete-File text-20 text-danger"></i>
                         </button>
-                        <button routerLink="/modules/empresa/{{row.id}}" ngbPopover="Empresas" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
+                        <button *ngIf = "row.roles[0] == 'EMPRESA'" routerLink="/modules/empresa/{{row.id}}" ngbPopover="Empresas" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
                             <i class="i-Door text-20 text-warning"></i>
                         </button>
                     </ng-template>

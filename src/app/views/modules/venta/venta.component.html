@@ -4,7 +4,7 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
-<div class="row">
+<div class="row" *ngIf='puntosVenta && state'>
 
     <div class="col-lg-4 col-sm-12">
         <div class="card card-body">
@@ -61,7 +61,20 @@
         </div>
     </div>  
 
-</div>      
+</div>     
+
+<div class="row" *ngIf="!puntosVenta && state">
+    <div class="col-lg-8 col-sm-12 offset-lg-2">
+        <div class="card card-profile-1 mb-4">
+            <div class="card-body text-center">
+                <div class="avatar box-shadow-2 mb-3">
+                    <img src="http://localhost/Git/queboleta_api/public/uploads/publicidad//5cbf411261c16474a3023992abf07b2d.jpeg" alt="">
+                </div>
+                <h5 class="m-0">Usuario no tiene un punto de venta asignado</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card user-profile o-hidden mb-4" *ngIf='evento'>
     <div class="header-cover"  [ngStyle]="{'background-image':'url('+ulrImage+')'}"></div>

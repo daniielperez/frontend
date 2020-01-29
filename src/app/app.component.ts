@@ -18,8 +18,20 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     if (this.store.getItem("token")) {
-      // this.router.navigateByUrl('/dashboard/v1');
-      this.router.navigateByUrl('/modules/precio/5');
+      switch (this.store.getItem("role")) {
+        case 'ADMIN':
+            this.router.navigateByUrl('/dashboard/v1');
+            break;
+        case 'EMPRESA':
+            this.router.navigateByUrl('/modules/empresaPerfil');
+            break;
+        case 'VENDEDOR':
+            this.router.navigateByUrl('/modules/venta');
+            break;
+        case 'CLIENTE':
+            this.router.navigateByUrl('/modules/cliente/perfil');
+            break;
+      }
     } else {
       this.router.navigateByUrl('/sessions/signin');
     }

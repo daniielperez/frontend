@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmpresaService } from '../../../../services/empresa.service';
 import { Empresa } from '../../../../model/empresa';
 import { Location, Appearance } from '@angular-material-extensions/google-maps-autocomplete';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { LocalStoreService } from "../../../../services/local-store.service";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-empresa',
@@ -24,6 +25,8 @@ export class NewComponent implements OnInit {
   latitude: number;
   longitude: number;
   zoom: number;
+  idUsuario:any;
+  usuarios:any;
   private geoCoder;
   public appearance = Appearance;
   
@@ -33,7 +36,9 @@ export class NewComponent implements OnInit {
     private toastr: ToastrService,
     private _EmpresaService: EmpresaService,
     private mapsAPILoader: MapsAPILoader,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private store: LocalStoreService,
+    private rutaActiva: ActivatedRoute,
   ) { 
     this.empresa = new Empresa(null, null, null, null,null, null, null, null);
   }
@@ -70,11 +75,14 @@ export class NewComponent implements OnInit {
   }
 
   onSubmit() {
+    this.idUsuario = this.rutaActiva.snapshot.params.idUsuario;
+    console.log(this.idUsuario);
     this.loading = true;
     let array = {
       empresa: this.empresa,
       correos: this.correos,
       telefonos: this.telefonos,
+      idUsuario: this.idUsuario,
     }
     this._EmpresaService.new(array).subscribe(
       response => { 

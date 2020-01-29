@@ -19,10 +19,10 @@ export class LocalStoreService {
     try {
       return JSON.parse(value);
     } catch (e) {
-      // console.log(e)
       return null;
     }
   }
+  
   public clear() {
     this.ls.clear();
   }

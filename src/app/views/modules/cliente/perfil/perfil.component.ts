@@ -19,7 +19,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(
     private _UserService: UserService,
-    private store: LocalStoreService,
+    private store: LocalStoreService, 
   ) { }
 
   ngOnInit() {

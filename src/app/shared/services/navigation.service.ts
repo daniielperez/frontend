@@ -50,7 +50,9 @@ export class NavigationService {
     constructor(
         private store: LocalStoreService,
     ) {
-       
+        console.log(this.store.getItem("role"));
+        this.publishNavigationChange();
+
     }
 
     defaultMenu: IMenuItem[] = [
@@ -69,7 +71,6 @@ export class NavigationService {
             sub: [
                 { icon: 'i-Business-Mens', name: 'Gestionar usuarios', state: '/modules/usuario', type: 'link' },
                 { icon: 'i-Map-Marker', name: 'Gestionar lugares', state: '/modules/lugar', type: 'link' },
-                { icon: 'i-Building', name: 'Gestionar empresas', state: '/modules/empresa/'+this.store.getItem("idUsuario"), type: 'link' },
             ]
         },
         {
@@ -95,24 +96,111 @@ export class NavigationService {
         }
     ];
 
+    empresaMenu: IMenuItem[] = [
+        {
+            name: 'Perfiles',
+            description: 'Perfiles.',
+            type: 'dropDown',
+            icon: 'i-Business-Mens',
+            sub: [
+                { icon: 'i-Boy', name: 'Perfil cliente', state: '/modules/cliente/perfil', type: 'link' },
+                { icon: 'i-Building', name: 'Perfil empresarial', state: '/modules/empresaPerfil', type: 'link' },
+            ]
+        },
+        {   
+            name: 'Lugares',
+            description: 'Lugar donde se realizara el evento.',
+            type: 'link',
+            icon: 'i-Map-Marker',
+            state: '/modules/lugar'
+        },
+        {
+            name: 'Empresas',
+            description: 'Mis empresas.',
+            type: 'link',
+            icon: 'i-Building',
+            state: '/modules/empresa/'+this.store.getItem("idUsuario")
+        },
+        {
+            name: 'Eventos',
+            description: 'Eventos top.',
+            type: 'link',
+            icon: 'i-Home1',
+            state: '/modules/cliente/home', 
+        },
+        {
+            name: 'Ventas',
+            description: 'Ventas.',
+            type: 'link',
+            icon: 'i-Cash-register-2',
+            state: '/modules/venta',
+        }
+    ];
 
+    vendedorMenu: IMenuItem[] = [
+        {
+            name: 'Ventas',
+            description: 'Ventas.',
+            type: 'link',
+            icon: 'i-Cash-register-2',
+            state: '/modules/venta',
+        },
+        {
+            name: 'Eventos',
+            description: 'Eventos top.',
+            type: 'link',
+            icon: 'i-Home1',
+            state: '/modules/cliente/home', 
+        },
+        {
+            name: 'Perfil',
+            description: 'Home.',
+            type: 'link',
+            icon: 'i-Business-Man',
+            state: '/modules/cliente/perfil', 
+        }
+    ];
+
+    clienteMenu: IMenuItem[] = [
+        {
+            name: 'Eventos',
+            description: 'Eventos top.',
+            type: 'link',
+            icon: 'i-Home1',
+            state: '/modules/cliente/home', 
+        },
+        {
+            name: 'Perfil',
+            description: 'Home.',
+            type: 'link',
+            icon: 'i-Business-Man',
+            state: '/modules/cliente/perfil', 
+        }
+    ];
+
+    
+    
     // sets iconMenu as default;
     menuItems = new BehaviorSubject<IMenuItem[]>(this.defaultMenu);
     // navigation component has subscribed to this Observable
     menuItems$ = this.menuItems.asObservable();
-
-    // You can customize this method to supply different menu for
-    // different user type.
-    // publishNavigationChange(menuType: string) {
-    //   switch (userType) {
-    //     case 'admin':
-    //       this.menuItems.next(this.adminMenu);
-    //       break;
-    //     case 'user':
-    //       this.menuItems.next(this.userMenu);
-    //       break;
-    //     default:
-    //       this.menuItems.next(this.defaultMenu);
-    //   }
-    // }
+    /* 
+    You can customize this method to supply different menu for
+    different user type. */
+    publishNavigationChange() {
+      switch (this.store.getItem("role")) {
+        case 'ADMIN':
+            this.menuItems.next(this.defaultMenu);
+            break;
+        case 'EMPRESA':
+            this.menuItems.next(this.empresaMenu);
+            break;
+        case 'VENDEDOR':
+            this.menuItems.next(this.vendedorMenu);
+            break;
+        case 'CLIENTE':
+            this.menuItems.next(this.clienteMenu);
+            break;
+      }
+    }
 }

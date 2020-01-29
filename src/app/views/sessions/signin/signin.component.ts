@@ -64,10 +64,11 @@ export class SigninComponent implements OnInit {
                     responseUser => { 
                       if(responseUser['status'] == 200){
                           let user = responseUser['data']['user']
-                          console.log(user.id);
-                        this.store.setItem("idUsuario", user.id);
-                        this.toastr.success(this.json.username, 'Bienvenido', { timeOut: 4000 });
-                        window.location.href = "/dashboard/v1";
+                          console.log(user.role);
+                            this.store.setItem("idUsuario", user.id);
+                            this.store.setItem("role", user.role);
+                            this.toastr.success(this.json.username, 'Bienvenido', { timeOut: 4000 });
+                            window.location.href = "/dashboard/v1";
                       }
                   }, error => {
                     alert(error.error.error_description); 

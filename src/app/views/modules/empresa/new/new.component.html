@@ -47,6 +47,7 @@
                                                     (onLocationSelected)="onLocationSelected($event)">
                     </mat-google-maps-autocomplete>
                 </div>
+                
                 <agm-map [latitude]="empresa.lat" [longitude]="empresa.lng" [zoom]="zoom">
                     <agm-marker [latitude]="empresa.lat" [longitude]="empresa.lng" [markerDraggable]="true"
                     (dragEnd)="markerDragEnd($event)"></agm-marker>

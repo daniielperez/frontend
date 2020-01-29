@@ -32,6 +32,7 @@ export class EmpresaComponent implements OnInit {
 
   ngOnInit() { 
     let idUsuario = this.rutaActiva.snapshot.params.idUsuario;
+    
     this._EmpresaService.index(idUsuario).subscribe(
       response => { 
         if(response['code'] == 200){
