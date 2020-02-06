@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventoService } from '../../../../services/evento.service';
 import { EmpresaService } from '../../../../services/empresa.service';
 import { LugarService } from '../../../../services/lugar.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-evento',
@@ -27,23 +28,13 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _EventoService: EventoService,
-    private _EmpresaService: EmpresaService,
     private _LugarService: LugarService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private rutaActiva: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-
-    this._EmpresaService.select().subscribe(
-      response => { 
-        this.empresas = response;
-        setTimeout(() => {
-          this.empresaSelect = [this.evento.empresa.id];
-          this.cdref.detectChanges();
-        });
-    }, error => {
-      alert(error.error.error_description);
-    });
+    
     this._LugarService.select().subscribe(
       response => { 
         this.lugares = response;
@@ -64,7 +55,6 @@ export class EditComponent implements OnInit {
       totalBoletas: [this.evento.totalBoletas, Validators.required],
       nombre: [this.evento.nombre, Validators.required],
       lugarSelect: ['', Validators.required],
-      empresaSelect: ['', Validators.required],
       fecha: ['', Validators.required],
     });
 
@@ -78,7 +68,7 @@ export class EditComponent implements OnInit {
       nombre: this.evento.nombre,
       totalBoletas: this.evento.totalBoletas,
       fecha: this.evento.fecha['year']+'-'+this.evento.fecha['month']+'-'+this.evento.fecha['day'],
-      empresa: this.empresaSelect.toString(), 
+      empresa: this.rutaActiva.snapshot.params.idEmpresa,
       lugar: this.lugarSelect.toString(), 
     };
     this._EventoService.edit(arrayDatos).subscribe(
@@ -86,6 +76,9 @@ export class EditComponent implements OnInit {
         if(response['code'] == 200){
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
+        }else if(response['code'] == 400){
+          this.toastr.error(response['message'], response['title'], {progressBar: true});
+          this.loading = false;
         }
     }, error => {
         alert(error.error.error_description);

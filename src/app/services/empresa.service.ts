@@ -23,18 +23,23 @@ export class EmpresaService {
     .pipe(map(data => data));
   }
 
-  edit(json){
-    return this.http.post(this.url+'/'+json.empresa.id+'/edit',json,{headers:this.header})
+  edit(formData, json){
+    let data = JSON.stringify(json);
+    formData.append('data', data);
+    return this.http.post(this.url+'/'+json.empresa.id+'/edit',formData)
     .pipe(map(data => data));
   }
+
 
   delete(json){
     return this.http.post(this.url+'/'+json.id+'/delete',json,{headers:this.header})
     .pipe(map(data => data));
   }
 
-  new(json){
-    return this.http.post(this.url+'/new',json,{headers:this.header})
+  new(formData, json){
+    let data = JSON.stringify(json);
+    formData.append('data', data);
+    return this.http.post(this.url+'/new',formData,{headers:this.header})
     .pipe(map(data => data));
   }
 

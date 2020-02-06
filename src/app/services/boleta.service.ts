@@ -33,8 +33,8 @@ export class BoletaService {
     .pipe(map(data => data));
   }
 
-  new(json){
-    return this.http.post(this.url+'/new/from/aplication',json,{headers:this.header})
+  new(lotes){
+    return this.http.post(this.url+'/new/from/aplication',lotes,{headers:this.header})
     .pipe(map(data => data));
   }
 

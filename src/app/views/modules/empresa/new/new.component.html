@@ -4,28 +4,34 @@
         <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
             <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre">Nombre *</label>
                     <input [(ngModel)]="empresa.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese nombre">
                 </div> 
 
                 <div class="col-md-6 form-group mb-3">
-                    <label for="logo">Logo</label> 
-                    <input [(ngModel)]="empresa.logo" [ngClass]="{ 'is-invalid': newForm.form.controls.logo.invalid , 'is-valid': !newForm.form.controls.logo.invalid }" type="text" class="form-control" formControlName="logo" id="logo" placeholder="Ingrese dirección">
+                    <label for="nombre">Logo</label>
+                    <div class="custom-file">
+                        <input type="file"  (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Abrir imagen</label>
+                    </div> 
                 </div>
 
                 <div class="col-md-6 form-group mb-3">
-                    <label for="portada">Portada</label> 
-                    <input [(ngModel)]="empresa.portada" [ngClass]="{ 'is-invalid': newForm.form.controls.portada.invalid , 'is-valid': !newForm.form.controls.portada.invalid }" type="text" class="form-control" formControlName="portada" id="portada" placeholder="Ingrese dirección">
+                    <label for="nombre">Portada</label>
+                    <div class="custom-file">
+                        <input type="file"  (change)="onFilePortadaChange($event)" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Abrir imagen</label>
+                    </div> 
                 </div>
 
                 <div class="col-md-6 form-group mb-3">
-                    <label for="nit">Nit</label> 
-                    <input [(ngModel)]="empresa.nit" [ngClass]="{ 'is-invalid': newForm.form.controls.nit.invalid , 'is-valid': !newForm.form.controls.nit.invalid }" type="text" class="form-control" formControlName="nit" id="nit" placeholder="Ingrese dirección">
+                    <label for="nit">Nit *</label> 
+                    <input [(ngModel)]="empresa.nit" [ngClass]="{ 'is-invalid': newForm.form.controls.nit.invalid , 'is-valid': !newForm.form.controls.nit.invalid }" type="number" class="form-control" formControlName="nit" id="nit" placeholder="Ingrese nit">
                 </div>
                 
 
                 <div class="col-md-6 form-group mb-3">
-                    <label for="direccion">Dirección</label> 
+                    <label for="direccion">Dirección *</label> 
                     <input [(ngModel)]="empresa.direccion" [ngClass]="{ 'is-invalid': newForm.form.controls.direccion.invalid , 'is-valid': !newForm.form.controls.direccion.invalid }" type="text" class="form-control" formControlName="direccion" id="direccion" placeholder="Ingrese dirección">
                 </div>
 
@@ -41,6 +47,21 @@
                     </tag-input> 
                 </div>
 
+                <div class="col-md-6 form-group mb-3">
+                    <label for="merchantId">merchantId</label>
+                    <input [(ngModel)]="empresa.merchantId" type="number" class="form-control" formControlName="merchantId" id="merchantId" placeholder="Ingrese merchantId">
+                </div> 
+
+                <div class="col-md-6 form-group mb-3">
+                    <label for="accountId">accountId</label>
+                    <input [(ngModel)]="empresa.accountId" type="number" class="form-control" formControlName="accountId" id="accountId" placeholder="Ingrese accountId">
+                </div> 
+
+                <div class="col-md-6 form-group mb-3">
+                    <label for="apiKey">apiKey</label>
+                    <input [(ngModel)]="empresa.apiKey" type="text" class="form-control" formControlName="apiKey" id="apiKey" placeholder="Ingrese apiKey">
+                </div>
+
                 <div fxFlex fxFlexAlign="center"
                         class="autocomplete-container col-lg-12">
                     <mat-google-maps-autocomplete [appearance]="appearance.OUTLINE"
@@ -52,6 +73,8 @@
                     <agm-marker [latitude]="empresa.lat" [longitude]="empresa.lng" [markerDraggable]="true"
                     (dragEnd)="markerDragEnd($event)"></agm-marker>
                 </agm-map>
+
+                 
                 
                 <div class="col-md-12">
                     <br>

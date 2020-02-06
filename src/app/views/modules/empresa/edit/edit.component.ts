@@ -17,6 +17,8 @@ export class EditComponent implements OnInit {
   
   correos;
   telefonos;
+  public file: any = null;
+  public fileSelected: File = null;
   itemsCorreos=[];
   itemsTelefonos=[];
   public zoom: number = 10;
@@ -37,6 +39,10 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.file = new FormData();
+    this.empresa.merchantId = this.empresa.marchant_id;
+    this.empresa.accountId = this.empresa.acount_id;
+    this.empresa.apiKey = this.empresa.api_key;
     this.correos = new FormControl(this.empresa.correos);
     this.telefonos = new FormControl(this.empresa.telefonos);
     this.mapsAPILoader.load().then(() => {
@@ -58,6 +64,9 @@ export class EditComponent implements OnInit {
       direccion: [this.empresa.direccion, Validators.required],
       lat: [this.empresa.lat, Validators.required],
       lng: [this.empresa.lng, Validators.required],
+      accountId: [this.empresa.acount_id],
+      merchantId: [this.empresa.marchant_id],
+      apiKey: [this.empresa.api_key],
     });
   }
 
@@ -74,13 +83,17 @@ export class EditComponent implements OnInit {
       direccion: this.empresa.direccion, 
       lat: this.empresa.lat, 
       lng: this.empresa.lng, 
+      merchantId: this.empresa.merchantId, 
+      accountId: this.empresa.accountId, 
+      apiKey: this.empresa.apiKey,  
     };
+    
     let array = {
       empresa: empresa,
       correos: this.correos,
       telefonos: this.telefonos
     }
-    this._EmpresaService.edit(array).subscribe(
+    this._EmpresaService.edit(this.file, array).subscribe(
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
@@ -118,6 +131,20 @@ export class EditComponent implements OnInit {
     this.lat = location.latitude;
     this.lng = location.longitude;
     this.getAddress(this.lat, this.lng);
+  }
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      this.fileSelected = event.target.files[0];
+      this.file.append('fileLogo', this.fileSelected);
+    }
+  }
+
+  onFilePortadaChange(event) {
+    if (event.target.files.length > 0) {
+      this.fileSelected = event.target.files[0];
+      this.file.append('filePortada', this.fileSelected);
+    }
   }
 
   onCancelar(){

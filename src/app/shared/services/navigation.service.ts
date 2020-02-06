@@ -104,7 +104,6 @@ export class NavigationService {
             icon: 'i-Business-Mens',
             sub: [
                 { icon: 'i-Boy', name: 'Perfil cliente', state: '/modules/cliente/perfil', type: 'link' },
-                { icon: 'i-Building', name: 'Perfil empresarial', state: '/modules/empresaPerfil', type: 'link' },
             ]
         },
         {   

@@ -5,7 +5,6 @@
 <div class="separator-breadcrumb border-top"></div>
 
 <div class="row" *ngIf='puntosVenta && state'>
-
     <div class="col-lg-4 col-sm-12">
         <div class="card card-body">
             <div class="card-title mb-3">cliente</div>
@@ -23,7 +22,7 @@
                         >
                     </div>
                     <div class="col-lg-12">
-                        <btn-loading btnClass="btn-primary" [loading]="loading">Buscar</btn-loading>
+                        <btn-loading btnClass="btn-primary" [loading]="loadingBuscar">Buscar</btn-loading>
                     </div>
                 </div> 
             </form>        
@@ -38,7 +37,6 @@
                         <p class="mt-0 text-muted">{{ userComprador.firstName }}</p>
                         <p>{{ userComprador.email }}</p>
                         <p>{{ userComprador.username }}</p>
-                        <button class="btn btn-primary btn-rounded" >Aceptar</button>
                     </div>
                 </div>
             </div>
@@ -46,21 +44,123 @@
     </div> 
     <br>
 
-    <div class="col-lg-7 col-sm-12">
-        <div class="card card-body">
-            <div class="card-title mb-3">Venta</div>
-            <div class="col-md-6 form-group mb-3">
-                <label for="nombre">Eventos</label>
-                <ng-select class="form-control" style="height: 47px;"  
-                    [multiple]="false" 
-                    [options]="puntosVenta" 
-                    [(ngModel)]="eventoSelect" 
-                    id="eventoSelect"> 
-                </ng-select>
-            </div>       
+    <div class="col-lg-7 col-sm-12" *ngIf='userComprador'>
+        <div class="card card-body ">
+            <div class="card-title mb-3">Punto</div>
+            <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                    <label for="nombre">Puntos</label>
+                    <ng-select class="form-control" style="height: 47px;"  
+                        (ngModelChange)="onChangedPunto($event)"
+                        [multiple]="false" 
+                        [options]="puntosVenta" 
+                        [(ngModel)]="puntosVentaSelect" 
+                        id="puntosVentaSelect"> 
+                    </ng-select>
+                </div>     
+                <div class="col-md-6 form-group mb-3"  *ngIf="eventos">
+                    <label for="nombre">Eventos</label>
+                    <ng-select class="form-control" style="height: 47px;"  
+                        (ngModelChange)="onChangedevento($event)"
+                        [multiple]="false" 
+                        [options]="eventos" 
+                        [(ngModel)]="eventoSelect" 
+                        id="eventoSelect"> 
+                    </ng-select>
+                </div>  
+                <div class="mb-12 col-md-12" *ngIf='evento'>
+                    <div class="card-body">
+                        <ngb-tabset class="nav-center">
+                            <ngb-tab title="Compras">
+                                <ng-template ngbTabContent>
+                                    <hr>
+                                    <div class="row" *ngFor="let categoria of categorias let i = index ">
+                                        <div class="row col-md-12 col-6">
+                                            <div class="col-md-4">
+                                                <p class="text-primary mb-1"><i class="i-Ticket text-16 mr-1"></i> Categoria</p>
+                                                <span>{{ categoria.nombre }}</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Boletas</p>
+                                                <i (click)="onRemove(categoria)" style="margin-left: 4px;" class="i-Remove text-16 mr-1 text-danger"></i>
+                                                    <b>{{ categoria.boleta }}</b>
+                                                <i (click)="onAdd(categoria)" class="i-Add text-16 mr-1 text-success" ></i>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Valor</p>
+                                                <span>$ {{ categoria.valor | number }}</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-6 col-sm-6">
+                                            <p>
+                                                <btn-loading (click)="onSubmit()" btnClass="btn-lg btn-primary btn-rounded" [loading]="loading"><i class="i-Add-Cart"></i> Comprar</btn-loading>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-6">
+                                            <div class="col-lg-9 offset-lg-3">
+                                                <p class="text-muted mb-0">Total <i class="i-Money-2"></i></p>
+                                                <p class="lead text-primary text-17 mb-2">$ {{valorTotal | number }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Precios">
+                                <ng-template ngbTabContent>
+                                    <hr>
+                                    <div class="row" *ngFor="let precio of precios let i = index ">
+                                        <div class="row col-md-12 col-6">
+                                            <div class="col-md-3">
+                                                <p class="text-primary mb-1"><i class="i-Ticket text-16 mr-1"></i> Categoria</p>
+                                                <span>{{precio.categoria}}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-primary mb-1"><i class="i-Calendar text-16 mr-1"></i> Fecha inicio</p>
+                                                <span>{{precio.fechaInicio|date}}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-primary mb-1"><i class="i-Calendar text-16 mr-1"></i> Fecha fin</p>
+                                                <span>{{precio.fechaFin|date}}</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Valor</p>
+                                                <span>{{precio.valor}}</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab title="Fotos">
+                                <ng-template ngbTabContent>
+                                    <div class="row">
+                                        <div class="col-md-4" *ngFor="let publicidad of publicidades let i = index ">
+                                            <div class="card text-white o-hidden mb-3">
+                                                <img class="card-img" [src]="ulr+'/'+publicidad.url_imagen" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </div>   
+            </div>
+          
         </div>
     </div>  
-
 </div>     
 
 <div class="row" *ngIf="!puntosVenta && state">
@@ -76,99 +176,4 @@
     </div>
 </div>
 
-<div class="card user-profile o-hidden mb-4" *ngIf='evento'>
-    <div class="header-cover"  [ngStyle]="{'background-image':'url('+ulrImage+')'}"></div>
-    <div class="user-info" style="margin-top: 0px;">
-        <br> 
-        <p class="m-0 text-24">{{evento.nombre}}</p>
-        <p class="text-muted m-0">{{evento.empresa.nombre}}</p>
-    </div>
-    <div class="card-body">
-        <ngb-tabset class="nav-center">
-            <ngb-tab title="Compras">
-                <ng-template ngbTabContent>
-                    <hr>
 
-                    <div class="row" *ngFor="let categoria of categorias let i = index ">
-                        <div class="row col-md-12 col-6">
-                            <div class="col-md-4">
-                                <p class="text-primary mb-1"><i class="i-Ticket text-16 mr-1"></i> Categoria</p>
-                                <span>{{ categoria.nombre }}</span>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Boletas</p>
-                                <i (click)="onRemove(categoria)" style="margin-left: 4px;" class="i-Remove text-16 mr-1 text-danger"></i>
-                                    <b>{{ categoria.boleta }}</b>
-                                <i (click)="onAdd(categoria)" class="i-Add text-16 mr-1 text-success" ></i>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Valor</p>
-                                <span>$ {{ categoria.valor | number }}</span>
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-            
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-7 col-md-6 col-sm-6">
-                            <p>
-                                <btn-loading (click)="onSubmit()" btnClass="btn-lg btn-primary btn-rounded" [loading]="loading"><i class="i-Add-Cart"></i> Comprar</btn-loading>
-                            </p>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="col-lg-6 offset-lg-3">
-                                <p class="text-muted mb-0">Total <i class="i-Money-2"></i></p>
-                                <p class="lead text-primary text-24 mb-2">$ {{valorTotal | number }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Precios">
-                <ng-template ngbTabContent>
-                    <hr>
-                    <div class="row" *ngFor="let precio of precios let i = index ">
-                        <div class="row col-md-12 col-6">
-                            <div class="col-md-3">
-                                <p class="text-primary mb-1"><i class="i-Ticket text-16 mr-1"></i> Categoria</p>
-                                <span>{{precio.nombre}}</span>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="text-primary mb-1"><i class="i-Calendar text-16 mr-1"></i> Fecha inicio</p>
-                                <span>{{precio.fechaInicio|date}}</span>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="text-primary mb-1"><i class="i-Calendar text-16 mr-1"></i> Fecha fin</p>
-                                <span>{{precio.fechaFin|date}}</span>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="text-primary mb-1"><i class="i-Money1 text-16 mr-1"></i> Valor</p>
-                                <span>{{precio.valor}}</span>
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Fotos">
-                <ng-template ngbTabContent>
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let publicidad of publicidades let i = index ">
-                            <div class="card text-white o-hidden mb-3">
-                                <img class="card-img" [src]="ulr+'/'+publicidad.url_imagen" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
-</div>

@@ -55,7 +55,7 @@ const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: 'empresaPerfil',
+        path: 'empresaPerfil/:idEmpresa',
         component: EmpresaPerfilComponent
     },
     {

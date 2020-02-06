@@ -5,22 +5,22 @@
         <form #newForm="ngForm" [formGroup]="formBasic" (ngSubmit)="newForm.form.valid && onSubmit()">
             <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre">Nombre*</label>
                     <input [(ngModel)]="lugar.nombre" [ngClass]="{ 'is-invalid': newForm.form.controls.nombre.invalid, 'is-valid': !newForm.form.controls.nombre.invalid }" type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese el primer nombre">
                 </div> 
     
                 <div class="col-md-6 form-group mb-3">
-                    <label for="direccion">Dirección</label> 
+                    <label for="direccion">Dirección*</label> 
                     <input [(ngModel)]="lugar.direccion" [ngClass]="{ 'is-invalid': newForm.form.controls.direccion.invalid , 'is-valid': !newForm.form.controls.direccion.invalid }" type="text" class="form-control" formControlName="direccion" id="lastName" placeholder="Ingrese direccion">
                 </div>
     
                 <div class="col-md-6 form-group mb-3">
-                    <label for="telefono">Telefono</label>
+                    <label for="telefono">Telefono*</label>
                     <input [(ngModel)]="lugar.telefono" [ngClass]="{ 'is-invalid': newForm.form.controls.telefono.invalid , 'is-valid': !newForm.form.controls.telefono.invalid }" type="telefono" class="form-control" formControlName="telefono" id="email" placeholder="Ingrese telefono">
                 </div>
     
                 <div class="col-md-6 form-group mb-3">
-                    <label for="celular">Celular</label>
+                    <label for="celular">Celular*</label>
                     <input [(ngModel)]="lugar.celular" [ngClass]="{ 'is-invalid': newForm.form.controls.celular.invalid , 'is-valid': !newForm.form.controls.celular.invalid }" type="text" class="form-control" formControlName="celular" id="celular" placeholder="Ingrese celular">
                 </div>
     

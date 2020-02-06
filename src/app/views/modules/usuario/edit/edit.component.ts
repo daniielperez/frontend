@@ -65,13 +65,17 @@ export class EditComponent implements OnInit {
     };
     let data = {
       usuario: usuarioArray,
-      roles: [this.rolSelected]
+      roles: this.rolSelected.toString()
     }
     this._UserService.edit(data).subscribe(
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
+        }
+        if(response['code'] == 400){
+          this.toastr.error(response['message'], 'Error!', {progressBar: true});
+          this.loading = false;
         }
     }, error => {
         alert(error.error.error_description);

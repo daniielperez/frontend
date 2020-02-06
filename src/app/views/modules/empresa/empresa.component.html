@@ -53,7 +53,7 @@
                 </ngx-datatable-column>
 
                 <ngx-datatable-column name="nombre" [width]="300">
-                <ng-template ngx-datatable-header-template>
+                <ng-template ngx-datatable-header-template >
                     Nombre
                 </ng-template>
                 </ngx-datatable-column>
@@ -83,6 +83,9 @@
                         </button>
                         <button routerLink="/modules/eventoConfig/{{row.id}}" ngbPopover="Eventos" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
                             <i class="i-Door text-20 text-warning"></i>
+                        </button>
+                        <button routerLink="/modules/empresaPerfil/{{row.id}}" ngbPopover="Perfil" triggers="mouseenter:mouseleave" placement="left" class="btn btn-icon bg-transparent">
+                            <i class="i-Boy text-20 text-info"></i>
                         </button>
                     </ng-template>
                 </ngx-datatable-column>

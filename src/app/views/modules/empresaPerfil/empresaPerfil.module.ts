@@ -10,17 +10,24 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { SelectModule } from 'angular2-select'; 
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
   // declarations: [NewComponent, EditComponent], 
+
   imports: [
     CommonModule,
     CustomFormsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedComponentsModule,
+    SharedComponentsModule, 
     NgxPaginationModule,
     NgxDatatableModule,
     SelectModule,
+   
+  ],
+  providers: [
+    AgmCoreModule,
   ],
   exports: [
     // NewComponent,

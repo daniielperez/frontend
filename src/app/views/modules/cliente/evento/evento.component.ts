@@ -60,13 +60,19 @@ export class EventoComponent implements OnInit {
             this.ulrImage = this.ulrImage+'/'+response['data']['evento']['publicidades'][0].url_imagen;
           }
           this.publicidades = response['data']['evento']['publicidades'];
+
+          this.accountId = response['data']['evento']['empresa']['acount_id'];
+          this.merchantId = response['data']['evento']['empresa']['marchant_id'];
+          this.apiKey = response['data']['evento']['empresa']['api_key'];
+
+          console.log(this.accountId);
           this.precios = response['data']['precios'];
           if (response['data']['categorias']) {
             response['data']['categorias'].forEach(element => {
               if(element.disponibles > 0){
                let array = {
                  username: this.store.getItem("username"),
-                 idCategoria: element.id, 
+                 idCategoria: element.id,  
                  nombre: element.nombre,
                  valor: element.valor,
                  boleta: 0,
@@ -118,8 +124,9 @@ export class EventoComponent implements OnInit {
         'valor_transaccion': valorTransaccion,
         'valor_venta': this.valorTotal - valorTransaccion,
         'estado': 'PENDIENTE',
-        'tipo': 'WEB' 
+        'tipo': 'WEB',
       },
+      'idPuntoVenta': null, 
       'detalle': this.categoriaDes,
       'user': this.store.getItem("username")
     }

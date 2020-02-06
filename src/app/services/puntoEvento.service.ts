@@ -33,6 +33,11 @@ export class PuntoEventoService {
     .pipe(map(data => data));
   }
 
+  select(idPuntoVenta){
+    return this.http.get(this.url+'/select/'+idPuntoVenta,{headers:this.header})
+    .pipe(map(data => data));
+  }
+
   new(json){
     return this.http.post(this.url+'/new',json,{headers:this.header})
     .pipe(map(data => data));

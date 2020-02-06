@@ -18,11 +18,11 @@
                                         <img [src]="ulr+'/'+eventoTop.imagen" alt="">
                                     </div>
                                     <h5 class="m-0">{{eventoTop.nombre}}</h5>
-                                    <p class="mt-0 text-muted">{{eventoTop.nombreEpresa}}</p>
-                                    <p>{{eventoTop.nombre}} dirección: {{eventoTop.direccion}}</p>
+                                    <h5 class="mt-0 text-muted">Empresa: <a routerLink="/modules/empresaPerfil/{{eventoTop.idEmpresa}}">{{eventoTop.nombreEmpresa}}</a></h5>
+                                    <p>dirección: {{eventoTop.direccion}}</p>
                                     <button class="btn btn-primary btn-rounded" (click)='onShowEvento(eventoTop.id)'>Saber más</button>
                                     <div class="card-socials-simple mt-4">
-                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoTop.empresa_reds let i = index">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoTop.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
                                             <i class="i-{{redes.nombre}}"></i>
                                         </a>
                                     </div>
@@ -32,7 +32,6 @@
                     </div>
                 </ng-template>
             </ngb-tab>
-        
 
             <ngb-tab title="Proximos Eventos">
                 <ng-template ngbTabContent>
@@ -44,11 +43,12 @@
                                         <img [src]="ulr+'/'+eventoProximo.imagen" alt="">
                                     </div>
                                     <h5 class="m-0">{{eventoProximo.nombre}}</h5>
-                                    <p class="mt-0 text-muted">{{eventoProximo.nombreEpresa}}</p>
-                                    <p>{{eventoProximo.lugar}} dirección: {{eventoProximo.direccion}}</p>
+                                    <h5 class="mt-0 text-muted">Empresa: <a routerLink="/modules/empresaPerfil/{{eventoProximo.idEmpresa}}">{{eventoProximo.nombreEmpresa}}</a></h5>
+                                    <p>dirección: {{eventoProximo.direccion}}</p>
                                     <button class="btn btn-primary btn-rounded" (click)='onShowEvento(eventoProximo.id)'>Saber más</button>
+                                    <button class="btn btn-primary btn-rounded" routerLink="/modules/empresaPerfil/{{evento.id}}">Visitar empresa</button> 
                                     <div class="card-socials-simple mt-4">
-                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoProximo.empresa_reds let i = index">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of eventoProximo.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
                                             <i class="i-{{redes.nombre}}"></i>
                                         </a>
                                     </div>
@@ -69,15 +69,15 @@
                                         <img [src]="ulr+'/'+evento.imagen" alt="">
                                     </div>
                                     <h5 class="m-0">{{evento.nombre}}</h5>
-                                    <p class="mt-0 text-muted">{{evento.nombreEpresa}}</p>
-                                    <p>{{evento.nombre}} dirección: {{evento.direccion}}</p>
+                                    <h5 class="mt-0 text-muted">Empresa: <a routerLink="/modules/empresaPerfil/{{evento.idEmpresa}}" >{{evento.nombreEmpresa}}</a></h5>
+                                    <p>dirección: {{evento.direccion}}</p>
                                     <button class="btn btn-primary btn-rounded" (click)='onShowEvento(evento.id)'>Saber más</button>
                                     <div class="card-socials-simple mt-4">
-                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of evento.empresa_reds let i = index">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of evento.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
                                             <i class="i-{{redes.nombre}}"></i>
                                         </a>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -87,3 +87,8 @@
         </ngb-tabset>
     </div>
 </div>
+
+<ng-template #modalBasic let-modal> 
+    <app-new-evento *ngIf='formNew' (ready)="ready($event)"></app-new-evento>
+    <app-edit-evento *ngIf='formEdit' [evento]="evento" (ready)="ready($event)"></app-edit-evento>
+</ng-template> 

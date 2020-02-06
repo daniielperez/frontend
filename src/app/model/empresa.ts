@@ -7,6 +7,9 @@ export class Empresa {
 		public portada: string,
 		public direccion: string,
 		public lat: number,
-		public lng: number,
+		public lng: number,  
+		public accountId: number,  
+		public merchantId: number,  
+		public apiKey: string,  
 	){}
 }

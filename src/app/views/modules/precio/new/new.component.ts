@@ -60,6 +60,9 @@ export class NewComponent implements OnInit {
           this.ready.emit(true);
           this.loading = false;
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
+        }else if(response['code'] == 400){
+          this.toastr.error(response['message'], response['title'], {progressBar: true});
+          this.loading = false;
         }
     }, error => {
       alert(error.error.error_description);

@@ -46,7 +46,7 @@ import { PuntoVentaComponent } from './puntoVenta/puntoVenta.component';
 import { VentaComponent } from './venta/venta.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { GoogleMapsAPIWrapper } from '@agm/core';
+import { GoogleMapsAPIWrapper, AgmCoreModule } from '@agm/core';
 
 
 
@@ -56,7 +56,7 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
     CommonModule,
     CustomFormsModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, 
     RouterModule,
     NgbModule,
     ModulesRoutingModule,
@@ -77,10 +77,14 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
     PuntoVendedorModule,
     PuntoEventoModule,
     PrecioModule,
-    EmpresaPerfilModule
+    EmpresaPerfilModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAE4fzSoCEHjBoGocIFwLz8BSqi0ti1o0g',
+      libraries: ["places"]
+    }), 
 
   ],
-  providers:[GoogleMapsAPIWrapper],
+  providers:[GoogleMapsAPIWrapper, AgmCoreModule],
   declarations: [
     EmpresaComponent, 
     BoletaComponent, 

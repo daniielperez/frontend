@@ -26,5 +26,5 @@ import { SelectModule } from 'angular2-select';
     // NewComponent,
     // EditComponent,
   ]
-})
+}) 
 export class HomeModule { }

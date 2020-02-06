@@ -4,30 +4,99 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
-<div class="card user-profile o-hidden mb-4">
+<div class="card user-profile o-hidden mb-4" *ngIf='empresa'>
+    <div class="header-cover" [style]="styleBackground"></div>
+    <div class="user-info">
+        <img class="profile-picture avatar-lg mb-2" [src]="ulr+'logo/'+empresa.logo" alt="">
+        <p class="m-0 text-24">{{empresa.nombre}}</p>
+    </div>
     <div class="card-body">
         <ngb-tabset class="nav-center">
 
-            <ngb-tab title="Top eventos">
+            <ngb-tab title="Mis eventos">
                 <ng-template ngbTabContent>
                     <div class="row">
                         <div class="col-md-6" *ngFor="let event of eventos let i = index">
                             <div class="card card-profile-1 mb-4">
                                 <div class="card-body text-center">
                                     <div class="avatar box-shadow-2 mb-3">
-                                        <img [src]="ulr+'/'+event.imagen" alt="">
+                                        <img [src]="ulrEvento+'/'+event.imagen" alt="">
                                     </div>
                                     <h5 class="m-0">{{event.nombre}}</h5>
                                     <p class="mt-0 text-muted">{{event.nombreEpresa}}</p>
                                     <p>{{event.nombre}} dirección: {{event.direccion}}</p>
                                     <button class="btn btn-primary btn-rounded" (click)='onShowEvento(event.id)'>Saber más</button>
                                     <div class="card-socials-simple mt-4">
-                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of event.empresa_reds let i = index">
+                                        <a [href]="redes.url" target="_blank" *ngFor="let redes of event.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
                                             <i class="i-{{redes.nombre}}"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Detalles">
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <br>
+                            <div class="card-body card">
+                                <h5 class="card-title">{{empresa.nombre}}</h5>
+                                <p class="card-text"> Dirección: {{empresa.direccion}}</p>
+                                Teléfonos:
+                                <ul>
+                                    <li *ngFor="let telefono of empresa.telefonos let i = index">{{telefono}}</li>
+                                </ul>
+                                Correos:
+                                <ul>
+                                    <li *ngFor="let correo of empresa.correos let i = index" >{{correo}}</li>
+                                </ul>
+                                <div class="card-socials-simple mt-4">
+                                    <a [href]="redes.url" target="_blank" *ngFor="let redes of empresa.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
+                                        <i class="i-{{redes.nombre}}" ></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <agm-map [latitude]="empresa.lat" [longitude]="empresa.lng" [zoom]="zoom">
+                                <agm-marker [latitude]="empresa.lat" [longitude]="empresa.lng" ></agm-marker>
+                            </agm-map>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Configuración" *ngIf='usernameEmpresa == empresa.user.username'>
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <br>
+                            <div class="card-body card">
+                                <h5 class="card-title">{{empresa.nombre}}</h5>
+                                <p class="card-text"> Dirección: {{empresa.direccion}}</p>
+                                Teléfonos:
+                                <ul >
+                                    <li *ngFor="let telefono of empresa.telefonos let i = index">{{telefono}}</li>
+                                </ul >
+                                Correos:
+                                <ul>
+                                    <li *ngFor="let correo of empresa.correos let i = index" >{{correo}}</li>
+                                </ul>
+                                <div class="card-socials-simple mt-4">
+                                    <a [href]="redes.url" target="_blank" *ngFor="let redes of empresa.empresa_reds let i = index" triggers="mouseenter:mouseleave" ngbPopover="{{redes.nombre}}" placement="top">
+                                        <i class="i-{{redes.nombre}}" ></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <agm-map [latitude]="empresa.lat" [longitude]="empresa.lng" [zoom]="zoom">
+                                <agm-marker [latitude]="empresa.lat" [longitude]="empresa.lng" ></agm-marker>
+                            </agm-map>
                         </div>
                     </div>
                 </ng-template>

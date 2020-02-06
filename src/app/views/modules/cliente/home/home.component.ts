@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventoService } from '../../../../services/evento.service';
-import { BoletaService } from '../../../../services/boleta.service';
 import { environment } from '../../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStoreService } from "../../../../services/local-store.service";
@@ -23,8 +22,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private _EventoService: EventoService,
     private _Router: Router,
-    private toastr: ToastrService,
-    private store: LocalStoreService,
   ) { }
 
   ngOnInit() {
@@ -41,6 +38,7 @@ export class HomeComponent implements OnInit {
             if(response['data']['eventosTop'].length > 0){
              let array = {
                id: element.id,
+               idEmpresa: element.empresa.id,
                nombre: element.nombre,
                nombreEmpresa: element.empresa.nombre,
                lugar: element.lugar.nombre, 
@@ -48,9 +46,9 @@ export class HomeComponent implements OnInit {
                empresa_reds: element.empresa.empresa_reds,
                imagen: this.imagen,
             }
-            this.eventosTop.push(array);
+            this.eventosTop.push(array); 
             }
-          });
+          }); 
 
           response['data']['todos'].forEach(element => {
             if(element['publicidades'][0]){
@@ -99,6 +97,5 @@ export class HomeComponent implements OnInit {
 
   onShowEvento(idEvento){
     this._Router.navigate(['modules/cliente/evento/',idEvento]);
-    console.log(idEvento);
   } 
 }

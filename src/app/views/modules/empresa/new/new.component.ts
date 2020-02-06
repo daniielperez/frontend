@@ -18,7 +18,7 @@ export class NewComponent implements OnInit {
   formBasic: FormGroup;
   loading: boolean;
   public empresa: Empresa;
-  itemsCorreos = [];
+  itemsCorreos = []; 
   itemsTelefonos = [];
   correos = new FormControl(this.itemsCorreos);
   telefonos = new FormControl(this.itemsTelefonos);
@@ -27,6 +27,8 @@ export class NewComponent implements OnInit {
   zoom: number;
   idUsuario:any;
   usuarios:any;
+  public file: any = null;
+  public fileSelected: File = null;
   private geoCoder;
   public appearance = Appearance;
   
@@ -40,10 +42,11 @@ export class NewComponent implements OnInit {
     private store: LocalStoreService,
     private rutaActiva: ActivatedRoute,
   ) { 
-    this.empresa = new Empresa(null, null, null, null,null, null, null, null);
+    this.empresa = new Empresa(null, null, null, null,null, null, null, null, null, null, null);
   }
   ngOnInit()
   {
+    this.file = new FormData();
     this.zoom = 8;
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
@@ -68,28 +71,28 @@ export class NewComponent implements OnInit {
     this.formBasic = this.fb.group({
       nombre: ['', Validators.required],
       nit: ['', Validators.required],
-      logo: ['', Validators.required],
-      portada: ['', Validators.required],
       direccion: ['', Validators.required],
+      accountId: [''],
+      merchantId: [''],
+      apiKey: [''],
     });
   }
 
   onSubmit() {
     this.idUsuario = this.rutaActiva.snapshot.params.idUsuario;
-    console.log(this.idUsuario);
-    this.loading = true;
+    // this.loading = true;
     let array = {
       empresa: this.empresa,
       correos: this.correos,
       telefonos: this.telefonos,
       idUsuario: this.idUsuario,
     }
-    this._EmpresaService.new(array).subscribe(
+    this._EmpresaService.new(this.file, array).subscribe(
       response => { 
         if(response['code'] == 200){
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
-        }
+        } 
     }, error => {
       alert(error.error.error_description);
     })
@@ -123,6 +126,21 @@ export class NewComponent implements OnInit {
     this.empresa.lng = location.longitude;
     this.getAddress(this.empresa.lat, this.empresa.lng); 
   }
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      this.fileSelected = event.target.files[0];
+      this.file.append('fileLogo', this.fileSelected);
+    }
+  }
+
+  onFilePortadaChange(event) {
+    if (event.target.files.length > 0) {
+      this.fileSelected = event.target.files[0];
+      this.file.append('filePortada', this.fileSelected);
+    }
+  }
+
   onCancelar(){
     this.ready.emit(true);
   }

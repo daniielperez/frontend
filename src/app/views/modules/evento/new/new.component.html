@@ -34,12 +34,6 @@
             </div>
 
             <div class="col-md-6 form-group mb-3">
-                <label for="valor">Empresas</label> 
-                <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.empresa.invalid , 'is-valid': !newForm.form.controls.empresa.invalid }" [multiple]="false" [options]="empresas" [(ngModel)]="evento.empresa" formControlName="empresa" id="empresa">
-                </ng-select>
-            </div>
-
-            <div class="col-md-6 form-group mb-3">
                 <label for="valor">Lugares</label> 
                 <ng-select class="form-control" style="height: 47px;"  [ngClass]="{ 'is-invalid': newForm.form.controls.lugar.invalid , 'is-valid': !newForm.form.controls.lugar.invalid }" [multiple]="false" [options]="lugares" [(ngModel)]="evento.lugar" formControlName="lugar" id="lugar">
                 </ng-select>

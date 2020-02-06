@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _PrecioService: PrecioService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef 
   ) { }
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class EditComponent implements OnInit {
         if(response['code'] == 200){
           this.ready.emit(true);
           this.toastr.success('Datos guardados.', 'Perfecto!', {progressBar: true});
-        }
+        } 
     }, error => {
         alert(error.error.error_description);
     })

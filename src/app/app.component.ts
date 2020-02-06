@@ -23,13 +23,13 @@ export class AppComponent implements OnInit{
             this.router.navigateByUrl('/dashboard/v1');
             break;
         case 'EMPRESA':
-            this.router.navigateByUrl('/modules/empresaPerfil');
+            this.router.navigateByUrl('/modules/cliente/home');
             break;
         case 'VENDEDOR':
             this.router.navigateByUrl('/modules/venta');
             break;
         case 'CLIENTE':
-            this.router.navigateByUrl('/modules/cliente/perfil');
+            this.router.navigateByUrl('/modules/cliente/home');
             break;
       }
     } else {
